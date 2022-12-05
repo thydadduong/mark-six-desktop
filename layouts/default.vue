@@ -3,119 +3,105 @@
     <v-overlay :value="loggingOut" z-index="999">
       <v-progress-circular indeterminate></v-progress-circular>
     </v-overlay>
-    <v-main style="background-color: #f5f5f5">
-      <v-toolbar
-        color="primary detail-toolbar"
-        height="70"
-        elevation="0"
-        tile
-        dark
-      >
-        <div class="mr-8">
-          <v-avatar size="54" rounded color="primary" class="white--text">
-            <img src="/images/hk6.jpg" style="object-fit: cover" />
-          </v-avatar>
-        </div>
-        <CardTodayResult
-          :issueNumber="lastIssueNumber"
-          :ballList="lastResult.balls"
-          class="py-2"
-        />
-        <v-layout class="fill-height" align-end column>
-          <div>
-            <v-menu>
-              <template v-slot:activator="{ on, attrs }">
-                <v-btn
-                  v-bind="attrs"
-                  v-on="on"
-                  :loading="loadingTable"
-                  class="px-1"
-                  small
-                  text
-                >
-                  盘口: {{ currentTable }}
-                  <v-icon>mdi-menu-down</v-icon>
-                </v-btn>
-              </template>
-              <v-list>
-                <v-list-item
-                  v-for="item in tableList"
-                  @click="openDialogConfirmSwitchTable(item)"
-                  :key="`table-${item}`"
-                  :disabled="item == currentTable"
-                >
-                  <v-list-item-content>盘口 {{ item }}</v-list-item-content>
-                </v-list-item>
-              </v-list>
-            </v-menu>
-
-            <v-menu>
-              <template v-slot:activator="{ on, attrs }">
-                <v-btn
-                  v-bind="attrs"
-                  v-on="on"
-                  :loading="loadingTable"
-                  class="px-1 text-none"
-                  small
-                  text
-                >
-                  <v-icon small class="mr-2">mdi-account-circle-outline</v-icon>
-                  <span>Profile</span>
-                  <v-icon small>mdi-menu-down</v-icon>
-                </v-btn>
-              </template>
-              <v-list dense>
-                <v-list-item to="/profile/reset-password" exact>
-                  <v-list-item-content>修改密码</v-list-item-content>
-                </v-list-item>
-                <v-list-item to="/profile" exact>
-                  <v-list-item-content>个人信息</v-list-item-content>
-                </v-list-item>
-              </v-list>
-            </v-menu>
+    <v-main class="overflow-x-auto" style="background-color: #f5f5f5">
+      <v-sheet min-width="950">
+        <v-toolbar
+          color="primary detail-toolbar"
+          height="70"
+          elevation="0"
+          tile
+          dark
+        >
+          <div class="mr-8">
+            <v-avatar size="54" rounded color="primary" class="white--text">
+              <img src="/images/hk6.jpg" style="object-fit: cover" />
+            </v-avatar>
           </div>
-          <div class="mt-auto">
-            <v-tabs
-              background-color="transparent"
-              :show-arrows="false"
-              height="36"
-              dark
-            >
-              <v-tabs-slider color="primary lighten-3"></v-tabs-slider>
-              <v-tab
-                v-for="(item, key) in menuList"
-                :key="`side-menu-${key}`"
-                :to="item.to"
-                :exact="item.exact"
-                class="px-0"
+          <CardTodayResult
+            :issueNumber="lastIssueNumber"
+            :ballList="lastResult.balls"
+            class="py-2"
+          />
+          <v-layout class="fill-height" align-end column>
+            <div>
+              <v-menu>
+                <template v-slot:activator="{ on, attrs }">
+                  <v-btn
+                    v-bind="attrs"
+                    v-on="on"
+                    :loading="loadingTable"
+                    class="px-1"
+                    small
+                    text
+                  >
+                    盘口: {{ currentTable }}
+                    <v-icon>mdi-menu-down</v-icon>
+                  </v-btn>
+                </template>
+                <v-list>
+                  <v-list-item
+                    v-for="item in tableList"
+                    @click="openDialogConfirmSwitchTable(item)"
+                    :key="`table-${item}`"
+                    :disabled="item == currentTable"
+                  >
+                    <v-list-item-content>盘口 {{ item }}</v-list-item-content>
+                  </v-list-item>
+                </v-list>
+              </v-menu>
+
+              <v-menu>
+                <template v-slot:activator="{ on, attrs }">
+                  <v-btn
+                    v-bind="attrs"
+                    v-on="on"
+                    :loading="loadingTable"
+                    class="px-1 text-none"
+                    small
+                    text
+                  >
+                    <v-icon small class="mr-2"
+                      >mdi-account-circle-outline</v-icon
+                    >
+                    <span>Profile</span>
+                    <v-icon small>mdi-menu-down</v-icon>
+                  </v-btn>
+                </template>
+                <v-list dense>
+                  <v-list-item to="/profile/reset-password" exact>
+                    <v-list-item-content>修改密码</v-list-item-content>
+                  </v-list-item>
+                  <v-list-item @click="logout">
+                    <v-list-item-content>个人信息</v-list-item-content>
+                  </v-list-item>
+                </v-list>
+              </v-menu>
+            </div>
+            <div class="mt-auto">
+              <v-tabs
+                background-color="transparent"
+                :show-arrows="false"
+                height="36"
+                dark
               >
-                {{ item.title }}
-              </v-tab>
-            </v-tabs>
-          </div>
-        </v-layout>
-      </v-toolbar>
-      <Nuxt />
-
+                <v-tabs-slider color="primary lighten-3"></v-tabs-slider>
+                <v-tab
+                  v-for="(item, key) in menuList"
+                  :key="`side-menu-${key}`"
+                  :to="item.to"
+                  :exact="item.exact"
+                  class="px-0"
+                >
+                  {{ item.title }}
+                </v-tab>
+              </v-tabs>
+            </div>
+          </v-layout>
+        </v-toolbar>
+        <Nuxt />
+      </v-sheet>
       <DialogConfirm @confirm="onConfirm" ref="dialogConfirm" />
       <DialogMessageBox ref="dialogMessage" auto-close />
-      <v-bottom-navigation
-        class="main-bottom-nav d-md-none"
-        color="primary"
-        grow
-        app
-      >
-        <v-btn
-          v-for="(item, key) in menuList"
-          :key="`bottom-menu-${key}`"
-          :to="item.to"
-          :exact="item.exact"
-          height="100%"
-        >
-          <span>{{ item.title }}</span>
-          <v-icon>{{ item.icon }}</v-icon>
-        </v-btn>
-      </v-bottom-navigation>
     </v-main>
   </v-app>
 </template>

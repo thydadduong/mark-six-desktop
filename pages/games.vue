@@ -7,7 +7,9 @@
       flat
       dark
     >
-      <v-toolbar-title class="white primary--text px-4 my-4 py-1 body-1 fill-height">
+      <v-toolbar-title
+        class="white primary--text px-4 my-4 py-1 body-1 fill-height"
+      >
         {{ gameTitle }}
       </v-toolbar-title>
       <v-spacer></v-spacer>
@@ -19,38 +21,16 @@
         </v-card>
       </v-layout>
     </v-toolbar>
-    <v-row no-gutters>
-      <v-col cols="2"></v-col>
-      <v-col cols="10" class="px-2">
-        <v-btn-toggle tile color="primary" group>
-          <template v-for="(item, index) in gameMenu">
-            <v-btn :to="item.to" class="px-1 ma-0" value="left" small>
-              {{ item.title }}
-            </v-btn>
-            <div class="my-auto" style="height: 24px">
-              <v-divider vertical></v-divider>
-            </div>
-          </template>
-        </v-btn-toggle>
-      </v-col>
-    </v-row>
-    <v-container class="pa-0">
-      <v-layout> </v-layout>
-      <v-card flat class="d-md-none" outlined>
-        <v-toolbar class="close-timer" color="grey lighten-4" height="48" flat>
-          <v-layout align-center>
-            <p class="text--secondary mb-0">{{ issueNumber }}期开奖</p>
-            <v-spacer></v-spacer>
-
-            <div class="text-center">
-              <p class="error--text mb-0 headline font-weight-medium">
-                {{ displayTimeCounter }}
-              </p>
-            </div>
-          </v-layout>
-        </v-toolbar>
-      </v-card>
-    </v-container>
+    <v-btn-toggle tile color="primary" group>
+      <template v-for="(item, index) in gameMenu">
+        <v-btn :to="item.to" class="px-1 ma-0" value="left" small>
+          {{ item.title }}
+        </v-btn>
+        <div class="my-auto" style="height: 24px">
+          <v-divider vertical></v-divider>
+        </div>
+      </template>
+    </v-btn-toggle>
     <v-divider></v-divider>
     <v-row no-gutters>
       <v-col cols="2" class="pa-2">
