@@ -1,0 +1,14 @@
+version: "3"
+
+services:
+
+  app:
+    build:
+      context: ./
+      dockerfile: Dockerfile
+    env_file:
+      - ./.env
+    working_dir: /workspace
+    ports:
+      - 10102:10102
+    entrypoint: ./docker-entrypoint.sh

@@ -1,0 +1,38 @@
+
+.main-toolbar.v-toolbar
+    position: sticky
+    top: 0
+    z-index: 1
+    .v-toolbar__content
+        padding-top: 0
+        padding-bottom: 0
+
+.v-slide-group__prev.v-slide-group__prev--disabled,
+.v-slide-group__next.v-slide-group__next--disabled
+    display: none
+
+.gap
+    gap: 1rem
+.gap-sm
+    gap: .5rem
+.gap-xs
+    gap: .25rem
+
+.full-width
+    width: 100%
+
+.v-data-table.hide-horizontal-scrollbar .v-data-table__wrapper::-webkit-scrollbar
+    display: none
+
+.table-ball-amount
+    .v-text-field__details
+        margin: 0 !important
+        .v-messages__message
+            word-break: keep-all
+.v-application
+    input:-webkit-autofill,
+    input:-webkit-autofill:hover,
+    input:-webkit-autofill:focus,
+    input:-webkit-autofill:active
+        -webkit-box-shadow: 0 0 0 30px #1976d2 inset !important
+        -webkit-text-fill-color: white

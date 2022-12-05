@@ -1,0 +1,1 @@
+export const getJsonKeyValue = (key, value) => ({ key, value });

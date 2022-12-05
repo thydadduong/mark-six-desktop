@@ -1,0 +1,27 @@
+{
+  "name": "mark-six",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "dev": "nuxt",
+    "build": "nuxt build",
+    "start": "nuxt start",
+    "generate": "nuxt generate"
+  },
+  "dependencies": {
+    "@nuxtjs/axios": "^5.13.6",
+    "cookie-universal-nuxt": "^2.2.2",
+    "core-js": "^3.15.1",
+    "generatorics": "^1.1.0",
+    "nuxt": "^2.15.7",
+    "qs": "^6.11.0",
+    "vue-i18n": "^8.27.1",
+    "vuetify": "^2.5.5"
+  },
+  "devDependencies": {
+    "@nuxtjs/google-analytics": "^2.4.0",
+    "@nuxtjs/moment": "^1.6.1",
+    "@nuxtjs/vuetify": "^1.12.1",
+    "@volar-plugins/vetur": "^0.1.0"
+  }
+}

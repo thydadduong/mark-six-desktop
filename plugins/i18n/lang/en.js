@@ -1,0 +1,22 @@
+export const en = {
+  "app.button.logout": "Logout",
+  "dialog.button.add": "Add",
+  "dialog.button.cancel": "取消",
+  "dialog.button.close": "关闭",
+  "dialog.button.confirm": "确认",
+  "dialog.button.save": "保存",
+  "dialog.button.settle": "Settle",
+  "dialog.button.update": "更新",
+  "dialog.message.confirmation_default": "Are you sure to confirm this action?",
+  "dialog.message.confirmation": "请确认",
+  "dialog.message.failed": "失败",
+  "dialog.message.logout_text": "请点击确认退出系统?",
+  "dialog.message.success": "成功",
+  // Login page
+  "login.title.login_text": "欢迎光临",
+  "login.title.credential": "用户",
+  "login.title.password": "密码",
+  "login.title.verification": "Verification",
+  "login.title.login": "登入",
+  "login.title.login_agreement": "Login meant you accept the user agreement",
+};
