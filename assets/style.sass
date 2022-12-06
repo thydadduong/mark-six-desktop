@@ -17,6 +17,8 @@
     gap: .5rem
 .gap-xs
     gap: .25rem
+.gap-xxs
+    gap: .125rem
 
 .full-width
     width: 100%
@@ -36,3 +38,23 @@
     input:-webkit-autofill:active
         -webkit-box-shadow: 0 0 0 30px #1976d2 inset !important
         -webkit-text-fill-color: white
+
+table.game-item-table
+    width: 100%
+    border-collapse: collapse
+    td
+        border: 1px solid #ccc
+        padding: .25rem
+        text-align: center
+
+        input
+            width: 100%
+            border-radius: 4px
+            border: 1px solid #ccc
+            background: #f2f2f2
+    td:last-child
+        max-width: 75px
+    td:first-child
+        background: #dae8fc
+    td:nth-child(2)
+        background: #dae8fc55

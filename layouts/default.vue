@@ -4,7 +4,7 @@
       <v-progress-circular indeterminate></v-progress-circular>
     </v-overlay>
     <v-main class="overflow-x-auto" style="background-color: #f5f5f5">
-      <v-sheet min-width="950">
+      <v-sheet color="transparent" min-width="950">
         <v-toolbar
           color="primary detail-toolbar"
           height="70"

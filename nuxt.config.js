@@ -7,7 +7,7 @@ export default {
   server: { port: 10102, host: "0.0.0.0", timing: false },
   // Global page headers: https://go.nuxtjs.dev/config-head
   head: {
-    titleTemplate: "%s - K8系统",
+    titleTemplate: "%s",
     title: "K8系统",
     htmlAttrs: {
       lang: "en",

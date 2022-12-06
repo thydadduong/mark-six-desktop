@@ -126,12 +126,16 @@ export const TemaFlipCoin = [
   [
     { play_id: "010401", label: "大" },
     { play_id: "010402", label: "小" },
+  ],
+  [
     { play_id: "010301", label: "单" },
     { play_id: "010302", label: "双" },
   ],
   [
     { play_id: "010501", label: "合单" },
     { play_id: "010502", label: "合双" },
+  ],
+  [
     { play_id: "010701", label: "尾大" },
     { play_id: "010702", label: "尾小" },
   ],

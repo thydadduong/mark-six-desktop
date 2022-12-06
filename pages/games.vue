@@ -21,35 +21,38 @@
         </v-card>
       </v-layout>
     </v-toolbar>
-    <v-btn-toggle tile color="primary" group>
-      <template v-for="(item, index) in gameMenu">
-        <v-btn :to="item.to" class="px-1 ma-0" value="left" small>
-          {{ item.title }}
-        </v-btn>
-        <div class="my-auto" style="height: 24px">
-          <v-divider vertical></v-divider>
-        </div>
-      </template>
-    </v-btn-toggle>
-    <v-divider></v-divider>
-    <v-row no-gutters>
-      <v-col cols="2" class="pa-2">
-        <v-card flat tile>
-          <v-card tile outlined>
-            <v-card-text
-              style="background: linear-gradient(0deg, #dae8fc, #fff)"
-              class="primary--text pa-1 text-center"
-            >
-              最新注单
-            </v-card-text>
-            <v-divider></v-divider>
-            <v-card-text
-              style="background: linear-gradient(0deg, #dae8fc, #fff)"
-              class="primary--text pa-1"
-            >
-              未结金额：0
-            </v-card-text>
-          </v-card>
+    <v-layout class="elevation-1">
+      <v-btn-toggle color="primary" group tile>
+        <template v-for="(item, index) in gameMenu">
+          <v-btn :to="item.to" class="px-1 ma-0" value="left" small>
+            {{ item.title }}
+          </v-btn>
+          <div class="my-auto" style="height: 24px">
+            <v-divider vertical></v-divider>
+          </div>
+        </template>
+      </v-btn-toggle>
+    </v-layout>
+    <v-layout>
+      <v-sheet
+        class="pa-2 px-1 flex-shrink-0 flex-grow-0"
+        width="15rem"
+        color="transparent"
+      >
+        <v-card elevation="1" tile>
+          <v-card-text
+            style="background: linear-gradient(0deg, #dae8fc, #fff)"
+            class="primary--text pa-1 text-center"
+          >
+            最新注单
+          </v-card-text>
+          <v-divider></v-divider>
+          <v-card-text
+            style="background: linear-gradient(0deg, #dae8fc, #fff)"
+            class="primary--text pa-1"
+          >
+            未结金额：0
+          </v-card-text>
           <v-card-text>
             <v-layout justify-center class="py-8">
               <v-avatar size="100" class="rounded-lg">
@@ -58,9 +61,11 @@
             </v-layout>
           </v-card-text>
         </v-card>
-      </v-col>
-      <v-col cols="9" class="grey lighten-4"> <nuxt /></v-col>
-    </v-row>
+      </v-sheet>
+      <v-sheet class="pa-2 px-1 flex-fill" color="transparent">
+        <nuxt />
+      </v-sheet>
+    </v-layout>
     <v-sheet height="60" color="transparent"></v-sheet>
     <DialogGameTimeout
       :visible="bittingClosed"
