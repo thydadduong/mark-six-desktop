@@ -66,12 +66,10 @@ export const GridZhengmaB = GridZhengmaA.map((col) =>
 );
 
 export const ZhengmaFlip = [
-  [
-    { play_id: "020301", label: "總單" },
-    { play_id: "020302", label: "總雙" },
-    { play_id: "020401", label: "總大" },
-    { play_id: "020402", label: "總小" },
-  ],
+  { play_id: "020301", label: "總單" },
+  { play_id: "020302", label: "總雙" },
+  { play_id: "020401", label: "總大" },
+  { play_id: "020402", label: "總小" },
 ];
 
 export const GridTemaA = GridZhengmaA.map((col) =>
@@ -97,8 +95,6 @@ export const ShortcutsTema = [
     { title: "红", balls: RedBalls },
     { title: "大", balls: BigBalls },
     { title: "小", balls: SmallBalls },
-  ],
-  [
     { title: "牛", balls: [2, 14, 26, 38] },
     { title: "龍", balls: [11, 23, 35, 47] },
     { title: "羊", balls: [8, 20, 32, 44] },
@@ -106,8 +102,6 @@ export const ShortcutsTema = [
     { title: "蓝", balls: BlueBalls },
     { title: "单", balls: OddBalls },
     { title: "双", balls: EvenBalls },
-  ],
-  [
     { title: "虎", balls: [1, 13, 25, 37, 49] },
     { title: "蛇", balls: [10, 22, 34, 46] },
     { title: "猴", balls: [7, 19, 31, 43] },
@@ -115,8 +109,6 @@ export const ShortcutsTema = [
     { title: "绿", balls: GreenBalls },
     { title: "合单", balls: SingleBalls },
     { title: "合双", balls: DoubleBalls },
-  ],
-  [
     { title: "特尾大", balls: BigTailBalls },
     { title: "特尾小", balls: SmallTailBalls },
   ],

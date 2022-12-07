@@ -86,17 +86,38 @@
                   </tr>
                 </tbody>
               </table>
-              <!-- <CardBallOutlined
-                v-for="(item, subKey) in rowNumbers"
-                @toggle="toggleSelectItem(item)"
-                :key="`color-ball-${rowKey}-${subKey}`"
-                :title="item.label"
-                :active="isActive(item.play_id)"
-                width="25%"
-                :rate="getBallRate(item.play_id)"
-              /> -->
             </v-layout>
           </v-layout>
+          <v-sheet height="8"></v-sheet>
+
+          <v-layout class="gap-xs">
+            <v-layout
+              v-for="(item, rowKey) in colorBalls[0]"
+              :key="`yes-no-row-${rowKey}`"
+              class="gap-xs flex-grow-0"
+              style="width: 25%"
+            >
+              <table class="game-item-table">
+                <tbody>
+                  <tr>
+                    <td :class="`${item.color}--text`">{{ item.label }}</td>
+                    <td>
+                      {{ getBallRate(item.play_id) }}
+                    </td>
+                    <td>
+                      <input type="text" />
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </v-layout>
+            <v-sheet width="25%"></v-sheet>
+          </v-layout>
+          <v-sheet height="8"></v-sheet>
+          <ActionBarBallValue
+            @input="openDialogBitting"
+            :value.sync="inputAmount"
+          />
         </v-card>
       </v-sheet>
 
@@ -131,6 +152,7 @@
                     outlined
                     flat
                     tile
+                    style="margin-top: -1px; margin-left: -1px"
                   >
                     <v-layout
                       class="fill-height py-1"
@@ -144,50 +166,6 @@
               </v-card-text>
             </v-card>
           </section>
-          <section>
-            <v-card :disabled="loadingRates" class="mb-4" flat tile>
-              <v-layout column class="gap-xs">
-                <v-sheet color="grey lighten-4 text-center py-1">
-                  色波
-                </v-sheet>
-              </v-layout>
-              <v-card-text class="pa-1">
-                <v-layout column class="gap-xs text-center">
-                  <v-layout
-                    v-for="(rowNumbers, rowKey) in colorBalls"
-                    :key="`color-ball-${rowKey}`"
-                    class="gap-xs"
-                  >
-                    <CardBallOutlined
-                      v-for="(item, subKey) in rowNumbers"
-                      @toggle="toggleSelectItem(item)"
-                      :key="`color-ball-${rowKey}-${subKey}`"
-                      :color="item.color"
-                      :title="item.label"
-                      :active="isActive(item.play_id)"
-                      :width="`${100 / 3}%`"
-                      :rate="getBallRate(item.play_id)"
-                    />
-                  </v-layout>
-                </v-layout>
-              </v-card-text>
-            </v-card>
-          </section>
-          <v-expand-transition>
-            <div v-if="showInput">
-              <ActionBarBallValue
-                @input="openDialogBitting"
-                :value.sync="inputAmount"
-                class="d-none d-sm-block"
-              />
-              <ActionBarBallValue
-                @input="openDialogBitting"
-                :value.sync="inputAmount"
-                class="d-sm-none"
-                mobile
-              />
-            </div>
-          </v-expand-transition>
         </v-card>
       </v-sheet>
     </v-layout>

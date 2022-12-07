@@ -1,140 +1,110 @@
 <template>
-  <v-container flat>
-    <v-card flat>
-      <v-card-text class="pa-2">
-        <v-row>
-          <v-col cols="12">
-            <v-card outlined tile>
-              <v-sheet color="grey lighten-4 pa-1" class="relative">
-                <v-layout justify-center>
-                  <v-menu>
-                    <template v-slot:activator="{ on, attrs }">
-                      <v-btn
-                        v-bind="attrs"
-                        v-on="on"
-                        class="px-1"
-                        color="grey darken-2"
-                        small
-                        text
-                      >
-                        盘: {{ activeChannel }}
-                        <v-icon>mdi-menu-down</v-icon>
-                      </v-btn>
-                    </template>
-                    <v-list>
-                      <v-list-item
-                        @click="switchChannel('A')"
-                        :disabled="activeChannel == 'A'"
-                      >
-                        <v-list-item-content>盘 A</v-list-item-content>
-                      </v-list-item>
-                      <v-list-item
-                        @click="switchChannel('B')"
-                        :disabled="activeChannel == 'B'"
-                      >
-                        <v-list-item-content>盘 B</v-list-item-content>
-                      </v-list-item>
-                    </v-list>
-                  </v-menu>
-                </v-layout>
-              </v-sheet>
-            </v-card>
-          </v-col>
-          <v-col cols="12" sm="6">
-            <v-card :disabled="loadingRates" class="mb-4" flat tile>
-              <v-layout class="gap-sm">
-                <v-layout
-                  v-for="(luckNumbs, key) in gridBalls"
-                  :key="`lucky-number-${key}`"
-                  class="gap-sm"
-                  style="width: 20%"
-                  column
-                >
-                  <CardBoardItem
+  <div>
+    <v-layout class="gap-sm">
+      <v-sheet class="flex-fill">
+        <v-card-text
+          style="background: linear-gradient(0deg, #dae8fc, #fff)"
+          class="primary--text py-1 px-2"
+        >
+          <v-btn-toggle
+            v-model="activeChannel"
+            @change="switchChannel"
+            color="primary"
+            active-class="primary white--text"
+            mandatory
+          >
+            <v-btn class="px-1 ma-0" height="24" value="A" small>
+              正码 A
+            </v-btn>
+            <v-btn class="px-1 ma-0" height="24" value="B" small>
+              正码 B
+            </v-btn>
+          </v-btn-toggle>
+        </v-card-text>
+        <v-divider></v-divider>
+        <v-card :disabled="loadingRates" class="pa-2" flat tile>
+          <v-layout class="gap-xs">
+            <v-layout
+              v-for="(luckNumbs, key) in gridBalls"
+              :key="`lucky-number-${key}`"
+              class="gap-sm"
+              style="width: 20%"
+              column
+            >
+              <table class="game-item-table">
+                <tbody>
+                  <tr
                     v-for="item in luckNumbs"
-                    @toggle="toggleSelectItem(item)"
                     :key="`lucky-number-item-${key}-${item.play_id}`"
-                    :color="item.color"
-                    :title="item.label"
-                    :active="isActive(item.play_id)"
-                    :rate="getBallRate(item.play_id)"
-                  />
-                  <v-card
-                    @click="clearSelection"
-                    color="error lighten-1"
-                    v-if="key == 4"
-                    height="100%"
-                    flat
-                    dark
                   >
-                    <v-layout class="fill-height" justify-center align-center>
-                      <v-icon>mdi-close</v-icon>
-                    </v-layout>
-                  </v-card>
-                </v-layout>
-              </v-layout>
-            </v-card>
-          </v-col>
-          <v-col cols="12" sm="6">
-            <section>
-              <v-card :disabled="loadingRates" class="mb-4" outlined tile>
-                <v-layout column class="gap-xs">
-                  <v-sheet color="grey lighten-4 text-center py-1">
-                    双面
-                  </v-sheet>
-                </v-layout>
-                <v-card-text class="pa-2">
-                  <v-layout column class="gap-sm">
-                    <v-layout
-                      v-for="(rowNumbers, rowKey) in flipCoins"
-                      :key="`yes-no-row-${rowKey}`"
-                      class="gap-sm"
-                    >
-                      <CardBallOutlined
-                        v-for="(item, subKey) in rowNumbers"
-                        @toggle="toggleSelectItem(item)"
-                        :key="`color-ball-${rowKey}-${subKey}`"
-                        :title="item.label"
-                        :active="isActive(item.play_id)"
-                        :width="`${100 / 4}%`"
-                        :rate="getBallRate(item.play_id)"
-                      />
-                    </v-layout>
-                  </v-layout>
-                </v-card-text>
-              </v-card>
-            </section>
-
-            <v-expand-transition>
-              <div v-if="showInput">
-                <ActionBarBallValue
-                  @input="openDialogBitting"
-                  :value.sync="inputAmount"
-                  class="d-none d-sm-block"
-                />
-                <ActionBarBallValue
-                  @input="openDialogBitting"
-                  :value.sync="inputAmount"
-                  class="d-sm-none"
-                  mobile
-                />
-              </div>
-            </v-expand-transition>
-          </v-col>
-        </v-row>
-      </v-card-text>
-      <DialogBittingAmount
-        @saved="onSaveAmount"
-        :visible.sync="bittingInputs"
-        :edited-item="editedItem"
-        type="2"
-      />
-    </v-card>
+                    <td>
+                      <v-avatar
+                        :color="$common.getBallColor(item.value)"
+                        class="white--text"
+                        size="26"
+                      >
+                        <small class="font-weight-bold">
+                          {{ item.label || "-" }}
+                        </small>
+                      </v-avatar>
+                    </td>
+                    <td>{{ getBallRate(item.play_id) }}</td>
+                    <td>
+                      <input type="text" />
+                    </td>
+                  </tr>
+                  <tr v-if="key == 4">
+                    <td><v-sheet color="transparent" height="26"></v-sheet></td>
+                    <td><v-sheet color="transparent" height="26"></v-sheet></td>
+                    <td><v-sheet color="transparent" height="26"></v-sheet></td>
+                  </tr>
+                </tbody>
+              </table>
+            </v-layout>
+          </v-layout>
+          <v-sheet height="8"></v-sheet>
+          <v-layout class="gap-xs">
+            <v-layout
+              v-for="(item, rowKey) in flipCoins"
+              :key="`yes-no-row-${rowKey}`"
+              class="gap-xs"
+              style="width: calc(100% / 2)"
+            >
+              <table class="game-item-table">
+                <tbody>
+                  <tr>
+                    <td :class="`${item.color}--text`">{{ item.label }}</td>
+                    <td>
+                      {{ getBallRate(item.play_id) }}
+                    </td>
+                    <td>
+                      <input type="text" />
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </v-layout>
+            <v-sheet width="25%"></v-sheet>
+          </v-layout>
+          <v-sheet height="8"></v-sheet>
+          <ActionBarBallValue
+            @input="openDialogBitting"
+            :value.sync="inputAmount"
+          />
+        </v-card>
+      </v-sheet>
+    </v-layout>
+    <DialogBittingAmount
+      @saved="onSaveAmount"
+      :visible.sync="bittingInputs"
+      :edited-item="editedItem"
+      type="2"
+    />
 
     <v-overlay :value="loadingRates">
       <v-progress-circular indeterminate />
     </v-overlay>
-  </v-container>
+  </div>
 </template>
 
 <script>
