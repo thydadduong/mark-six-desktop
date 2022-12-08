@@ -1,183 +1,193 @@
 <template>
-  <v-container>
-    <v-card flat>
-      <v-card-text class="pa-2">
-        <v-row>
-          <v-col cols="12" sm="6">
-            <v-card class="mb-5" outlined tile>
-              <v-sheet class="text-center py-2"> 生肖 </v-sheet>
-              <v-divider></v-divider>
-              <v-sheet color="#f3f5f8">
-                <v-card-text class="px-2 py-0">
-                  <v-chip-group
-                    v-model="activeType"
-                    @change="onPrefixChanged"
-                    active-class="primary--text"
-                    mandatory
-                    column
-                  >
-                    <v-chip
-                      v-for="(item, key) in typeOptions"
-                      :key="`option-${key}`"
-                      :value="item"
-                      small
-                    >
-                      {{ item.title }}
-                    </v-chip>
-                  </v-chip-group>
-                </v-card-text>
-              </v-sheet>
-            </v-card>
-            <v-card :disabled="loadingRates" class="mb-4" flat tile>
-              <v-layout class="gap-sm">
-                <v-layout
-                  v-for="(luckNumbs, key) in gridBalls"
-                  :key="`lucky-number-${key}`"
-                  class="gap-sm"
-                  style="width: 20%"
-                  column
-                >
-                  <CardBoardItem
+  <div>
+    <v-layout class="gap-sm">
+      <v-sheet class="flex-fill">
+        <v-card-text
+          style="background: linear-gradient(0deg, #dae8fc, #fff)"
+          class="primary--text py-1 px-2"
+        >
+          <v-btn-toggle
+            v-model="activeType"
+            color="primary"
+            active-class="primary white--text"
+            mandatory
+          >
+            <v-btn
+              v-for="(item, key) in typeOptions"
+              :key="`option-${key}`"
+              :value="item"
+              class="px-1 ma-0"
+              height="24"
+              small
+            >
+              {{ item.title }}
+            </v-btn>
+          </v-btn-toggle>
+        </v-card-text>
+        <v-divider></v-divider>
+        <v-card :disabled="loadingRates" class="pa-2" flat tile>
+          <v-layout class="gap-xs">
+            <v-layout
+              v-for="(luckNumbs, key) in gridBalls"
+              :key="`lucky-number-${key}`"
+              class="gap-sm"
+              style="width: 20%"
+              column
+            >
+              <table class="game-item-table">
+                <tbody>
+                  <tr
                     v-for="item in luckNumbs"
-                    @toggle="toggleSelectItem(item)"
                     :key="`lucky-number-item-${key}-${item.play_id}`"
-                    :color="item.color"
-                    :title="item.label"
-                    :active="isActive(item.play_id)"
-                    :rate="getBallRate(item.play_id)"
-                  />
-                  <v-card
-                    @click="clearSelection"
-                    color="error lighten-1"
-                    v-if="key == 4"
-                    height="100%"
-                    flat
-                    dark
                   >
-                    <v-layout class="fill-height" justify-center align-center>
-                      <v-icon>mdi-close</v-icon>
-                    </v-layout>
-                  </v-card>
-                </v-layout>
-              </v-layout>
-            </v-card>
-          </v-col>
-          <v-col cols="12" sm="6">
-            <section>
-              <v-card :disabled="loadingRates" class="mb-4" outlined tile>
-                <v-card-text class="pa-1">
-                  <v-layout column class="gap-xs">
-                    <v-layout
-                      v-for="(rowNumbers, rowKey) in shortcutBalls"
-                      :key="`row-${rowKey}`"
-                      class="gap-xs"
-                    >
-                      <v-card
-                        v-for="(item, colKey) in rowNumbers"
-                        @click="onClickShortcut(item.balls, item.title)"
-                        :key="`row-${rowKey}-col-${colKey}`"
-                        :width="`${100 / 7}%`"
-                        :color="item.title == activeShortcut ? 'primary' : ''"
-                        :dark="item.title == activeShortcut"
-                        outlined
-                        flat
-                        tile
+                    <td>
+                      <v-avatar
+                        :color="$common.getBallColor(item.value)"
+                        class="white--text"
+                        size="26"
                       >
-                        <v-layout
-                          class="fill-height py-1"
-                          justify-center
-                          align-center
-                        >
-                          {{ item.title }}
-                        </v-layout>
-                      </v-card>
-                    </v-layout>
-                  </v-layout>
-                </v-card-text>
-              </v-card>
-            </section>
-            <section>
-              <v-card :disabled="loadingRates" class="mb-4" outlined tile>
-                <v-layout column class="gap-xs">
-                  <v-sheet color="grey lighten-4 text-center py-1">
-                    双面
-                  </v-sheet>
-                </v-layout>
-                <v-card-text class="pa-1">
-                  <v-layout wrap>
-                    <v-card
-                      v-for="(item, rowKey) in flipCoins"
-                      :width="`${100 / 4}%`"
-                      :key="`yes-no-row-${rowKey}`"
-                      class="pa-1"
-                      flat
-                    >
-                      <CardBallOutlined
-                        @toggle="toggleSelectItem(item)"
-                        :title="item.label"
-                        :active="isActive(item.play_id)"
-                        :rate="getBallRate(item.play_id)"
-                      />
-                    </v-card>
-                  </v-layout>
-                </v-card-text>
-              </v-card>
-            </section>
-            <section>
-              <v-card :disabled="loadingRates" class="mb-4" outlined tile>
-                <v-layout column class="gap-xs">
-                  <v-sheet color="grey lighten-4 text-center py-1">
-                    色波
-                  </v-sheet>
-                </v-layout>
-                <v-card-text class="pa-1">
-                  <v-layout class="gap-xs text-center">
-                    <CardBallOutlined
-                      v-for="(item, rowKey) in colorBalls"
-                      :key="`color-ball-${rowKey}`"
-                      @toggle="toggleSelectItem(item)"
-                      :color="item.color"
-                      :title="item.label"
-                      :active="isActive(item.play_id)"
-                      :width="`${100 / 3}%`"
-                      :rate="getBallRate(item.play_id)"
-                    />
-                  </v-layout>
-                </v-card-text>
-              </v-card>
-            </section>
+                        <small class="font-weight-bold">
+                          {{ item.label || "-" }}
+                        </small>
+                      </v-avatar>
+                    </td>
+                    <td>{{ getBallRate(item.play_id) }}</td>
+                    <td>
+                      <input type="text" />
+                    </td>
+                  </tr>
+                  <tr v-if="key == 4">
+                    <td><v-sheet color="transparent" height="26"></v-sheet></td>
+                    <td><v-sheet color="transparent" height="26"></v-sheet></td>
+                    <td><v-sheet color="transparent" height="26"></v-sheet></td>
+                  </tr>
+                </tbody>
+              </table>
+            </v-layout>
+          </v-layout>
+          <v-sheet height="8"></v-sheet>
+          <v-layout class="gap-xs">
+            <v-layout
+              v-for="(item, key) in flipCoins"
+              :width="`${100 / 3}%`"
+              :key="`yes-no-row-${key}`"
+              class="gap-sm"
+              style="width: 20%"
+              column
+            >
+              <table class="game-item-table">
+                <tbody>
+                  <tr
+                    v-for="subItem in item"
+                    :key="`lucky-number-subItem-${key}-${subItem.play_id}`"
+                  >
+                    <td class="primary--text">
+                      {{ subItem.label || "-" }}
+                    </td>
+                    <td>{{ getBallRate(subItem.play_id) }}</td>
+                    <td>
+                      <input type="text" />
+                    </td>
+                  </tr>
+                  <tr v-if="key == 4">
+                    <td><v-sheet color="transparent" height="26"></v-sheet></td>
+                    <td><v-sheet color="transparent" height="26"></v-sheet></td>
+                    <td><v-sheet color="transparent" height="26"></v-sheet></td>
+                  </tr>
+                </tbody>
+              </table>
+            </v-layout>
+          </v-layout>
+          <v-layout class="gap-xs" style="margin-top: -1px">
+            <v-layout
+              v-for="(item, rowKey) in colorBalls"
+              :key="`color-ball-${rowKey}`"
+              :width="`${100 / 3}%`"
+              class="gap-sm"
+              style="width: 20%"
+              column
+            >
+              <table class="game-item-table">
+                <tbody>
+                  <tr>
+                    <td :class="`${item.color}--text`">
+                      {{ item.label || "-" }}
+                    </td>
+                    <td>{{ getBallRate(item.play_id) }}</td>
+                    <td>
+                      <input type="text" />
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </v-layout>
+          </v-layout>
+          <v-sheet height="8"></v-sheet>
 
-            <v-expand-transition>
-              <div v-if="showInput">
-                <ActionBarBallValue
-                  @input="openDialogBitting"
-                  :value.sync="inputAmount"
-                  class="d-none d-sm-block"
-                />
-                <ActionBarBallValue
-                  @input="openDialogBitting"
-                  :value.sync="inputAmount"
-                  class="d-sm-none"
-                  mobile
-                />
-              </div>
-            </v-expand-transition>
-          </v-col>
-        </v-row>
-      </v-card-text>
-      <DialogBittingAmount
-        @saved="onSaveAmount"
-        :visible.sync="bittingInputs"
-        :edited-item="editedItem"
-        :amount="inputAmount"
-        :type="activeType.value"
-      />
-    </v-card>
+          <ActionBarBallValue
+            @input="openDialogBitting"
+            :value.sync="inputAmount"
+          />
+        </v-card>
+      </v-sheet>
+
+      <v-sheet
+        class="flex-shrink-0 flex-grow-0"
+        width="15rem"
+        color="transparent"
+      >
+        <v-card-text
+          style="background: linear-gradient(0deg, #dae8fc, #fff)"
+          class="primary--text py-1 px-2"
+        >
+          <v-sheet height="24" color="transparent"></v-sheet>
+        </v-card-text>
+        <v-card :disabled="loadingRates" class="mb-4" outlined tile>
+          <v-card-text class="pa-2 pr-1">
+            <v-layout column class="gap-xs">
+              <v-layout
+                v-for="(rowNumbers, rowKey) in shortcutBalls"
+                :key="`row-${rowKey}`"
+                wrap
+              >
+                <v-card
+                  v-for="(item, colKey) in rowNumbers"
+                  @click="onClickShortcut(item.balls, item.title)"
+                  :key="`row-${rowKey}-col-${colKey}`"
+                  :width="`${100 / 4}%`"
+                  :color="item.title == activeShortcut ? 'primary' : ''"
+                  :dark="item.title == activeShortcut"
+                  style="margin-top: -1px; margin-left: -1px"
+                  outlined
+                  flat
+                  tile
+                >
+                  <v-layout
+                    class="fill-height py-1"
+                    justify-center
+                    align-center
+                  >
+                    {{ item.title }}
+                  </v-layout>
+                </v-card>
+              </v-layout>
+            </v-layout>
+          </v-card-text>
+        </v-card>
+      </v-sheet>
+    </v-layout>
+    <DialogBittingAmount
+      @saved="onSaveAmount"
+      :visible.sync="bittingInputs"
+      :edited-item="editedItem"
+      :amount="inputAmount"
+      :type="activeType.value"
+    />
 
     <v-overlay :value="loadingRates">
       <v-progress-circular indeterminate />
     </v-overlay>
-  </v-container>
+  </div>
 </template>
 
 <script>
@@ -224,16 +234,24 @@ export default {
     },
     flipCoins() {
       return [
-        { suffix: "0301", label: "大" },
-        { suffix: "0302", label: "小" },
-        { suffix: "0201", label: "单" },
-        { suffix: "0202", label: "双" },
-        { suffix: "0401", label: "合单" },
-        { suffix: "0402", label: "合双" },
-      ].map((item) => ({
-        ...item,
-        play_id: [this.activeType.prefix, item.suffix].join(""),
-      }));
+        [
+          { suffix: "0301", label: "大" },
+          { suffix: "0302", label: "小" },
+        ],
+        [
+          { suffix: "0201", label: "单" },
+          { suffix: "0202", label: "双" },
+        ],
+        [
+          { suffix: "0401", label: "合单" },
+          { suffix: "0402", label: "合双" },
+        ],
+      ].map((item) =>
+        item.map((subItem) => ({
+          ...subItem,
+          play_id: [this.activeType.prefix, subItem.suffix].join(""),
+        }))
+      );
     },
     showInput() {
       return !!this.selectedList.length;
