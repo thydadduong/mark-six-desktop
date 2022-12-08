@@ -1,116 +1,128 @@
 <template>
-  <v-container>
-    <v-card flat>
-      <v-card-text class="pa-2">
-        <v-row>
-          <v-col cols="12" sm="6">
-            <v-card class="mb-4" outlined tile>
-              <v-sheet color="#f3f5f8">
-                <v-card-text class="px-2 py-0">
-                  <v-chip-group
-                    v-model="selectedProp"
-                    @change="onOptionChange"
-                    active-class="primary--text"
-                    mandatory
-                    column
-                  >
-                    <v-chip
-                      v-for="(item, key) in propertyOptions"
-                      :key="`option-${key}`"
-                      :value="item"
-                      small
-                    >
-                      {{ item.title }}
-                    </v-chip>
-                  </v-chip-group>
-                </v-card-text>
-                <v-divider></v-divider>
-                <v-card-text class="px-2 py-0">
-                  <v-chip-group
-                    v-model="selectedType"
-                    @change="onSubOptionChange"
-                    active-class="primary--text"
-                    mandatory
-                  >
-                    <v-chip
-                      v-for="(item, key) in typeOptions"
-                      :key="`mode-${key}`"
-                      :value="item"
-                      small
-                    >
-                      {{ item.title }}
-                    </v-chip>
-                  </v-chip-group>
-                </v-card-text>
-              </v-sheet>
-            </v-card>
-            <v-card :disabled="loadingRates" class="mb-4" flat tile>
-              <v-layout class="gap-xs">
-                <v-layout
-                  v-for="(luckNumbs, key) in gridBalls"
-                  :key="`lucky-number-${key}`"
-                  class="gap-xs"
-                  style="width: 20%"
-                  column
-                >
-                  <CardBoardItem
+  <div>
+    <v-layout class="gap-sm">
+      <v-sheet class="flex-fill">
+        <v-card-text
+          style="background: linear-gradient(0deg, #dae8fc, #fff)"
+          class="primary--text py-1 px-2"
+        >
+          <v-btn-toggle
+            v-model="selectedProp"
+            @change="onOptionChange"
+            class="mr-2"
+            active-class="primary white--text"
+            color="primary"
+            mandatory
+          >
+            <v-btn
+              v-for="(item, key) in propertyOptions"
+              :key="`option-${key}`"
+              :value="item"
+              class="px-1 ma-0"
+              height="24"
+              small
+            >
+              {{ item.title }}
+            </v-btn>
+          </v-btn-toggle>
+          <v-btn-toggle
+            v-model="selectedType"
+            @change="onSubOptionChange"
+            active-class="primary white--text"
+            color="primary"
+            mandatory
+          >
+            <v-btn
+              v-for="(item, key) in typeOptions"
+              :key="`mode-${key}`"
+              :value="item.value"
+              class="px-1 ma-0"
+              height="24"
+              small
+            >
+              {{ item.title }}
+            </v-btn>
+          </v-btn-toggle>
+        </v-card-text>
+        <v-divider></v-divider>
+        <v-card :disabled="loadingRates" class="pa-2" flat tile>
+          <v-layout class="gap-xs">
+            <v-layout
+              v-for="(luckNumbs, key) in gridBalls"
+              :key="`lucky-number-${key}`"
+              class="gap-sm"
+              style="width: 20%"
+              column
+            >
+              <table class="game-item-table">
+                <tbody>
+                  <tr
                     v-for="item in luckNumbs"
-                    @toggle="toggleSelectItem(item)"
                     :key="`lucky-number-item-${key}-${item.play_id}`"
-                    :color="item.color"
-                    :title="item.label"
-                    :active="isActive(item.play_id)"
-                    :rate="getBallRate(item.label)"
-                  />
-                  <v-card
-                    @click="clearSelection"
-                    color="error lighten-1"
-                    v-if="key == 4"
-                    height="100%"
-                    flat
-                    dark
                   >
-                    <v-layout class="fill-height" justify-center align-center>
-                      <v-icon>mdi-close</v-icon>
-                    </v-layout>
-                  </v-card>
-                </v-layout>
-              </v-layout>
-            </v-card>
-          </v-col>
-          <v-col cols="12" sm="6">
-            <v-expand-transition>
-              <div v-if="showInput">
-                <ActionBarBallValue
-                  @input="openDialogBitting"
-                  :value.sync="inputAmount"
-                  class="d-none d-sm-block"
-                />
-                <ActionBarBallValue
-                  @input="openDialogBitting"
-                  :value.sync="inputAmount"
-                  class="d-sm-none"
-                  mobile
-                />
-              </div>
-            </v-expand-transition>
-          </v-col>
-        </v-row>
-      </v-card-text>
-      <DialogBittingAmountHitAny
-        @saved="onSaveAmount"
-        :visible.sync="bittingInputs"
-        :edited-item="editedItem"
-        :type="selectedProp.type"
-        :typeTitle="selectedType.title"
-        :propertyTitle="selectedProp.title"
-        :amount="inputAmount"
-      />
-    </v-card>
+                    <td>
+                      <v-avatar
+                        :color="$common.getBallColor(item.value)"
+                        class="white--text"
+                        size="26"
+                      >
+                        <small class="font-weight-bold">
+                          {{ item.label || "-" }}
+                        </small>
+                      </v-avatar>
+                    </td>
+                    <td>{{ getBallRate(item.label) }}</td>
+                    <td>
+                      <input type="text" />
+                    </td>
+                  </tr>
+                  <tr v-if="key == 4">
+                    <td><v-sheet color="transparent" height="26"></v-sheet></td>
+                    <td><v-sheet color="transparent" height="26"></v-sheet></td>
+                    <td><v-sheet color="transparent" height="26"></v-sheet></td>
+                  </tr>
+                </tbody>
+              </table>
+            </v-layout>
+          </v-layout>
+          <v-sheet height="8"></v-sheet>
+
+          <ActionBarBallValue
+            @input="openDialogBitting"
+            :value.sync="inputAmount"
+            class="d-none d-sm-block"
+          />
+        </v-card>
+      </v-sheet>
+
+      <v-sheet
+        class="flex-shrink-0 flex-grow-0"
+        width="15rem"
+        color="transparent"
+      >
+        <v-card flat tile>
+          <v-card-text
+            style="background: linear-gradient(0deg, #dae8fc, #fff)"
+            class="primary--text py-1 px-2"
+          >
+            <v-sheet height="24" color="transparent"></v-sheet>
+          </v-card-text>
+        </v-card>
+      </v-sheet>
+    </v-layout>
+    <DialogBittingAmountHitAny
+      @saved="onSaveAmount"
+      :visible.sync="bittingInputs"
+      :edited-item="editedItem"
+      :type="selectedProp.type"
+      :typeTitle="selectedType.title"
+      :propertyTitle="selectedProp.title"
+      :amount="inputAmount"
+    />
     <v-overlay :value="loadingRates">
       <v-progress-circular indeterminate />
     </v-overlay>
-  </v-container>
+  </div>
 </template>
 
 <script>
