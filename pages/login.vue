@@ -130,21 +130,21 @@ export default {
           console.log(res);
           if (!res.code) {
             let _loginMsg = res.webtitle.split("客戶").join(" 客戶");
-            message = ["K8系统", _loginMsg].join(" ");
-            this.$refs.dialogMessage.show(DialogType.SUCCESS, message);
+            message = [this.appTitle, _loginMsg].join(" ");
+            this.$toast.success(message);
             setTimeout(() => {
               window.location.href = "/check-policy";
-            }, 1500);
+            }, 1000);
             return;
           } else {
             this.isLoading = false;
             message = res.message;
-            this.$refs.dialogMessage.show(DialogType.ERROR, message);
+            this.$toast.error(message);
           }
         })
         .catch((error) => {
           const message = error.response?.data?.message || error;
-          this.$refs.dialogMessage.show(DialogType.ERROR, message);
+          this.$toast.error(message);
           this.isLoading = false;
         });
     },

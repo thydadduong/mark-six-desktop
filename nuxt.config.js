@@ -30,6 +30,7 @@ export default {
     "~/plugins/common",
     "~/plugins/i18n",
     "~/plugins/form-rule.js",
+    "~/plugins/vue-toastification.client",
   ],
 
   // Auto import components: https://go.nuxtjs.dev/config-components
