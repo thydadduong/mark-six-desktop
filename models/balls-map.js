@@ -152,12 +152,32 @@ export const AnimalList = [
   { name: "兔", value: 4, name_en: "Hare", balls: [12, 24, 36, 48] },
   { name: "龍", value: 5, name_en: "Dragon", balls: [11, 23, 35, 47] },
   { name: "蛇", value: 6, name_en: "Snake", balls: [10, 22, 34, 46] },
+
   { name: "馬", value: 7, name_en: "Horse", balls: [9, 21, 33, 45] },
   { name: "羊", value: 8, name_en: "Sheep", balls: [8, 20, 32, 44] },
   { name: "猴", value: 9, name_en: "Monkey", balls: [7, 19, 31, 43] },
   { name: "雞", value: 10, name_en: "Rooster", balls: [6, 18, 30, 42] },
   { name: "狗", value: 11, name_en: "Dog", balls: [5, 17, 29, 41] },
   { name: "豬", value: 12, name_en: "Boa", balls: [4, 16, 28, 40] },
+];
+
+export const AnimalGroupedList = [
+  [
+    { name: "鼠", value: 1, name_en: "Rat", balls: [3, 15, 27, 39] },
+    { name: "牛", value: 2, name_en: "Ox", balls: [2, 14, 26, 38] },
+    { name: "虎", value: 3, name_en: "Tiger", balls: [1, 13, 25, 37, 49] },
+    { name: "兔", value: 4, name_en: "Hare", balls: [12, 24, 36, 48] },
+    { name: "龍", value: 5, name_en: "Dragon", balls: [11, 23, 35, 47] },
+    { name: "蛇", value: 6, name_en: "Snake", balls: [10, 22, 34, 46] },
+  ],
+  [
+    { name: "馬", value: 7, name_en: "Horse", balls: [9, 21, 33, 45] },
+    { name: "羊", value: 8, name_en: "Sheep", balls: [8, 20, 32, 44] },
+    { name: "猴", value: 9, name_en: "Monkey", balls: [7, 19, 31, 43] },
+    { name: "雞", value: 10, name_en: "Rooster", balls: [6, 18, 30, 42] },
+    { name: "狗", value: 11, name_en: "Dog", balls: [5, 17, 29, 41] },
+    { name: "豬", value: 12, name_en: "Boa", balls: [4, 16, 28, 40] },
+  ],
 ];
 export const TemaZodiac = AnimalList.map((item, index) => ({
   ...item,
