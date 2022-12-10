@@ -22,17 +22,6 @@
               {{ item.label }}
             </v-btn>
           </v-btn-toggle>
-          <v-btn-toggle v-model="selectedType" color="primary" mandatory>
-            <v-btn
-              v-for="(item, key) in combinedOptions"
-              :key="`combined-option-${key}`"
-              :value="item"
-              mandatory
-              small
-            >
-              {{ item.label }}
-            </v-btn>
-          </v-btn-toggle>
         </v-card-text>
         <v-divider></v-divider>
 

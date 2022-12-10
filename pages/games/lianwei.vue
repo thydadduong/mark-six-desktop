@@ -49,7 +49,7 @@
                 <tbody>
                   <tr
                     v-for="item in luckNumbs"
-                    :key="`lucky-number-item-${key}-${item.play_id}`"
+                    :key="`lucky-number-item-${key}-${item.name}`"
                   >
                     <td class="primary--text">{{ item.name }}</td>
                     <td>{{ getBallRate(item.name) }}</td>
