@@ -50,15 +50,6 @@
                     </tr>
                   </tbody>
                 </table>
-                <!-- <v-card @click="onSelectBalls(zodiac)" flat class="fill-height">
-                <CardZodiacItem
-                  :active="isActive(zodiac.play_id)"
-                  :name="zodiac.name"
-                  :balls="zodiac.balls"
-                  :rate=""
-                  class="fill-height"
-                />
-              </v-card> -->
               </v-col>
             </v-row>
           </v-card-text>
@@ -94,7 +85,7 @@
 </template>
 
 <script>
-import { TemaZodiac, AnimalGroupedList } from "~/models/balls-map";
+import { AnimalGroupedList } from "~/models/balls-map";
 
 export default {
   name: "PageLuckyDraw",
