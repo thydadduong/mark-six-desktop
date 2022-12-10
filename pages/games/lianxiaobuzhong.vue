@@ -13,17 +13,17 @@
             mandatory
             column
           >
-            <v-btn-toggle
+            <v-btn
               v-for="(item, key) in propertyOptions"
               :key="`item-${key}`"
               :value="item"
               small
             >
               {{ item.label }}
-            </v-btn-toggle>
+            </v-btn>
           </v-btn-toggle>
           <v-btn-toggle v-model="selectedType" color="primary" mandatory>
-            <v-btn-toggle
+            <v-btn
               v-for="(item, key) in combinedOptions"
               :key="`combined-option-${key}`"
               :value="item"
@@ -31,7 +31,7 @@
               small
             >
               {{ item.label }}
-            </v-btn-toggle>
+            </v-btn>
           </v-btn-toggle>
         </v-card-text>
         <v-divider></v-divider>
