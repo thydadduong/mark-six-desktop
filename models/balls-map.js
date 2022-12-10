@@ -200,6 +200,28 @@ export const TailGridNumbers = [
   { name: "8尾", value: 8, balls: [8, 18, 28, 38, 48] },
   { name: "9尾", value: 9, balls: [9, 19, 29, 39, 49] },
 ];
+export const TailGridNumbersGrouped = [
+  [
+    { name: "0尾", value: 0, balls: [10, 20, 30, 40] },
+    { name: "5尾", value: 5, balls: [5, 15, 25, 35, 45] },
+  ],
+  [
+    { name: "1尾", value: 1, balls: [1, 11, 21, 31, 41] },
+    { name: "6尾", value: 6, balls: [6, 16, 26, 36, 46] },
+  ],
+  [
+    { name: "2尾", value: 2, balls: [2, 12, 22, 32, 42] },
+    { name: "7尾", value: 7, balls: [7, 17, 27, 37, 47] },
+  ],
+  [
+    { name: "3尾", value: 3, balls: [3, 13, 23, 33, 43] },
+    { name: "8尾", value: 8, balls: [8, 18, 28, 38, 48] },
+  ],
+  [
+    { name: "4尾", value: 4, balls: [4, 14, 24, 34, 44] },
+    { name: "9尾", value: 9, balls: [9, 19, 29, 39, 49] },
+  ],
+];
 export const TailNumbers = TailGridNumbers.map((item, index) => ({
   ...item,
   play_id: getPlayId("1101", index + 1),
