@@ -85,63 +85,17 @@
         </v-card>
       </v-sheet>
     </v-layout>
-    <v-card flat>
-      <v-card-text class="pa-2">
-        <v-row>
-          <v-col cols="12" sm="6">
-            <!-- <v-card :disabled="loadingRates" class="mb-4" flat tile>
-              <v-layout wrap>
-                <v-sheet
-                  v-for="(item, key) in gridBalls"
-                  :key="`lucky-number-${key}`"
-                  class="pa-1"
-                  width="calc(100% / 5)"
-                  cols="3"
-                >
-                  <CardBoardItem
-                    @toggle="toggleSelectItem(item)"
-                    :key="`lucky-number-item-${key}-${item.play_id}`"
-                    :title="item.label"
-                    :secondary="isFixedFront(item.name)"
-                    :active="isActive(item.play_id)"
-                    :rate="getBallRate(item.name)"
-                    splitTitle
-                  />
-                </v-sheet>
-              </v-layout>
-            </v-card> -->
-          </v-col>
-          <v-col cols="12" sm="6">
-            <v-expand-transition>
-              <div v-if="showInput">
-                <ActionBarBallValue
-                  @input="openDialogBitting"
-                  :value.sync="inputAmount"
-                  class="d-none d-sm-block"
-                />
-                <ActionBarBallValue
-                  @input="openDialogBitting"
-                  :value.sync="inputAmount"
-                  class="d-sm-none"
-                  mobile
-                />
-              </div>
-            </v-expand-transition>
-          </v-col>
-        </v-row>
-      </v-card-text>
-      <DialogBittingAmountTail
-        @saved="onSaveAmount"
-        :visible.sync="bittingInputs"
-        :edited-item="editedItem"
-        :property="propertyType"
-        :amount="inputAmount"
-        :type="1"
-        :fixedFrontIndex="fixedFrontIndex"
-        :propertyTitle="propertyTitle"
-        :rate="minRate"
-      />
-    </v-card>
+    <DialogBittingAmountTail
+      @saved="onSaveAmount"
+      :visible.sync="bittingInputs"
+      :edited-item="editedItem"
+      :property="propertyType"
+      :amount="inputAmount"
+      :type="1"
+      :fixedFrontIndex="fixedFrontIndex"
+      :propertyTitle="propertyTitle"
+      :rate="minRate"
+    />
 
     <v-overlay :value="loadingRates">
       <v-progress-circular indeterminate />
