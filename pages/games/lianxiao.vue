@@ -79,6 +79,7 @@
               </v-col>
             </v-row>
 
+            <v-sheet height="8"></v-sheet>
             <ActionBarBallValue
               @input="openDialogBitting"
               :value.sync="inputAmount"
