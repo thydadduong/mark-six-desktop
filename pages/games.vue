@@ -7,6 +7,7 @@
       flat
       dark
     >
+      <v-sheet width="14rem"></v-sheet>
       <v-toolbar-title
         class="white primary--text px-4 my-4 py-1 body-1 fill-height"
       >
@@ -22,6 +23,7 @@
       </v-layout>
     </v-toolbar>
     <v-layout class="elevation-1">
+      <v-sheet width="15rem"></v-sheet>
       <v-btn-toggle color="primary" group tile>
         <template v-for="(item, index) in gameMenu">
           <v-btn :to="item.to" class="px-1 ma-0" value="left" small>
@@ -185,7 +187,7 @@ export default {
           this.bittingClosed = false;
           this.closeTimer = res.seconds || 0;
           clearInterval(this.timerInterval);
-          // this.startCountdown();
+          this.startCountdown();
         })
         .catch((error) => {
           console.log(error);
