@@ -49,7 +49,7 @@
                     class="flex-grow-0 font-weight-bold pa-2 py-2"
                     color="transparent"
                     width="150"
-                    >dd
+                  >
                   </v-sheet>
                 </v-layout>
               </v-card>

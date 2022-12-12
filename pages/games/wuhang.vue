@@ -1,9 +1,18 @@
 <template>
-  <v-container>
-    <v-card flat>
-      <v-card-text class="pa-2">
-        <v-row>
-          <v-col cols="12" sm="6">
+  <div>
+    <v-layout class="gap-sm">
+      <v-sheet class="flex-fill">
+        <v-card-text
+          style="background: linear-gradient(0deg, #dae8fc, #fff)"
+          class="primary--text py-1 px-2"
+        >
+          五行
+        </v-card-text>
+        <v-divider></v-divider>
+
+        <v-card :disabled="loadingRates" class="mb-4" flat tile>
+          <v-card class="text-center grey lighten-3" flat tile> 生肖 </v-card>
+          <v-card-text class="pa-2">
             <v-card flat>
               <v-card
                 color="#0000001f"
@@ -14,26 +23,33 @@
               >
                 <v-layout class="gap-sm" align-center>
                   <v-sheet
-                    class="flex-grow-0 font-weight-bold pa-2 py-4 text-center"
+                    class="flex-grow-0 font-weight-bold pa-2 py-2 text-center"
                     color="transparent"
                     width="50"
                   >
-                    五行
+                    半波
                   </v-sheet>
                   <v-divider vertical></v-divider>
                   <v-sheet
                     width="50"
-                    class="flex-grow-0 font-weight-bold pa-2 py-4 text-center"
+                    class="flex-grow-0 font-weight-bold pa-2 py-2 text-center"
                     color="transparent"
                   >
                     赔率
                   </v-sheet>
                   <v-divider vertical></v-divider>
                   <v-sheet
-                    class="flex-grow-1 font-weight-bold pa-2 py-4"
+                    class="flex-grow-1 font-weight-bold pa-2 py-2"
                     color="transparent"
                   >
                     号码
+                  </v-sheet>
+                  <v-divider vertical></v-divider>
+                  <v-sheet
+                    class="flex-grow-0 font-weight-bold pa-2 py-2"
+                    color="transparent"
+                    width="150"
+                  >
                   </v-sheet>
                 </v-layout>
               </v-card>
@@ -48,43 +64,46 @@
                 <CardGrid3Item
                   :name="item.name"
                   :balls="item.balls"
-                  :ballsColor="item.color || 'primary'"
-                  :active="isActive(item.play_id)"
+                  :ballsColor="item.color"
                   :rate="getBallRate(item.name)"
                 />
               </v-card>
             </v-card>
-          </v-col>
-          <v-col cols="12" sm="6">
-            <v-expand-transition>
-              <div v-if="showInput">
-                <ActionBarBallValue
-                  @input="openDialogBitting"
-                  :value.sync="inputAmount"
-                  class="d-none d-sm-block"
-                />
-                <ActionBarBallValue
-                  @input="openDialogBitting"
-                  :value.sync="inputAmount"
-                  class="d-sm-none"
-                  mobile
-                />
-              </div>
-            </v-expand-transition>
-          </v-col>
-        </v-row>
-      </v-card-text>
+            <v-sheet height="8"></v-sheet>
 
-      <DialogBittingAmount
-        @saved="onSaveAmount"
-        :visible.sync="bittingInputs"
-        :edited-item="editedItem"
-        :type="14"
-        :gClass="8"
-        :tot_num="selectedList.length"
-      />
-    </v-card>
-  </v-container>
+            <ActionBarBallValue
+              @input="openDialogBitting"
+              :value.sync="inputAmount"
+              class="d-none d-sm-block"
+            />
+          </v-card-text>
+        </v-card>
+      </v-sheet>
+      <v-sheet
+        class="flex-shrink-0 flex-grow-0"
+        width="15rem"
+        color="transparent"
+      >
+        <v-card flat tile>
+          <v-card-text
+            style="background: linear-gradient(0deg, #dae8fc, #fff)"
+            class="primary--text py-1 px-2"
+          >
+            <v-sheet height="24" color="transparent"></v-sheet>
+          </v-card-text>
+        </v-card>
+      </v-sheet>
+    </v-layout>
+
+    <DialogBittingAmount
+      @saved="onSaveAmount"
+      :visible.sync="bittingInputs"
+      :edited-item="editedItem"
+      :type="14"
+      :gClass="8"
+      :tot_num="selectedList.length"
+    />
+  </div>
 </template>
 
 <script>
