@@ -233,12 +233,18 @@ export const TailNumbers = TailGridNumbers.map((item, index) => ({
 }));
 
 const YiXiaoLiangBalls = [
-  { name: "肖2", value: 1 },
-  { name: "肖3", value: 2 },
-  { name: "肖4", value: 3 },
-  { name: "肖5", value: 4 },
-  { name: "肖6", value: 5 },
-  { name: "肖7", value: 6 },
+  [
+    { name: "肖2", value: 1 },
+    { name: "肖3", value: 2 },
+  ],
+  [
+    { name: "肖4", value: 3 },
+    { name: "肖5", value: 4 },
+  ],
+  [
+    { name: "肖6", value: 5 },
+    { name: "肖7", value: 6 },
+  ],
 ];
 const YiWeiLiangBalls = [
   { name: "尾2", value: 1 },

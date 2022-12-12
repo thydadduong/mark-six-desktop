@@ -1,66 +1,79 @@
 <template>
-  <v-container>
-    <v-card flat>
-      <v-card-text class="pa-2">
-        <v-row>
-          <v-col cols="12" sm="6">
-            <v-card class="text-center mb-4 py-2" outlined tile>
-              生肖量
-            </v-card>
-            <v-card :disabled="loadingRates" class="mb-4" flat tile>
-              <v-layout wrap>
-                <v-sheet
-                  v-for="(item, key) in gridBalls"
-                  :key="`lucky-number-${key}`"
-                  class="pa-1"
-                  width="calc(100% / 3)"
-                >
-                  <CardBoardItem
-                    @toggle="toggleSelectItem(item)"
-                    :key="`lucky-number-item-${key}-${item.play_id}`"
-                    :title="item.label"
-                    :active="isActive(item.play_id)"
-                    :rate="getBallRate(item.name)"
-                    splitTitle
-                  />
-                </v-sheet>
-              </v-layout>
-            </v-card>
-          </v-col>
-          <v-col cols="12" sm="6">
-            <v-expand-transition>
-              <div v-if="showInput">
-                <ActionBarBallValue
-                  @input="openDialogBitting"
-                  :value.sync="inputAmount"
-                  class="d-none d-sm-block"
-                />
-                <ActionBarBallValue
-                  @input="openDialogBitting"
-                  :value.sync="inputAmount"
-                  class="d-sm-none"
-                  mobile
-                />
-              </div>
-            </v-expand-transition>
-          </v-col>
-        </v-row>
-      </v-card-text>
+  <div>
+    <v-layout class="gap-sm">
+      <v-sheet class="flex-fill">
+        <v-card-text
+          style="background: linear-gradient(0deg, #dae8fc, #fff)"
+          class="primary--text py-1 px-2"
+        >
+          一肖量
+        </v-card-text>
+        <v-divider></v-divider>
 
-      <DialogBittingAmount
-        @saved="onSaveAmount"
-        :visible.sync="bittingInputs"
-        :edited-item="editedItem"
-        :type="7"
-        :gClass="8"
-        :tot_num="selectedList.length"
-      />
-    </v-card>
+        <v-card :disabled="loadingRates" class="mb-4" flat tile>
+          <v-card class="text-center grey lighten-3" flat tile> 生肖 </v-card>
+          <v-card-text class="pa-2">
+            <v-row dense>
+              <v-col
+                v-for="(items, key) in gridBalls"
+                :key="`lucky-number-${key}`"
+                cols="4"
+              >
+                <table class="game-item-table">
+                  <tbody>
+                    <tr
+                      v-for="item in items"
+                      :key="`lucky-number-item-${key}-${item.name}`"
+                    >
+                      <td class="primary--text">{{ item.name }}</td>
+                      <td>{{ getBallRate(item.name) }}</td>
+                      <td>
+                        <input type="text" />
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </v-col>
+            </v-row>
+            <v-sheet height="8"></v-sheet>
+
+            <ActionBarBallValue
+              @input="openDialogBitting"
+              :value.sync="inputAmount"
+              class="d-none d-sm-block"
+            />
+          </v-card-text>
+        </v-card>
+      </v-sheet>
+      <v-sheet
+        class="flex-shrink-0 flex-grow-0"
+        width="15rem"
+        color="transparent"
+      >
+        <v-card flat tile>
+          <v-card-text
+            style="background: linear-gradient(0deg, #dae8fc, #fff)"
+            class="primary--text py-1 px-2"
+          >
+            <v-sheet height="24" color="transparent"></v-sheet>
+          </v-card-text>
+        </v-card>
+      </v-sheet>
+    </v-layout>
+
+    <DialogBittingAmount
+      @saved="onSaveAmount"
+      :visible.sync="bittingInputs"
+      :edited-item="editedItem"
+      :type="7"
+      :gClass="8"
+      :tot_num="selectedList.length"
+    />
 
     <v-overlay :value="loadingRates">
       <v-progress-circular indeterminate />
     </v-overlay>
-  </v-container>
+  </div>
 </template>
 
 <script>
@@ -84,11 +97,13 @@ export default {
   },
   computed: {
     gridBalls() {
-      return YiXiaoLiangBalls.map((item) => ({
-        ...item,
-        label: item.name,
-        play_id: this.$common.getPlayId("2101", item.value),
-      }));
+      return YiXiaoLiangBalls.map((items) =>
+        items.map((subitem) => ({
+          ...subitem,
+          label: subitem.name,
+          play_id: this.$common.getPlayId("2101", subitem.value),
+        }))
+      );
     },
     showInput() {
       return !!this.selectedList.length;

@@ -185,7 +185,7 @@ export default {
           this.bittingClosed = false;
           this.closeTimer = res.seconds || 0;
           clearInterval(this.timerInterval);
-          this.startCountdown();
+          // this.startCountdown();
         })
         .catch((error) => {
           console.log(error);
