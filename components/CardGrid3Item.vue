@@ -40,6 +40,15 @@
           </div>
         </v-layout>
       </v-sheet>
+      <v-divider vertical></v-divider>
+
+      <v-sheet
+        :class="active ? 'white--text' : `${ballsColor}--text`"
+        class="flex-grow-0 flex-shrink-0 font-weight-bold pa-2 text-center"
+        width="150"
+      >
+        <v-text-field hide-details outlined dense></v-text-field>
+      </v-sheet>
     </v-layout>
   </v-card>
 </template>
