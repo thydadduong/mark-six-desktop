@@ -247,12 +247,18 @@ const YiXiaoLiangBalls = [
   ],
 ];
 const YiWeiLiangBalls = [
-  { name: "尾2", value: 1 },
-  { name: "尾3", value: 2 },
-  { name: "尾4", value: 3 },
-  { name: "尾5", value: 4 },
-  { name: "尾6", value: 5 },
-  { name: "尾7", value: 6 },
+  [
+    { name: "尾2", value: 1 },
+    { name: "尾3", value: 2 },
+  ],
+  [
+    { name: "尾4", value: 3 },
+    { name: "尾5", value: 4 },
+  ],
+  [
+    { name: "尾6", value: 5 },
+    { name: "尾7", value: 6 },
+  ],
 ];
 
 export {
