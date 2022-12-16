@@ -60,6 +60,8 @@ table.game-item-table
     td:nth-child(2)
         min-width: 40px
         background: #dae8fc55
+    td.primary.cell-selected
+        border-bottom: 1px solid white
 
 table.game-table-animal
     width: 100%
@@ -84,3 +86,22 @@ table.game-table-animal
         min-width: 40px
     td.game-table-animal__input
         max-width: 75px
+
+    td.primary.cell-selected
+        border-bottom: 1px solid white
+
+input.hidden-spin::-webkit-outer-spin-button,
+input.hidden-spin::-webkit-inner-spin-button
+    -webkit-appearance: none
+    margin: 0
+
+input[type=number].hidden-spin
+    -moz-appearance: textfield
+
+.cursor-pointer
+    cursor: pointer
+
+.disable-select
+    -webkit-user-select: none
+    -ms-user-select: none
+    user-select: none

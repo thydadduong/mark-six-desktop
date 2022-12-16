@@ -7,6 +7,12 @@ export const getPlayId = (prefix = "", number) => {
 export const getNumberLabel = (number) =>
   number < 10 ? `0${number}` : `${number}`;
 
+export const Items49 = [
+  1, 11, 21, 31, 41, 2, 12, 22, 32, 42, 3, 13, 23, 33, 43, 4, 14, 24, 34, 44, 5,
+  15, 25, 35, 45, 6, 16, 26, 36, 46, 7, 17, 27, 37, 47, 8, 18, 28, 38, 48, 9,
+  19, 29, 39, 49, 10, 20, 30, 40,
+];
+
 export const gridNumbers = [
   [1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
   [11, 12, 13, 14, 15, 16, 17, 18, 19, 20],
@@ -86,27 +92,52 @@ export const GridTemaB = GridZhengmaA.map((col) =>
   }))
 );
 
+export const ShortcutColors = [
+  { label: "红", value: "红", color: "error", balls: RedBalls },
+  { label: "蓝", value: "蓝", color: "primary", balls: BlueBalls },
+  { label: "绿", value: "绿", color: "success", balls: GreenBalls },
+];
+
+export const ShortcutsItems = [
+  { label: "鼠", value: "鼠", balls: [3, 15, 27, 39] },
+  { label: "兔", value: "兔", balls: [12, 24, 36, 48] },
+  { label: "馬", value: "馬", balls: [9, 21, 33, 45] },
+  { label: "雞", value: "雞", balls: [6, 18, 30, 42] },
+  { label: "大", value: "大", balls: BigBalls },
+  { label: "小", value: "小", balls: SmallBalls },
+  { label: "牛", value: "牛", balls: [2, 14, 26, 38] },
+  { label: "龍", value: "龍", balls: [11, 23, 35, 47] },
+  { label: "羊", value: "羊", balls: [8, 20, 32, 44] },
+  { label: "狗", value: "狗", balls: [5, 17, 29, 41] },
+  { label: "单", value: "单", balls: OddBalls },
+  { label: "双", value: "双", balls: EvenBalls },
+  { label: "虎", value: "虎", balls: [1, 13, 25, 37, 49] },
+  { label: "蛇", value: "蛇", balls: [10, 22, 34, 46] },
+  { label: "猴", value: "猴", balls: [7, 19, 31, 43] },
+  { label: "豬", value: "豬", balls: [4, 16, 28, 40] },
+  { label: "合单", value: "合单", balls: SingleBalls },
+  { label: "合双", value: "合双", balls: DoubleBalls },
+  { label: "特尾大", value: "特尾大", balls: BigTailBalls },
+  { label: "特尾小", value: "特尾小", balls: SmallTailBalls },
+];
 export const ShortcutsTema = [
   [
     { title: "鼠", balls: [3, 15, 27, 39] },
     { title: "兔", balls: [12, 24, 36, 48] },
     { title: "馬", balls: [9, 21, 33, 45] },
     { title: "雞", balls: [6, 18, 30, 42] },
-    { title: "红", balls: RedBalls },
     { title: "大", balls: BigBalls },
     { title: "小", balls: SmallBalls },
     { title: "牛", balls: [2, 14, 26, 38] },
     { title: "龍", balls: [11, 23, 35, 47] },
     { title: "羊", balls: [8, 20, 32, 44] },
     { title: "狗", balls: [5, 17, 29, 41] },
-    { title: "蓝", balls: BlueBalls },
     { title: "单", balls: OddBalls },
     { title: "双", balls: EvenBalls },
     { title: "虎", balls: [1, 13, 25, 37, 49] },
     { title: "蛇", balls: [10, 22, 34, 46] },
     { title: "猴", balls: [7, 19, 31, 43] },
     { title: "豬", balls: [4, 16, 28, 40] },
-    { title: "绿", balls: GreenBalls },
     { title: "合单", balls: SingleBalls },
     { title: "合双", balls: DoubleBalls },
     { title: "特尾大", balls: BigTailBalls },
@@ -116,33 +147,49 @@ export const ShortcutsTema = [
 
 export const TemaFlipCoin = [
   [
-    { play_id: "010401", label: "大" },
-    { play_id: "010402", label: "小" },
+    { play_id: "010401", label: "大", value: "大" },
+    { play_id: "010402", label: "小", value: "小" },
   ],
   [
-    { play_id: "010301", label: "单" },
-    { play_id: "010302", label: "双" },
+    { play_id: "010301", label: "单", value: "单" },
+    { play_id: "010302", label: "双", value: "双" },
   ],
   [
-    { play_id: "010501", label: "合单" },
-    { play_id: "010502", label: "合双" },
+    { play_id: "010501", label: "合单", value: "合单" },
+    { play_id: "010502", label: "合双", value: "合双" },
   ],
   [
-    { play_id: "010701", label: "尾大" },
-    { play_id: "010702", label: "尾小" },
+    { play_id: "010701", label: "尾大", value: "尾大" },
+    { play_id: "010702", label: "尾小", value: "尾小" },
   ],
 ];
 export const ColorBalls = [
-  [
-    { play_id: "010601", suffix: "0501", label: "红", color: "error" },
-    { play_id: "010602", suffix: "0502", label: "蓝", color: "primary" },
-    { play_id: "010603", suffix: "0503", label: "绿", color: "success" },
-  ],
+  {
+    play_id: "010601",
+    suffix: "0501",
+    label: "红",
+    value: "红",
+    color: "error",
+  },
+  {
+    play_id: "010602",
+    suffix: "0502",
+    label: "蓝",
+    value: "蓝",
+    color: "primary",
+  },
+  {
+    play_id: "010603",
+    suffix: "0503",
+    label: "绿",
+    value: "绿",
+    color: "success",
+  },
 ];
 export const ColorBallsFlat = [
-  { suffix: "0501", label: "红", color: "error" },
-  { suffix: "0502", label: "蓝", color: "primary" },
-  { suffix: "0503", label: "绿", color: "success" },
+  { suffix: "0501", label: "红", value: "红", color: "error" },
+  { suffix: "0502", label: "蓝", value: "蓝", color: "primary" },
+  { suffix: "0503", label: "绿", value: "绿", color: "success" },
 ];
 
 export const AnimalList = [
