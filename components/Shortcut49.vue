@@ -41,7 +41,7 @@ export default {
   },
   methods: {
     getBallColor(item) {
-      return `${this.$common.getBallColor(item)}--text`;
+      return `${this.$common.getBallColor(item)}--text `;
     },
     isSelected(item) {
       return this.selectedItems.includes(item);

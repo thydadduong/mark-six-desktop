@@ -275,7 +275,6 @@ export default {
       return !!this.selectedList.find((item) => item.label == label);
     },
     onClickShortcut(item = {}) {
-      console.log(item);
       const balls = item.balls || [];
       const prefix = this.activeChannel == "A" ? "0101" : "0102";
       let ids = balls.map((item) => {
@@ -307,17 +306,14 @@ export default {
       this.selectedList = [];
     },
     openDialogBitting() {
-      // TODO: Handle bitting value
-      // const formData = new FormData(this.$refs.formItem.$el);
-      // const play_id = this.selectedList[0].play_id;
-      // console.log(formData.get(play_id));
-      // const _balls = this.selectedList.map((item) => ({
-      //   ...item,
-      //   rate: this.getBallRate(item.play_id),
-      //   amount: this.inputAmount || 0,
-      // }));
-      // this.editedItem.balls = Object.assign([], _balls);
-      // this.bittingInputs = true;
+      const formData = new FormData(this.$refs.formItem.$el);
+      const _balls = this.selectedList.map((item) => ({
+        ...item,
+        rate: this.getBallRate(item.play_id),
+        amount: formData.get(item.play_id) || 0,
+      }));
+      this.editedItem.balls = Object.assign([], _balls);
+      this.bittingInputs = true;
     },
     getOddValues() {
       this.loadingRates = true;

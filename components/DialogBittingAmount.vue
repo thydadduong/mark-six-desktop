@@ -11,7 +11,7 @@
       <v-divider></v-divider>
       <v-card-text class="pb-2 px-0 text--primary">
         <v-form ref="editedForm" v-model="formValid" :disabled="isSaving">
-          <table class="table-ball-amount">
+          <table class="table-bitting">
             <thead>
               <tr>
                 <th class="pl-4">球号</th>
@@ -20,7 +20,7 @@
                   <v-layout align-center>
                     <span class="mr-2">金额</span>
                     <v-btn
-                      @click="customAmount = true"
+                      @click="customAmount = !customAmount"
                       class="rounded"
                       color="primary"
                       small
@@ -38,17 +38,19 @@
                 :key="`row-${index}`"
               >
                 <td class="pl-4">
-                  <div class="pt-2">{{ ball.label || ball.play_id }}</div>
+                  <div class="pt-1">{{ ball.label || ball.play_id }}</div>
                 </td>
                 <td class="pl-2">
-                  <div class="pt-2">{{ ball.rate }}</div>
+                  <div class="pt-1">{{ ball.rate }}</div>
                 </td>
                 <td class="pr-4">
-                  <v-text-field
+                  <input
                     v-model.number="ball.amount"
-                    :rules="$formRules.bittingAmount"
-                    :readonly="!customAmount"
+                    :disabled="!customAmount"
+                    class="hidden-spin"
                     placeholder="0"
+                    type="number"
+                    required
                     outlined
                     dense
                   />
@@ -169,7 +171,7 @@ export default {
 </script>
 
 <style lang="sass">
-.table-ball-amount
+.table-bitting
   width: 100%
   border-collapse: collapse
   thead tr
@@ -177,9 +179,16 @@ export default {
 
   tr th,
   tr td
-    padding: 0.125rem
+    padding: 0.5rem 0.125rem
     text-align: left
-    height: 56px
   tbody tr td
     vertical-align: top
+  input
+    width: 75px
+    padding: 2px 4px
+    border: 1px solid #ccc
+    border-radius: 4px
+    text-align: right
+    &:read-only
+      background: #f2f2f2
 </style>
