@@ -226,9 +226,6 @@ export default {
     gridBalls() {
       return this.activeChannel == "A" ? GridTemaA : GridTemaB;
     },
-    shortcutBalls() {
-      return ShortcutsTema;
-    },
     colorBalls() {
       const prefix = this.activeChannel == "A" ? "0101" : "0102";
       return ColorBallsFlat.map((item) => ({
