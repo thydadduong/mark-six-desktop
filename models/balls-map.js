@@ -77,6 +77,23 @@ export const ZhengmaFlip = [
   { play_id: "020401", label: "總大" },
   { play_id: "020402", label: "總小" },
 ];
+export const ZhengmaTeFlip = [
+  [
+    { suffix: "0301", label: "大", value: "大" },
+    { suffix: "0302", label: "小", value: "小" },
+    { suffix: "0501", label: "红", value: "红", color: "error" },
+  ],
+  [
+    { suffix: "0201", label: "单", value: "单" },
+    { suffix: "0202", label: "双", value: "双" },
+    { suffix: "0502", label: "蓝", value: "蓝", color: "primary" },
+  ],
+  [
+    { suffix: "0401", label: "合单", value: "合单" },
+    { suffix: "0402", label: "合双", value: "合双" },
+    { suffix: "0503", label: "绿", value: "绿", color: "success" },
+  ],
+];
 
 export const GridTemaA = GridZhengmaA.map((col) =>
   col.map((item) => ({

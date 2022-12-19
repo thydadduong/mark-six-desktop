@@ -1,7 +1,7 @@
 <template>
   <div>
     <v-layout class="gap-sm">
-      <v-sheet class="flex-fill">
+      <v-sheet>
         <v-card-text
           style="background: linear-gradient(0deg, #dae8fc, #fff)"
           class="primary--text py-1 px-2"
@@ -26,108 +26,101 @@
         </v-card-text>
         <v-divider></v-divider>
         <v-card :disabled="loadingRates" class="pa-2" flat tile>
-          <v-layout class="gap-xs">
-            <v-layout
-              v-for="(luckNumbs, key) in gridBalls"
-              :key="`lucky-number-${key}`"
-              class="gap-sm"
-              style="width: 20%"
-              column
-            >
-              <table class="game-item-table">
-                <tbody>
-                  <tr
-                    v-for="item in luckNumbs"
-                    :key="`lucky-number-item-${key}-${item.play_id}`"
-                  >
-                    <td>
-                      <v-avatar
-                        :color="$common.getBallColor(item.value)"
-                        class="white--text"
-                        size="26"
-                      >
-                        <small class="font-weight-bold">
-                          {{ item.label || "-" }}
-                        </small>
-                      </v-avatar>
-                    </td>
-                    <td>{{ getBallRate(item.play_id) }}</td>
-                    <td>
-                      <input type="text" />
-                    </td>
-                  </tr>
-                  <tr v-if="key == 4">
-                    <td><v-sheet color="transparent" height="26"></v-sheet></td>
-                    <td><v-sheet color="transparent" height="26"></v-sheet></td>
-                    <td><v-sheet color="transparent" height="26"></v-sheet></td>
-                  </tr>
-                </tbody>
-              </table>
+          <v-form ref="formItem">
+            <v-layout class="gap-xs">
+              <v-layout
+                v-for="(luckNumbs, key) in gridBalls"
+                :key="`lucky-number-${key}`"
+                width="165"
+              >
+                <table class="game-item-table disable-select">
+                  <tbody>
+                    <tr
+                      v-for="item in luckNumbs"
+                      :key="`lucky-number-item-${key}-${item.play_id}`"
+                      @click="toggleSelectItem(item)"
+                      class="cursor-pointer"
+                    >
+                      <template v-if="isActive(item.label)">
+                        <td class="white--text primary">
+                          <v-avatar
+                            :color="$common.getBallColor(item.value)"
+                            class="darken-1"
+                            size="26"
+                          >
+                            <small class="font-weight-bold">
+                              {{ item.label || "-" }}
+                            </small>
+                          </v-avatar>
+                        </td>
+                        <td class="primary white--text">
+                          {{ getBallRate(item.play_id) }}
+                        </td>
+                        <td class="primary">
+                          <input
+                            @click.stop="() => {}"
+                            :ref="item.play_id"
+                            :id="item.play_id"
+                            :name="item.play_id"
+                            class="text-right px-1 hidden-spin"
+                            placeholder="0"
+                            type="number"
+                          />
+                        </td>
+                      </template>
+                      <template v-else>
+                        <td>
+                          <v-avatar
+                            :color="$common.getBallColor(item.value)"
+                            class="white--text"
+                            size="26"
+                          >
+                            <small class="font-weight-bold">
+                              {{ item.label || "-" }}
+                            </small>
+                          </v-avatar>
+                        </td>
+                        <td>{{ getBallRate(item.play_id) }}</td>
+                        <td>
+                          <input
+                            @click.stop="onClickInputReadonly(item)"
+                            placeholder="0"
+                            class="text-right px-1"
+                            tabindex="-1"
+                            readonly
+                          />
+                        </td>
+                      </template>
+                    </tr>
+                    <tr v-if="key == 4">
+                      <td>
+                        <v-sheet color="transparent" height="26"></v-sheet>
+                      </td>
+                      <td>
+                        <v-sheet color="transparent" height="26"></v-sheet>
+                      </td>
+                      <td>
+                        <v-sheet color="transparent" height="26"></v-sheet>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </v-layout>
             </v-layout>
-          </v-layout>
-          <v-sheet height="8"></v-sheet>
-          <v-layout class="gap-xs">
-            <v-layout
-              v-for="(item, key) in flipCoins"
-              :width="`${100 / 3}%`"
-              :key="`yes-no-row-${key}`"
-              class="gap-sm"
-              style="width: 20%"
-              column
-            >
-              <table class="game-item-table">
-                <tbody>
-                  <tr
-                    v-for="subItem in item"
-                    :key="`lucky-number-subItem-${key}-${subItem.play_id}`"
-                  >
-                    <td class="primary--text">
-                      {{ subItem.label || "-" }}
-                    </td>
-                    <td>{{ getBallRate(subItem.play_id) }}</td>
-                    <td>
-                      <input type="text" />
-                    </td>
-                  </tr>
-                  <tr v-if="key == 4">
-                    <td><v-sheet color="transparent" height="26"></v-sheet></td>
-                    <td><v-sheet color="transparent" height="26"></v-sheet></td>
-                    <td><v-sheet color="transparent" height="26"></v-sheet></td>
-                  </tr>
-                </tbody>
-              </table>
-            </v-layout>
-          </v-layout>
-          <v-layout class="gap-xs" style="margin-top: -1px">
-            <v-layout
-              v-for="(item, rowKey) in colorBalls"
-              :key="`color-ball-${rowKey}`"
-              :width="`${100 / 3}%`"
-              class="gap-sm"
-              style="width: 20%"
-              column
-            >
-              <table class="game-item-table">
-                <tbody>
-                  <tr>
-                    <td :class="`${item.color}--text`">
-                      {{ item.label || "-" }}
-                    </td>
-                    <td>{{ getBallRate(item.play_id) }}</td>
-                    <td>
-                      <input type="text" />
-                    </td>
-                  </tr>
-                </tbody>
-              </table>
-            </v-layout>
-          </v-layout>
-          <v-sheet height="8"></v-sheet>
-
-          <ActionBarBallValue
-            @input="openDialogBitting"
-            :value.sync="inputAmount"
-          />
+            <v-sheet height="8"></v-sheet>
+            <BittingZhengmaTeFlip
+              @click:row="toggleSelectItem"
+              :flip-coins="flipCoins"
+              :rates="flipBallRates"
+              :selectedItems="selectedList"
+              ref="flipItem"
+            />
+            <v-sheet height="8"></v-sheet>
+            <ActionBarBallAmount
+              @set-amount="setItemAmount"
+              @compose="openDialogBitting"
+            />
+          </v-form>
         </v-card>
       </v-sheet>
 
@@ -144,34 +137,18 @@
         </v-card-text>
         <v-card :disabled="loadingRates" class="mb-4" outlined tile>
           <v-card-text class="pa-2 pr-1">
-            <v-layout column class="gap-xs">
-              <v-layout
-                v-for="(rowNumbers, rowKey) in shortcutBalls"
-                :key="`row-${rowKey}`"
-                wrap
-              >
-                <v-card
-                  v-for="(item, colKey) in rowNumbers"
-                  @click="onClickShortcut(item.balls, item.title)"
-                  :key="`row-${rowKey}-col-${colKey}`"
-                  :width="`${100 / 4}%`"
-                  :color="item.title == activeShortcut ? 'primary' : ''"
-                  :dark="item.title == activeShortcut"
-                  style="margin-top: -1px; margin-left: -1px"
-                  outlined
-                  flat
-                  tile
-                >
-                  <v-layout
-                    class="fill-height py-1"
-                    justify-center
-                    align-center
-                  >
-                    {{ item.title }}
-                  </v-layout>
-                </v-card>
-              </v-layout>
-            </v-layout>
+            <Shortcut49
+              @click:item="onClickItem49"
+              :selected-items="selectedItems"
+            />
+            <ShortcutColor
+              @click:item="onClickShortcut"
+              :selected="activeShortcut"
+            />
+            <ShortcutItem
+              @click:item="onClickShortcut"
+              :selected="activeShortcut"
+            />
           </v-card-text>
         </v-card>
       </v-sheet>
@@ -191,12 +168,18 @@
 </template>
 
 <script>
-import { ColorBallsFlat, gridNumbers, ShortcutsTema } from "~/models/balls-map";
+import {
+  ColorBallsFlat,
+  gridNumbers,
+  ShortcutsTema,
+  ZhengmaTeFlip,
+} from "~/models/balls-map";
 
 export default {
   name: "PageZhengmaTe",
   data() {
     return {
+      activeShortcut: "",
       activeType: {
         title: "正一特",
         prefix: "03",
@@ -213,6 +196,19 @@ export default {
     };
   },
   computed: {
+    selectedItems() {
+      return this.selectedList.map((item) => item.value);
+    },
+    flipBallRates() {
+      const rates = {};
+      this.flipCoins.forEach((balls) => {
+        balls.forEach(({ play_id }) => {
+          rates[play_id] = this.getBallRate(play_id);
+        });
+      });
+      console.log(rates);
+      return rates;
+    },
     gridBalls() {
       return gridNumbers.map((col) =>
         col.map((ball) => ({
@@ -233,20 +229,7 @@ export default {
       }));
     },
     flipCoins() {
-      return [
-        [
-          { suffix: "0301", label: "大" },
-          { suffix: "0302", label: "小" },
-        ],
-        [
-          { suffix: "0201", label: "单" },
-          { suffix: "0202", label: "双" },
-        ],
-        [
-          { suffix: "0401", label: "合单" },
-          { suffix: "0402", label: "合双" },
-        ],
-      ].map((item) =>
+      return ZhengmaTeFlip.map((item) =>
         item.map((subItem) => ({
           ...subItem,
           play_id: [this.activeType.prefix, subItem.suffix].join(""),
@@ -268,6 +251,19 @@ export default {
     },
   },
   methods: {
+    setItemAmount(value) {
+      this.selectedList.forEach((item) => {
+        const _item = this.$refs[item.play_id]?.[0];
+        if (_item) _item.value = value;
+      });
+      this.$refs.flipItem.setItemAmount(value);
+    },
+    onClickInputReadonly(item) {
+      this.toggleSelectItem(item);
+      setTimeout(() => {
+        this.$refs[item.play_id][0].focus();
+      }, 100);
+    },
     toggleSelectItem(item) {
       this.activeShortcut = "";
       let index = this.selectedList.findIndex(
@@ -276,21 +272,43 @@ export default {
       if (index != -1) return this.selectedList.splice(index, 1);
       this.selectedList.push(item);
     },
-    isActive(play_id) {
-      return !!this.selectedList.find((item) => item.play_id == play_id);
+    onClickItem49(item) {
+      let ballItem;
+      for (const column of this.gridBalls) {
+        ballItem = column.find((ball) => ball.value == item);
+        if (ballItem) break;
+      }
+      this.toggleSelectItem(ballItem);
     },
-    onClickShortcut(items = [], type) {
+    isActive(label) {
+      return !!this.selectedList.find((item) => item.label == label);
+    },
+    onClickShortcut(item = {}) {
+      console.log(item);
+      const balls = item.balls || [];
       const prefix = this.activeType.ball_prefix;
-      let ids = items.map((item) => {
-        console.log(item);
-        return {
-          play_id: this.$common.getPlayId(prefix, item),
-          value: item,
-          label: this.$common.getNumberLabel(item),
-          color: this.$common.getBallColor(item),
-        };
-      });
-      this.selectBalls(ids, type);
+      let ids = balls.map((item) => ({
+        play_id: this.$common.getPlayId(prefix, item),
+        value: item,
+        label: this.$common.getNumberLabel(item),
+        color: this.$common.getBallColor(item),
+      }));
+      console.log(ids);
+      this.selectBalls(ids, item.value);
+    },
+    selectBalls(items = [], type) {
+      this.selectedList = Object.assign([], []);
+      this.activeShortcut = type;
+
+      if (items.every((item) => this.selectedList.includes(item))) {
+        items.forEach((item) => {
+          let index = this.selectedList.indexOf(item);
+          this.selectedList.splice(index, 1);
+        });
+        return;
+      }
+      const newList = [...new Set([...this.selectedList, ...items])];
+      this.selectedList = Object.assign([], newList);
     },
     selectBalls(items = [], type) {
       this.selectedList = Object.assign([], []);
@@ -325,10 +343,11 @@ export default {
       this.selectedList = [];
     },
     openDialogBitting() {
+      const formData = new FormData(this.$refs.formItem.$el);
       const _balls = this.selectedList.map((item) => ({
         ...item,
         rate: this.getBallRate(item.play_id),
-        amount: this.inputAmount || 0,
+        amount: formData.get(item.play_id) || 0,
       }));
       this.editedItem.balls = Object.assign([], _balls);
       this.bittingInputs = true;
