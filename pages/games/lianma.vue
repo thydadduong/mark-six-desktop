@@ -46,91 +46,93 @@
         </v-card-text>
         <v-divider></v-divider>
         <v-card :disabled="loadingRates" class="pa-2" flat tile>
-          <v-layout class="gap-xs">
-            <v-layout
-              v-for="(luckNumbs, key) in gridBalls"
-              :key="`lucky-number-${key}`"
-              width="165"
-            >
-              <table class="game-item-table disable-select">
-                <tbody>
-                  <tr
-                    v-for="item in luckNumbs"
-                    :key="`lucky-number-item-${key}-${item.play_id}`"
-                    @click="toggleSelectItem(item)"
-                    class="cursor-pointer"
-                  >
-                    <template v-if="isActive(item.label)">
-                      <td class="white--text primary">
-                        <v-avatar
-                          :color="$common.getBallColor(item.value)"
-                          class="darken-1"
-                          size="26"
-                        >
-                          <small class="font-weight-bold">
-                            {{ item.label || "-" }}
-                          </small>
-                        </v-avatar>
-                      </td>
-                      <td class="primary white--text">
-                        {{ getBallRate(item.label) }}
-                      </td>
-                      <td class="primary">
-                        <input
-                          @click.stop="() => {}"
-                          :ref="item.play_id"
-                          :id="item.play_id"
-                          :name="item.play_id"
-                          class="text-right px-1 hidden-spin"
-                          placeholder="0"
-                          type="number"
-                        />
-                      </td>
-                    </template>
-                    <template v-else>
+          <v-form ref="formItem">
+            <v-layout class="gap-xs">
+              <v-layout
+                v-for="(luckNumbs, key) in gridBalls"
+                :key="`lucky-number-${key}`"
+                width="165"
+              >
+                <table class="game-item-table disable-select">
+                  <tbody>
+                    <tr
+                      v-for="item in luckNumbs"
+                      :key="`lucky-number-item-${key}-${item.play_id}`"
+                      @click="toggleSelectItem(item)"
+                      class="cursor-pointer"
+                    >
+                      <template v-if="isActive(item.label)">
+                        <td class="white--text primary">
+                          <v-avatar
+                            :color="$common.getBallColor(item.value)"
+                            class="darken-1"
+                            size="26"
+                          >
+                            <small class="font-weight-bold">
+                              {{ item.label || "-" }}
+                            </small>
+                          </v-avatar>
+                        </td>
+                        <td class="primary white--text">
+                          {{ getBallRate(item.label) }}
+                        </td>
+                        <td class="primary">
+                          <input
+                            @click.stop="() => {}"
+                            :ref="item.play_id"
+                            :id="item.play_id"
+                            :name="item.play_id"
+                            class="text-right px-1 hidden-spin"
+                            placeholder="0"
+                            type="number"
+                          />
+                        </td>
+                      </template>
+                      <template v-else>
+                        <td>
+                          <v-avatar
+                            :color="$common.getBallColor(item.value)"
+                            class="white--text"
+                            size="26"
+                          >
+                            <small class="font-weight-bold">
+                              {{ item.label || "-" }}
+                            </small>
+                          </v-avatar>
+                        </td>
+                        <td>{{ getBallRate(item.label) }}</td>
+                        <td>
+                          <input
+                            @click.stop="onClickInputReadonly(item)"
+                            placeholder="0"
+                            class="text-right px-1"
+                            tabindex="-1"
+                            readonly
+                          />
+                        </td>
+                      </template>
+                    </tr>
+                    <tr v-if="key == 4">
                       <td>
-                        <v-avatar
-                          :color="$common.getBallColor(item.value)"
-                          class="white--text"
-                          size="26"
-                        >
-                          <small class="font-weight-bold">
-                            {{ item.label || "-" }}
-                          </small>
-                        </v-avatar>
+                        <v-sheet color="transparent" height="26"></v-sheet>
                       </td>
-                      <td>{{ getBallRate(item.label) }}</td>
                       <td>
-                        <input
-                          @click.stop="onClickInputReadonly(item)"
-                          placeholder="0"
-                          class="text-right px-1"
-                          tabindex="-1"
-                          readonly
-                        />
+                        <v-sheet color="transparent" height="26"></v-sheet>
                       </td>
-                    </template>
-                  </tr>
-                  <tr v-if="key == 4">
-                    <td>
-                      <v-sheet color="transparent" height="26"></v-sheet>
-                    </td>
-                    <td>
-                      <v-sheet color="transparent" height="26"></v-sheet>
-                    </td>
-                    <td>
-                      <v-sheet color="transparent" height="26"></v-sheet>
-                    </td>
-                  </tr>
-                </tbody>
-              </table>
+                      <td>
+                        <v-sheet color="transparent" height="26"></v-sheet>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </v-layout>
             </v-layout>
-          </v-layout>
-          <v-sheet height="8"></v-sheet>
-          <ActionBarBallAmount
-            @set-amount="setItemAmount"
-            @compose="openDialogBitting"
-          />
+            <v-sheet height="8"></v-sheet>
+            <ActionBarBallAmount
+              @set-amount="setItemAmount"
+              @compose="openDialogBitting"
+            />
+          </v-form>
         </v-card>
       </v-sheet>
 
@@ -316,17 +318,19 @@ export default {
       return index <= this.selectedProp.min - 2;
     },
     async openDialogBitting() {
+      const formData = new FormData(this.$refs.formItem.$el);
+
       const _balls = this.selectedList.map((item) => ({
         ...item,
         rate: this.getBallRate(item.label),
-        amount: this.inputAmount || 0,
+        amount: formData.get(item.play_id) || 0,
       }));
       this.editedItem.balls = Object.assign([], _balls);
-      this.editedItem.amount = this.inputAmount || 0;
+      this.editedItem.amount =
+        Math.min(..._balls.map((item) => item.amount)) || 0;
       this.editedItem.minRate =
-        Math.min(
-          ...this.selectedList.map((item) => this.getBallRate(item.label))
-        ) || this.getBallRate(this.selectedList[0].label);
+        Math.min(..._balls.map((item) => item.rate)) ||
+        this.getBallRate(this.selectedList[0].label);
       this.bittingInputs = true;
     },
     getOddValues() {
