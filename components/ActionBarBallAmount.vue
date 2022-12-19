@@ -1,6 +1,6 @@
 <template>
   <v-card flat class="game-action-bar" color="#dae8fc" rounded="lg">
-    <v-layout class="pa-2 gap-sm" justify-center align-center>
+    <v-layout class="pa-1 gap-sm" justify-center align-center>
       <v-btn
         v-for="item in valueOptions"
         :key="`option-${item}`"
@@ -15,8 +15,18 @@
       >
         {{ item }}
       </v-btn>
-      <v-spacer></v-spacer>
-      <v-btn @click="submit" color="primary" elevation="0"> 输入 </v-btn>
+      <v-btn
+        @click="submit"
+        class="rounded"
+        color="primary"
+        elevation="0"
+        width="50"
+        height="50"
+        dark
+        fab
+      >
+        输入
+      </v-btn>
     </v-layout>
   </v-card>
 </template>

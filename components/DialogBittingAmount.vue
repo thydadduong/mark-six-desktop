@@ -2,7 +2,7 @@
   <v-dialog
     @input="visibleChange"
     :value="visible"
-    width="30rem"
+    width="40rem"
     scrollable
     persistent
   >
