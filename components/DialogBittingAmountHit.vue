@@ -2,7 +2,7 @@
   <v-dialog
     @input="visibleChange"
     :value="visible"
-    width="30rem"
+    width="40rem"
     scrollable
     persistent
   >
@@ -11,13 +11,13 @@
       <v-divider></v-divider>
       <v-card-text class="pb-2 px-0 text--primary">
         <v-form ref="editedForm" v-model="formValid" :disabled="isSaving">
-          <table class="table-ball-amount">
+          <table class="table-bitting">
             <thead>
               <tr>
-                <th style="width: 80px" class="pl-4">项目</th>
-                <th>球号</th>
-                <th class="text-right" style="width: 40px">赔率</th>
-                <th class="text-right pr-4" style="width: 70px">
+                <th style="min-width: 80px" class="pl-4">项目</th>
+                <th class="px-2">球号</th>
+                <th class="text-right px-2" style="width: 75px">赔率</th>
+                <th class="text-right px-4" style="width: 100px">
                   <v-layout class="gap-xs" align-center>
                     <span class="text-no-wrap">金额</span>
                     <v-btn
@@ -35,25 +35,27 @@
             </thead>
             <tbody>
               <tr>
-                <td class="pl-4 pt-4">
+                <td class="pl-4 pt-3">
                   <v-layout class="gap-xs" wrap>
                     <span>{{ propertyTitle }}</span>
                     <span v-if="typeTitle"> [{{ typeTitle }}]</span>
                   </v-layout>
                 </td>
 
-                <td class="pt-4">
+                <td class="pt-3 px-2">
                   {{ displayBallItems }}
                 </td>
-                <td class="pt-4 text-right">
+                <td class="pt-3 pa-3 text-right">
                   {{ editedItem.minRate }}
                 </td>
-                <td class="pr-4 py-2 text-right">
-                  <v-text-field
+                <td class="pr-4 pa-2 text-right">
+                  <input
                     v-model.number="editedItem.amount"
-                    :rules="$formRules.bittingAmount"
-                    :readonly="!customAmount"
+                    :disabled="!customAmount"
+                    class="hidden-spin"
                     placeholder="0"
+                    type="number"
+                    required
                     outlined
                     dense
                   />

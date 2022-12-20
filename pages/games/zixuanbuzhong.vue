@@ -76,7 +76,7 @@
                           </v-avatar>
                         </td>
                         <td class="primary white--text">
-                          {{ getBallRate(item.play_id) }}
+                          {{ getBallRate(item.label) }}
                         </td>
                         <td class="primary">
                           <input
