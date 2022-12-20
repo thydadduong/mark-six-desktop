@@ -35,7 +35,7 @@
             <v-btn
               v-for="(item, key) in typeOptions"
               :key="`mode-${key}`"
-              :value="item.value"
+              :value="item"
               class="px-1 ma-0"
               height="24"
               small
