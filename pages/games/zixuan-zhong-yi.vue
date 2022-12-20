@@ -51,7 +51,6 @@
               <v-sheet
                 v-for="(luckNumbs, key) in gridBalls"
                 :key="`lucky-number-${key}`"
-                class="gap-sm"
                 width="165"
               >
                 <table class="game-item-table disable-select">
