@@ -152,8 +152,6 @@ export default {
         rates,
         +this.editedItem.amount
       );
-
-      console.log(_qs);
       const options = {
         headers: { "Content-Type": "application/x-www-form-urlencoded" },
         params: { UID: uid },

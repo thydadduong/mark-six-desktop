@@ -35,7 +35,7 @@
             <v-btn
               v-for="(item, key) in subOptions"
               :key="`mode-${key}`"
-              :value="item.value"
+              :value="item"
               class="px-1 ma-0"
               height="24"
               small
@@ -48,12 +48,10 @@
         <v-card :disabled="loadingRates" class="pa-2" flat tile>
           <v-form ref="formItem">
             <v-layout class="gap-xs">
-              <v-layout
+              <v-sheet
                 v-for="(luckNumbs, key) in gridBalls"
                 :key="`lucky-number-${key}`"
-                class="gap-sm"
-                style="width: 20%"
-                column
+                width="165"
               >
                 <table class="game-item-table disable-select">
                   <tbody>
@@ -127,7 +125,7 @@
                     </tr>
                   </tbody>
                 </table>
-              </v-layout>
+              </v-sheet>
             </v-layout>
 
             <v-sheet height="8"></v-sheet>
@@ -159,14 +157,6 @@
                   @click:item="onClickItem49"
                   :selected-items="selectedItems"
                 />
-                <ShortcutColor
-                  @click:item="onClickShortcut"
-                  :selected="activeShortcut"
-                />
-                <ShortcutItem
-                  @click:item="onClickShortcut"
-                  :selected="activeShortcut"
-                />
               </v-card-text>
             </v-card>
           </section>
@@ -193,13 +183,20 @@
 
 <script>
 import { gridNumbers } from "~/models/balls-map";
+import { POSITION } from 'vue-toastification';
 
 export default {
   name: "PageZixuanbuzhong",
   data() {
     return {
       activeShortcut: "",
-      selectedProp: { title: "五不中", value: 5, type: 13, property: 54 },
+      selectedProp: {
+        title: "五不中",
+        value: 5,
+        type: 13,
+        property: 54,
+        max: 8,
+      },
       minRate: "",
       selectedType: 1,
       activeShortcut: "",
@@ -233,12 +230,12 @@ export default {
     },
     propertyOptions() {
       return [
-        { title: "五不中", value: 5, type: 13, property: 54 },
-        { title: "六不中", value: 6, type: 17, property: 85 },
-        { title: "七不中", value: 7, type: 16, property: 70 },
-        { title: "八不中", value: 8, type: 18, property: 86 },
-        { title: "九不中", value: 9, type: 19, property: 87 },
-        { title: "十不中", value: 10, type: 20, property: 88 },
+        { title: "五不中", value: 5, type: 13, property: 54, max: 8 },
+        { title: "六不中", value: 6, type: 17, property: 85, max: 9 },
+        { title: "七不中", value: 7, type: 16, property: 70, max: 10 },
+        { title: "八不中", value: 8, type: 18, property: 86, max: 11 },
+        { title: "九不中", value: 9, type: 19, property: 87, max: 11 },
+        { title: "十不中", value: 10, type: 20, property: 88, max: 12 },
       ];
     },
     subOptions() {
@@ -266,6 +263,8 @@ export default {
         ({ play_id }) => item.play_id == play_id
       );
       if (index != -1) return this.selectedList.splice(index, 1);
+      if (this.selectedList.length >= this.selectedProp.max)
+        this.selectedList.shift();
       this.selectedList.push(item);
     },
     onClickItem49(item) {
@@ -325,6 +324,12 @@ export default {
       this.selectedList = [];
     },
     openDialogBitting() {
+      const minSelected = this.selectedProp.value;
+
+      if (this.selectedList.length < minSelected)
+        return this.$toast.error(`请至少选择 ${minSelected} 项`, {
+          position: POSITION.TOP_CENTER,
+        });
       const formData = new FormData(this.$refs.formItem.$el);
 
       const _balls = this.selectedList.map((item) => ({

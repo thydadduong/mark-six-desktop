@@ -155,14 +155,6 @@
               @click:item="onClickItem49"
               :selected-items="selectedItems"
             />
-            <!-- <ShortcutColor
-              @click:item="onClickShortcut"
-              :selected="activeShortcut"
-            />
-            <ShortcutItem
-              @click:item="onClickShortcut"
-              :selected="activeShortcut"
-            /> -->
           </v-card-text>
         </v-card>
       </v-sheet>
