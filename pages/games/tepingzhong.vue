@@ -48,7 +48,7 @@
         <v-card :disabled="loadingRates" class="pa-2" flat tile>
           <v-form ref="formItem">
             <v-layout class="gap-xs">
-              <v-layout
+              <v-sheet
                 v-for="(luckNumbs, key) in gridBalls"
                 :key="`lucky-number-${key}`"
                 width="165"
@@ -125,7 +125,7 @@
                     </tr>
                   </tbody>
                 </table>
-              </v-layout>
+              </v-sheet>
             </v-layout>
             <v-sheet height="8"></v-sheet>
 
@@ -155,14 +155,14 @@
               @click:item="onClickItem49"
               :selected-items="selectedItems"
             />
-            <ShortcutColor
+            <!-- <ShortcutColor
               @click:item="onClickShortcut"
               :selected="activeShortcut"
             />
             <ShortcutItem
               @click:item="onClickShortcut"
               :selected="activeShortcut"
-            />
+            /> -->
           </v-card-text>
         </v-card>
       </v-sheet>
@@ -184,6 +184,7 @@
 
 <script>
 import { gridNumbers } from "~/models/balls-map";
+import { POSITION } from "vue-toastification";
 
 export default {
   name: "PageTepingzhong",
@@ -217,9 +218,6 @@ export default {
         }))
       );
     },
-    showInput() {
-      return this.selectedList.length >= this.selectedProp.value;
-    },
     propertyOptions() {
       return [
         { title: "一粒任中", value: 1, type: 38, property: 95 },
@@ -252,6 +250,7 @@ export default {
         ({ play_id }) => item.play_id == play_id
       );
       if (index != -1) return this.selectedList.splice(index, 1);
+      if (this.selectedList.length >= 10) this.selectedList.shift();
       this.selectedList.push(item);
     },
     onClickItem49(item) {
@@ -296,6 +295,12 @@ export default {
       this.selectedList = [];
     },
     openDialogBitting() {
+      const minSelected = this.selectedProp.value;
+
+      if (this.selectedList.length < minSelected)
+        return this.$toast.error(`请至少选择 ${minSelected} 项`, {
+          position: POSITION.TOP_CENTER,
+        });
       const formData = new FormData(this.$refs.formItem.$el);
       const _balls = this.selectedList.map((item) => ({
         ...item,
