@@ -35,7 +35,7 @@
             <v-btn
               v-for="(item, key) in subOptions"
               :key="`mode-${key}`"
-              :value="item.value"
+              :value="item"
               class="px-1 ma-0"
               height="24"
               small
@@ -155,14 +155,14 @@
               @click:item="onClickItem49"
               :selected-items="selectedItems"
             />
-            <ShortcutColor
+            <!-- <ShortcutColor
               @click:item="onClickShortcut"
               :selected="activeShortcut"
             />
             <ShortcutItem
               @click:item="onClickShortcut"
               :selected="activeShortcut"
-            />
+            /> -->
           </v-card-text>
         </v-card>
       </v-sheet>
@@ -183,6 +183,7 @@
 </template>
 
 <script>
+import { POSITION } from "vue-toastification";
 import { gridNumbers } from "~/models/balls-map";
 
 export default {
@@ -190,7 +191,13 @@ export default {
   data() {
     return {
       activeShortcut: "",
-      selectedProp: { title: "五中一", value: 5, type: 30, property: 89 },
+      selectedProp: {
+        title: "五中一",
+        value: 5,
+        type: 30,
+        property: 89,
+        max: 8,
+      },
       selectedType: { title: "复式", value: 1 },
       inputAmount: 5,
       bittingInputs: false,
@@ -217,17 +224,14 @@ export default {
         }))
       );
     },
-    showInput() {
-      return this.selectedList.length >= this.selectedProp.value;
-    },
     propertyOptions() {
       return [
-        { title: "五中一", value: 5, type: 30, property: 89 },
-        { title: "六中一", value: 6, type: 31, property: 90 },
-        { title: "七中一", value: 7, type: 32, property: 91 },
-        { title: "八中一", value: 8, type: 33, property: 92 },
-        { title: "九中一", value: 9, type: 34, property: 93 },
-        { title: "十中一", value: 10, type: 35, property: 94 },
+        { title: "五中一", value: 5, type: 30, property: 89, max: 8 },
+        { title: "六中一", value: 6, type: 31, property: 90, max: 9 },
+        { title: "七中一", value: 7, type: 32, property: 91, max: 10 },
+        { title: "八中一", value: 8, type: 33, property: 92, max: 11 },
+        { title: "九中一", value: 9, type: 34, property: 93, max: 11 },
+        { title: "十中一", value: 10, type: 35, property: 94, max: 12 },
       ];
     },
     subOptions() {
@@ -252,7 +256,10 @@ export default {
       let index = this.selectedList.findIndex(
         ({ play_id }) => item.play_id == play_id
       );
+
       if (index != -1) return this.selectedList.splice(index, 1);
+      if (this.selectedList.length >= this.selectedProp.max)
+        this.selectedList.shift();
       this.selectedList.push(item);
     },
     onClickItem49(item) {
@@ -297,6 +304,12 @@ export default {
       this.selectedList = [];
     },
     openDialogBitting() {
+      const minSelected = this.selectedProp.value;
+
+      if (this.selectedList.length < minSelected)
+        return this.$toast.error(`请至少选择 ${minSelected} 项`, {
+          position: POSITION.TOP_CENTER,
+        });
       const formData = new FormData(this.$refs.formItem.$el);
       const _balls = this.selectedList.map((item) => ({
         ...item,

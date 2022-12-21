@@ -86,13 +86,9 @@ function fixedfront(balls, combination_factor, odds_dict) {
 }
 
 function multiple(balls, combination_factor, odds_dict) {
-  console.log(balls, combination_factor, odds_dict);
-  console.log("-----------------multiple ------------------");
-
   let arrstring = "",
     odds_string = "";
   let temp_arr = combination(balls, combination_factor);
-  console.log("combination result : ", temp_arr);
   let count = temp_arr.length;
   assert(count > 0);
 
@@ -160,7 +156,6 @@ function compose_payload(
   // Get combination factor from the title_select_item
   let combination_factor = get_factor(title_select_item);
 
-  console.log("因子", title_select_item, combination_factor);
   assert(combination_factor > 0);
 
   let t = {};

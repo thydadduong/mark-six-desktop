@@ -148,7 +148,6 @@ export default {
         rates.push(+item.rate);
         balls.push(item.label);
       });
-
       const _qs = compose_payload(
         this.propertyTitle,
         this.typeTitle,
