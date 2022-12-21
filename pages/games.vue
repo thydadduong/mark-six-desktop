@@ -98,29 +98,6 @@ export default {
       lastResult: {},
       loadingTable: false,
       activeTabMenu: "",
-      tabGamMenu: [
-        { title: "特码", to: "/games/tema" },
-        { title: "正码", to: "/games/zhengma" },
-        { title: "特码生肖", to: "/games/tema-zodiac" },
-        { title: "连码", to: "/games/lianma" },
-        { title: "正码特", to: "/games/zhengma-te" },
-        { title: "连尾", to: "/games/lianwei" },
-      ],
-      moreGameMenu: [
-        { title: "连尾不中 ", to: "/games/lianweibuzhong" },
-        { title: "尾数项目", to: "/games/zhongshu-weishu" },
-        { title: "自选不中", to: "/games/zixuanbuzhong" },
-        { title: "连肖", to: "/games/lianxiao" },
-        { title: "连肖不中", to: "/games/lianxiaobuzhong" },
-        { title: "自选中一", to: "/games/zixuan-zhong-yi" },
-        { title: "特平中", to: "/games/tepingzhong" },
-        { title: "一肖项目", to: "/games/yi-xiao-xiangmu" },
-        { title: "一肖量", to: "/games/yi-xiao-laing" },
-        { title: "一尾量", to: "/games/yi-wei-laing" },
-        { title: "六肖", to: "/games/liu-xiao" },
-        { title: "半波", to: "/games/banbo" },
-        { title: "五行", to: "/games/wuhang" },
-      ],
     };
   },
   computed: {
@@ -139,21 +116,21 @@ export default {
       return [
         { title: "特码", to: "/games/tema" },
         { title: "正码", to: "/games/zhengma" },
-        { title: "特码生肖", to: "/games/tema-zodiac" },
-        { title: "连码", to: "/games/lianma" },
         { title: "正码特", to: "/games/zhengma-te" },
+        { title: "连码", to: "/games/lianma" },
+        { title: "自选不中", to: "/games/zixuanbuzhong" },
+        { title: "自选中一", to: "/games/zixuan-zhong-yi" },
+        { title: "特平中", to: "/games/tepingzhong" },
+        { title: "特码生肖", to: "/games/tema-zodiac" },
+        { title: "连肖", to: "/games/lianxiao" },
+        { title: "连肖不中", to: "/games/lianxiaobuzhong" },
+        { title: "一肖项目", to: "/games/yi-xiao-xiangmu" },
+        { title: "六肖", to: "/games/liu-xiao" },
         { title: "连尾", to: "/games/lianwei" },
         { title: "连尾不中 ", to: "/games/lianweibuzhong" },
         { title: "尾数项目", to: "/games/zhongshu-weishu" },
-        { title: "自选不中", to: "/games/zixuanbuzhong" },
-        { title: "连肖", to: "/games/lianxiao" },
-        { title: "连肖不中", to: "/games/lianxiaobuzhong" },
-        { title: "自选中一", to: "/games/zixuan-zhong-yi" },
-        { title: "特平中", to: "/games/tepingzhong" },
-        { title: "一肖项目", to: "/games/yi-xiao-xiangmu" },
         { title: "一肖量", to: "/games/yi-xiao-laing" },
         { title: "一尾量", to: "/games/yi-wei-laing" },
-        { title: "六肖", to: "/games/liu-xiao" },
         { title: "半波", to: "/games/banbo" },
         { title: "五行", to: "/games/wuhang" },
       ];
@@ -271,14 +248,6 @@ export default {
       this.intervalRequest = setInterval(() => {
         this.getCloseTime();
       }, 1000 * 30);
-    },
-    addItem(item, index) {
-      const removed = this.tabGamMenu.pop();
-      this.tabGamMenu.push(item);
-      this.moreGameMenu.splice(index, 1, removed);
-      this.$nextTick(() => {
-        this.activeTabMenu = "tab-5";
-      });
     },
   },
   mounted() {

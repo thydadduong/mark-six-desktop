@@ -1,7 +1,7 @@
 <template>
   <div>
     <v-layout class="gap-sm">
-      <v-sheet class="flex-fill">
+      <v-sheet color="transparent" width="850">
         <v-card-text
           style="background: linear-gradient(0deg, #dae8fc, #fff)"
           class="primary--text py-1 px-2"
@@ -11,62 +11,22 @@
         <v-divider></v-divider>
 
         <v-card :disabled="loadingRates" class="mb-4" flat tile>
-          <v-card class="text-center grey lighten-3" flat tile> 生肖 </v-card>
-          <v-card-text class="pa-2">
-            <v-row dense>
-              <v-col
-                v-for="(item, key) in gridBalls"
-                :key="`lucky-number-${key}`"
-                cols="6"
-              >
-                <table class="game-table-animal">
-                  <tbody>
-                    <tr
-                      v-for="subitem in item"
-                      :key="`lucky-number-item-${key}-${subitem.play_id}`"
-                    >
-                      <td class="game-table-animal__label">
-                        {{ subitem.name }}
-                      </td>
-                      <td class="game-table-animal__balls pb-0 px-4">
-                        <v-avatar
-                          v-for="(ball, index) in subitem.balls"
-                          :key="`ball-${key}-${subitem.play_id}-${index}`"
-                          :color="$common.getBallColor(ball.value)"
-                          class="white--text mr-1 mb-1"
-                          size="26"
-                        >
-                          <small class="font-weight-bold">
-                            {{ ball.label || "-" }}
-                          </small>
-                        </v-avatar>
-                      </td>
-                      <td class="game-table-animal__odd">
-                        {{ getBallRate(subitem.play_id) }}
-                      </td>
-                      <td class="game-table-animal__input">
-                        <input type="text" />
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </v-col>
-            </v-row>
-          </v-card-text>
-        </v-card>
-      </v-sheet>
-      <v-sheet
-        class="flex-shrink-0 flex-grow-0"
-        width="15rem"
-        color="transparent"
-      >
-        <v-card flat tile>
-          <v-card-text
-            style="background: linear-gradient(0deg, #dae8fc, #fff)"
-            class="primary--text py-1 px-2"
-          >
-            <v-sheet height="24" color="transparent"></v-sheet>
-          </v-card-text>
+          <v-form ref="formItem">
+            <v-card class="text-center grey lighten-3" flat tile> 生肖 </v-card>
+            <v-card-text class="pa-2">
+              <PickItemAnimal
+                @toggle-item="toggleSelectItem"
+                :gridItems="gridBalls"
+                :selectedItems="selectedList"
+                ref="animalItemPicker"
+              />
+              <v-sheet height="8"></v-sheet>
+              <ActionBarBallAmount
+                @set-amount="setItemAmount"
+                @compose="openDialogBitting"
+              />
+            </v-card-text>
+          </v-form>
         </v-card>
       </v-sheet>
     </v-layout>
@@ -86,6 +46,7 @@
 
 <script>
 import { AnimalGroupedList } from "~/models/balls-map";
+import { POSITION } from "vue-toastification";
 
 export default {
   name: "PageLuckyDraw",
@@ -105,6 +66,9 @@ export default {
     };
   },
   computed: {
+    selectedItems() {
+      return this.selectedList.map((item) => item.value);
+    },
     gridBalls() {
       return AnimalGroupedList.map((item) =>
         item.map((subitem) => {
@@ -119,9 +83,6 @@ export default {
           };
         })
       );
-    },
-    showInput() {
-      return !!this.selectedList.length;
     },
     requiredOptions() {
       return [
@@ -139,11 +100,16 @@ export default {
     },
   },
   methods: {
-    toggleSelectItem(value) {
+    setItemAmount(value) {
+      this.$refs.animalItemPicker.setItemAmount(value);
+    },
+    toggleSelectItem(item) {
       this.activeShortcut = "";
-      let index = this.selectedList.indexOf(value);
-      if (index != -1) this.selectedList.splice(index, 1);
-      else this.selectedList.push(value);
+      let index = this.selectedList.findIndex(
+        ({ play_id }) => item.play_id == play_id
+      );
+      if (index != -1) return this.selectedList.splice(index, 1);
+      this.selectedList.push(item);
     },
     isActive(play_id) {
       return !!this.selectedList.find((item) => item.play_id == play_id);
@@ -160,21 +126,31 @@ export default {
       if (this.selectedList.length >= 12) this.selectedList.shift();
       this.selectedList.push(item);
     },
-    clearSelection() {
-      this.activeShortcut = "";
-      this.selectedList = [];
-    },
     openDialogBitting() {
+      if (!this.selectedList.length)
+        return this.$toast.error(`请至少选择 1 项`, {
+          position: POSITION.TOP_CENTER,
+        });
+
+      // const _balls = this.selectedList.map((item) => ({
+      //   ...item,
+      //   label: item.name,
+      //   rate: this.getBallRate(item.play_id),
+      //   amount: this.inputAmount || 0,
+      // }));
+      // this.editedItem.balls = Object.assign([], _balls);
+      // this.bittingInputs = true;
+
+      const formData = new FormData(this.$refs.formItem.$el);
       const _balls = this.selectedList.map((item) => ({
         ...item,
-        label: item.name,
         rate: this.getBallRate(item.play_id),
-        amount: this.inputAmount || 0,
+        amount: formData.get(item.play_id) || 0,
       }));
       this.editedItem.balls = Object.assign([], _balls);
       this.bittingInputs = true;
     },
-    getOddValues(order_type = "A") {
+    getOddValues() {
       this.loadingRates = true;
       const uid = this.$cookiz.get("m6_uid");
       const r = Math.random().toFixed(10);

@@ -1,12 +1,11 @@
 <template>
   <v-card flat class="game-action-bar" color="#dae8fc" rounded="lg">
-    <v-layout class="pa-1 gap-sm" justify-center align-center>
+    <v-layout class="pa-1 gap" justify-end align-center>
       <v-btn
         v-for="item in valueOptions"
         :key="`option-${item}`"
         @click="setValue(item)"
-        class="rounded"
-        elevation="0"
+        elevation="1"
         color="teal"
         width="50"
         height="50"
@@ -19,7 +18,7 @@
         @click="submit"
         class="rounded"
         color="primary"
-        elevation="0"
+        elevation=""
         width="50"
         height="50"
         dark
