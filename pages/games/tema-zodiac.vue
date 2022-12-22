@@ -17,6 +17,7 @@
               <PickItemAnimal
                 @toggle-item="toggleSelectItem"
                 :gridItems="gridBalls"
+                :rates="itemsRate"
                 :selectedItems="selectedList"
                 ref="animalItemPicker"
               />
@@ -68,6 +69,16 @@ export default {
   computed: {
     selectedItems() {
       return this.selectedList.map((item) => item.value);
+    },
+    itemsRate() {
+      const rates = {};
+      this.gridBalls.forEach((subitems) => {
+        subitems.forEach(({ play_id }) => {
+          rates[play_id] = this.getBallRate(play_id);
+        });
+      });
+      console.log(rates);
+      return rates;
     },
     gridBalls() {
       return AnimalGroupedList.map((item) =>
@@ -131,16 +142,6 @@ export default {
         return this.$toast.error(`请至少选择 1 项`, {
           position: POSITION.TOP_CENTER,
         });
-
-      // const _balls = this.selectedList.map((item) => ({
-      //   ...item,
-      //   label: item.name,
-      //   rate: this.getBallRate(item.play_id),
-      //   amount: this.inputAmount || 0,
-      // }));
-      // this.editedItem.balls = Object.assign([], _balls);
-      // this.bittingInputs = true;
-
       const formData = new FormData(this.$refs.formItem.$el);
       const _balls = this.selectedList.map((item) => ({
         ...item,

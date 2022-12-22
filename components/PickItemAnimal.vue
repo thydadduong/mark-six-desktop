@@ -27,7 +27,7 @@
                   </small>
                 </v-avatar>
               </td>
-              <td class="primary white--text">
+              <td class="primary white--text" style="min-width: 50px">
                 {{ getBallRate(subitem.play_id) }}
               </td>
               <td class="primary">
@@ -59,7 +59,9 @@
                   </small>
                 </v-avatar>
               </td>
-              <td>{{ getBallRate(subitem.play_id) }}</td>
+              <td style="min-width: 50px">
+                {{ getBallRate(subitem.play_id) }}
+              </td>
               <td>
                 <input
                   @click.stop="toggleSelectItem(subitem)"
@@ -81,8 +83,8 @@
 export default {
   name: "PickItemAnimal",
   props: {
+    rates: { type: Object, default: () => ({}) },
     gridItems: { type: Array, default: () => [] },
-    selectedList: { type: Array, default: () => [] },
     selectedItems: { type: Array, default: () => [] },
   },
   computed: {},
@@ -96,11 +98,14 @@ export default {
         if (_item) _item.value = value;
       });
     },
-    getBallRate() {
-      return 12;
+    getBallRate(id) {
+      return this.rates[id] || "-";
     },
     toggleSelectItem(item) {
       this.$emit("toggle-item", item);
+      setTimeout(() => {
+        this.$refs[item.play_id][0]?.focus();
+      }, 100);
     },
   },
 };

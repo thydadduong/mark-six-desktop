@@ -14,7 +14,7 @@
           <table class="table-bitting">
             <thead>
               <tr>
-                <th style="min-width: 50px" class="pl-4">项目</th>
+                <th style="width: 200px" class="pl-4">项目</th>
                 <th class="px-3">球号</th>
                 <th class="text-right px-3" style="width: 75px">赔率</th>
                 <th class="text-right px-3" style="width: 100px">
