@@ -2,7 +2,7 @@
   <v-dialog
     @input="visibleChange"
     :value="visible"
-    width="30rem"
+    width="40rem"
     scrollable
     persistent
   >
@@ -11,29 +11,44 @@
       <v-divider></v-divider>
       <v-card-text class="pb-2 px-0 text--primary">
         <v-form ref="editedForm" v-model="formValid" :disabled="isSaving">
-          <table class="table-ball-amount">
+          <table class="table-bitting">
             <thead>
               <tr>
-                <th style="min-width: 50px" class="pl-4">项目</th>
-                <th>球号</th>
-                <th class="text-right pr-4" style="width: 50px">赔率</th>
-                <th class="text-right pr-4" style="width: 50px">金额</th>
+                <th style="width: 200px" class="pl-4">项目</th>
+                <th class="px-3">球号</th>
+                <th class="text-right px-3" style="width: 75px">赔率</th>
+                <th class="text-right px-3" style="width: 100px">
+                  <v-layout class="gap-xs" align-center>
+                    <span class="text-no-wrap">金额</span>
+                    <v-btn
+                      @click="customAmount = true"
+                      class="rounded"
+                      color="primary"
+                      small
+                      icon
+                    >
+                      <v-icon small>mdi-pencil</v-icon>
+                    </v-btn>
+                  </v-layout>
+                </th>
               </tr>
             </thead>
             <tbody>
               <tr>
-                <td class="pl-4 py-2">
-                  {{ propertyTitle }}
-                </td>
-
-                <td class="py-2">
-                  {{ displayBallItems }}
-                </td>
-                <td class="py-2 pr-4 text-right">
-                  {{ rate }}
-                </td>
-                <td class="pr-4 py-2 text-right">
-                  {{ amount }}
+                <td class="pl-4 pa-3">{{ propertyTitle }}</td>
+                <td class="pa-3">{{ displayBallItems }}</td>
+                <td class="text-right pa-3">{{ rate }}</td>
+                <td class="px-3 py-2 text-right">
+                  <input
+                    v-model.number="editedItem.amount"
+                    :disabled="!customAmount"
+                    class="hidden-spin"
+                    placeholder="0"
+                    type="number"
+                    required
+                    outlined
+                    dense
+                  />
                 </td>
               </tr>
             </tbody>

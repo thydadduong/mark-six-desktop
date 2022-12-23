@@ -1,32 +1,32 @@
 <template>
   <div>
     <v-layout class="gap-sm">
-      <v-sheet class="flex-fill">
+      <v-sheet color="transparent" width="850">
         <v-card-text
           style="background: linear-gradient(0deg, #dae8fc, #fff)"
           class="primary--text py-1 px-2"
         >
           <v-btn-toggle
-            v-model="minSelection"
+            v-model="selectedProp"
             @change="onCountingOptionChanged"
             color="primary"
             mandatory
             column
           >
             <v-btn
-              v-for="(item, key) in minBallOptions"
+              v-for="(item, key) in propertyOptions"
               :key="`item-${key}`"
-              :value="item.count"
+              :value="item"
               small
             >
-              {{ item.label }}
+              {{ item.title }}
             </v-btn>
           </v-btn-toggle>
-          <v-btn-toggle v-model="gameType" color="primary" mandatory>
+          <v-btn-toggle v-model="selectedType" color="primary" mandatory>
             <v-btn
-              v-for="(item, key) in combinedOptions"
+              v-for="(item, key) in typeOptions"
               :key="`combined-option-${key}`"
-              :value="item.count"
+              :value="item"
               mandatory
               small
             >
@@ -37,52 +37,20 @@
 
         <v-divider></v-divider>
         <v-card :disabled="loadingRates" class="pa-2" flat tile>
-          <v-layout class="gap-xs">
-            <v-layout
-              v-for="(luckNumbs, key) in gridBalls"
-              :key="`lucky-number-${key}`"
-              class="gap-sm"
-              style="width: 20%"
-              column
-            >
-              <table class="game-item-table">
-                <tbody>
-                  <tr
-                    v-for="item in luckNumbs"
-                    :key="`lucky-number-item-${key}-${item.name}`"
-                  >
-                    <td class="primary--text">{{ item.name }}</td>
-                    <td>{{ getBallRate(item.name) }}</td>
-                    <td>
-                      <input type="text" />
-                    </td>
-                  </tr>
-                </tbody>
-              </table>
-            </v-layout>
-          </v-layout>
-          <v-sheet height="8"></v-sheet>
-
-          <ActionBarBallValue
-            @input="openDialogBitting"
-            :value.sync="inputAmount"
-            class="d-none d-sm-block"
-          />
-        </v-card>
-      </v-sheet>
-
-      <v-sheet
-        class="flex-shrink-0 flex-grow-0"
-        width="15rem"
-        color="transparent"
-      >
-        <v-card flat tile>
-          <v-card-text
-            style="background: linear-gradient(0deg, #dae8fc, #fff)"
-            class="primary--text py-1 px-2"
-          >
-            <v-sheet height="24" color="transparent"></v-sheet>
-          </v-card-text>
+          <v-form ref="formItem">
+            <PickItemTail
+              @toggle-item="toggleSelectItem"
+              :rates="itemsRate"
+              :gridItems="gridBalls"
+              :selectedItems="selectedList"
+              ref="tailItemPicker"
+            />
+            <v-sheet height="8"></v-sheet>
+            <ActionBarBallAmount
+              @set-amount="setItemAmount"
+              @compose="openDialogBitting"
+            />
+          </v-form>
         </v-card>
       </v-sheet>
     </v-layout>
@@ -90,11 +58,11 @@
       @saved="onSaveAmount"
       :visible.sync="bittingInputs"
       :edited-item="editedItem"
-      :property="propertyType"
+      :property="selectedProp.value"
       :amount="inputAmount"
       :type="1"
       :fixedFrontIndex="fixedFrontIndex"
-      :propertyTitle="propertyTitle"
+      :propertyTitle="selectedProp.title"
       :rate="minRate"
     />
 
@@ -106,13 +74,15 @@
 
 <script>
 import { TailGridNumbersGrouped } from "~/models/balls-map";
+import { POSITION } from "vue-toastification";
 
 export default {
   name: "PageLianWei",
   data() {
     return {
+      selectedProp: { title: "二连尾", count: 2, value: 64 },
+      selectedType: { label: "复式", value: 1 },
       minRate: "-",
-      minSelection: 2,
       gameType: 1,
       inputAmount: 5,
       bittingInputs: false,
@@ -125,46 +95,49 @@ export default {
     };
   },
   computed: {
+    itemsRate() {
+      const rates = {};
+      this.gridBalls.forEach((subitems) => {
+        subitems.forEach(({ name, play_id }) => {
+          rates[play_id] = this.getBallRate(name);
+        });
+      });
+      return rates;
+    },
     gridBalls() {
       return TailGridNumbersGrouped.map((item, index) =>
         item.map((subitem) => ({
           ...subitem,
-          label: item.name,
-          value: index,
-          play_id: this.$common.getPlayId("1504", index),
+          label: subitem.name,
+          play_id: this.$common.getPlayId("1504", subitem.value),
         }))
       );
     },
     showInput() {
-      return this.selectedList.length >= this.minSelection;
+      return this.selectedList.length >= this.selectedProp.count;
     },
-    propertyTitle() {
-      return this.minBallOptions.find((item) => this.minSelection == item.count)
-        .label;
-    },
-    minBallOptions() {
+    propertyOptions() {
       return [
-        { label: "二连尾", count: 2 },
-        { label: "三连尾", count: 3 },
-        { label: "四连尾", count: 4 },
+        { title: "二连尾", count: 2, value: 64 },
+        { title: "三连尾", count: 3, value: 65 },
+        { title: "四连尾", count: 4, value: 66 },
       ];
     },
-    propertyType() {
-      const mapped = { 2: 64, 3: 65, 4: 66 };
-      return mapped[this.minSelection];
-    },
-    combinedOptions() {
+    typeOptions() {
       return [
-        { label: "复式 ", count: 1 },
-        { label: "胆拖 ", count: 2 },
+        { label: "复式", value: 1 },
+        { label: "胆拖 ", value: 2 },
       ];
     },
     fixedFrontIndex() {
-      if (this.gameType != 2) return -1;
-      return this.minSelection - 2;
+      if (this.selectedType.value != 2) return -1;
+      return this.selectedProp.count - 2;
     },
   },
   methods: {
+    setItemAmount(value) {
+      this.$refs.tailItemPicker.setItemAmount(value);
+    },
     toggleSelectItem(item) {
       let index = this.selectedList.findIndex(
         ({ play_id }) => item.play_id == play_id
@@ -178,32 +151,41 @@ export default {
       return !!this.selectedList.find((item) => item.play_id == play_id);
     },
     isFixedFront(label) {
-      if (this.gameType != 2) return false;
+      if (this.selectedType.value != 2) return false;
       let index = this.selectedList.findIndex((item) => item.label == label);
       if (index == -1) return false;
-      return index <= this.minSelection - 2;
+      return index <= this.selectedProp.count - 2;
     },
     clearSelection() {
       this.selectedList = [];
     },
     openDialogBitting() {
-      const _balls = this.selectedList.map((item) => ({
-        ...item,
-        rate: this.getBallRate(item.name),
-        amount: this.inputAmount || 0,
-      }));
+      const minSelected = this.selectedProp.count;
+      if (this.selectedList.length < minSelected)
+        return this.$toast.error(`请至少选择 ${minSelected} 项`, {
+          position: POSITION.TOP_CENTER,
+        });
+
       this.minRate = Math.min(
         ...this.selectedList.map((item) => this.getBallRate(item.name))
       );
 
+      const formData = new FormData(this.$refs.formItem.$el);
+      const _balls = this.selectedList.map((item) => ({
+        ...item,
+        rate: this.getBallRate(item.name),
+        amount: formData.get(item.play_id) || 0,
+      }));
       this.editedItem.balls = Object.assign([], _balls);
+      this.editedItem.amount =
+        Math.min(..._balls.map((item) => item.amount)) || 0;
       this.bittingInputs = true;
     },
     getOddValues() {
       this.loadingRates = true;
       const r = Math.random().toFixed(10);
       const UID = this.$cookiz.get("m6_uid");
-      const property = this.propertyType;
+      const property = this.selectedProp.value;
       this.$axios
         .$get("/api-base/GetOddsMulti", {
           params: { UID, r, property, type: 15 },
@@ -227,7 +209,6 @@ export default {
     },
     onCountingOptionChanged() {
       this.selectedList = [];
-      // this.gameType = 1;
       this.getOddValues();
     },
     startIntervalRequest() {
