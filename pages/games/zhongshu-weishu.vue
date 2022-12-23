@@ -22,43 +22,24 @@
               {{ item.label }}
             </v-btn>
           </v-btn-toggle>
-      
-          </v-btn-toggle>
         </v-card-text>
 
         <v-divider></v-divider>
         <v-card :disabled="loadingRates" class="pa-2" flat tile>
-          <v-layout class="gap-xs">
-            <v-layout
-              v-for="(luckNumbs, key) in gridBalls"
-              :key="`lucky-number-${key}`"
-              class="gap-sm"
-              style="width: 20%"
-              column
-            >
-              <table class="game-item-table">
-                <tbody>
-                  <tr
-                    v-for="(item, subindex) in luckNumbs"
-                    :key="`lucky-number-item-${key}-${subindex}`"
-                  >
-                    <td class="primary--text">{{ item.name }}</td>
-                    <td>{{ getBallRate(item.name) }}</td>
-                    <td>
-                      <input type="text" />
-                    </td>
-                  </tr>
-                </tbody>
-              </table>
-            </v-layout>
-          </v-layout>
-          <v-sheet height="8"></v-sheet>
-
-          <ActionBarBallValue
-            @input="openDialogBitting"
-            :value.sync="inputAmount"
-            class="d-none d-sm-block"
-          />
+          <v-form ref="formItem">
+            <PickItemTail
+              @toggle-item="toggleSelectItem"
+              :rates="itemsRate"
+              :gridItems="gridBalls"
+              :selectedItems="selectedList"
+              ref="tailItemPicker"
+            />
+            <v-sheet height="8"></v-sheet>
+            <ActionBarBallAmount
+              @set-amount="setItemAmount"
+              @compose="openDialogBitting"
+            />
+          </v-form>
         </v-card>
       </v-sheet>
 
@@ -110,19 +91,24 @@ export default {
     };
   },
   computed: {
+    itemsRate() {
+      const rates = {};
+      this.gridBalls.forEach((subitems) => {
+        subitems.forEach(({ name, play_id }) => {
+          rates[play_id] = this.getBallRate(name);
+        });
+      });
+      return rates;
+    },
     gridBalls() {
       let _prefix = this.selectedProperty.value == 2 ? "1701" : "1401";
-      return TailGridNumbersGrouped.map((item, index) =>
+      return TailGridNumbersGrouped.map((item) =>
         item.map((subitem) => ({
           ...subitem,
-          label: item.name,
-          value: index,
-          play_id: this.$common.getPlayId(_prefix, index),
+          label: subitem.name,
+          play_id: this.$common.getPlayId(_prefix, subitem.value),
         }))
       );
-    },
-    showInput() {
-      return !!this.selectedList.length;
     },
     propertyOptions() {
       return [
@@ -136,6 +122,9 @@ export default {
     },
   },
   methods: {
+    setItemAmount(value) {
+      this.$refs.tailItemPicker.setItemAmount(value);
+    },
     toggleSelectItem(item) {
       let index = this.selectedList.findIndex(
         ({ play_id }) => item.play_id == play_id
@@ -150,16 +139,22 @@ export default {
       this.selectedList = [];
     },
     openDialogBitting() {
+      const min = 1;
+      if (this.selectedList.length < min)
+        return this.$toast.error(`请至少选择 ${min} 项`, {
+          position: POSITION.TOP_CENTER,
+        });
+
+      const formData = new FormData(this.$refs.formItem.$el);
       const _balls = this.selectedList.map((item) => ({
         ...item,
         rate: this.getBallRate(item.name),
-        amount: this.inputAmount || 0,
+        amount: formData.get(item.play_id) || 0,
       }));
-      this.minRate = Math.min(
-        ...this.selectedList.map((item) => this.getBallRate(item.name))
-      );
-
       this.editedItem.balls = Object.assign([], _balls);
+      this.minRate = Math.min(..._balls.map((item) => item.rate));
+      this.editedItem.amount =
+        Math.min(..._balls.map((item) => item.amount)) || 0;
       this.bittingInputs = true;
     },
     getOddValues() {
