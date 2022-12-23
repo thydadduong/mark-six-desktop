@@ -166,10 +166,6 @@ export default {
           position: POSITION.TOP_CENTER,
         });
 
-      this.minRate = Math.min(
-        ...this.selectedList.map((item) => this.getBallRate(item.name))
-      );
-
       const formData = new FormData(this.$refs.formItem.$el);
       const _balls = this.selectedList.map((item) => ({
         ...item,
@@ -177,6 +173,7 @@ export default {
         amount: formData.get(item.play_id) || 0,
       }));
       this.editedItem.balls = Object.assign([], _balls);
+      this.minRate = Math.min(..._balls.map((item) => item.rate));
       this.editedItem.amount =
         Math.min(..._balls.map((item) => item.amount)) || 0;
       this.bittingInputs = true;
