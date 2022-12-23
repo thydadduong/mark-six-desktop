@@ -8,26 +8,26 @@
     tile
     flat
   >
-    <v-layout class="gap-sm" align-center>
+    <v-layout align-center>
       <v-sheet
         :class="active ? 'white--text' : `${ballsColor}--text`"
-        class="flex-grow-0 flex-shrink-0 font-weight-bold pa-2 text-center"
+        class="flex-grow-0 flex-shrink-0 font-weight-bold pa-2 py-1 text-center"
         color="transparent"
         width="50"
       >
         {{ name }}
       </v-sheet>
-      <v-divider vertical></v-divider>
+      <v-divider class="flex-shrink-0" vertical></v-divider>
       <v-sheet
         :class="active ? 'white--text' : 'grey--text text--darken-2'"
-        class="flex-grow-0 flex-shrink-0 pa-2 text-center"
+        class="flex-grow-0 flex-shrink-0 pa-2 py-1 text-center"
         color="transparent"
         width="50"
       >
         {{ rate }}
       </v-sheet>
-      <v-divider vertical></v-divider>
-      <v-sheet class="flex-grow-1 pa-2" color="transparent">
+      <v-divider class="flex-shrink-0" vertical></v-divider>
+      <v-sheet class="flex-grow-1 pa-2 py-1" color="transparent">
         <v-layout align-center class="gap-xs" wrap>
           <div v-for="(ball, key) in balls" :key="`ball-${key}`">
             <v-avatar
@@ -40,14 +40,15 @@
           </div>
         </v-layout>
       </v-sheet>
-      <v-divider vertical></v-divider>
+      <v-divider class="flex-shrink-0" vertical></v-divider>
 
       <v-sheet
         :class="active ? 'white--text' : `${ballsColor}--text`"
-        class="flex-grow-0 flex-shrink-0 font-weight-bold pa-2 text-center"
+        class="flex-grow-0 flex-shrink-0 font-weight-bold pa-2 py-1 text-center"
+        color="transparent"
         width="150"
       >
-        <v-text-field hide-details outlined dense></v-text-field>
+        <input placeholder="0" hide-details outlined dense />
       </v-sheet>
     </v-layout>
   </v-card>
@@ -78,5 +79,12 @@ export default {
 .card-ball-color.v-card.v-sheet--outlined {
   line-height: 1.5;
   border-color: #ccc !important;
+}
+
+.card-ball-color input {
+  width: 100%;
+  border-radius: 4px;
+  border: 1px solid #ccc;
+  background: #f2f2f2;
 }
 </style>
