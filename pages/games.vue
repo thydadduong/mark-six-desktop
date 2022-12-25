@@ -41,7 +41,7 @@
         width="15rem"
         color="transparent"
       >
-        <v-card elevation="1" tile>
+        <v-card :loading="loadingRecent" elevation="1" tile>
           <v-card-text
             style="background: linear-gradient(0deg, #dae8fc, #fff)"
             class="primary--text pa-1 text-center"
@@ -49,19 +49,47 @@
             最新注单
           </v-card-text>
           <v-divider></v-divider>
-          <v-card-text
+          <!-- <v-card-text
             style="background: linear-gradient(0deg, #dae8fc, #fff)"
             class="primary--text pa-1"
           >
             未结金额：0
-          </v-card-text>
-          <v-card-text>
+          </v-card-text> -->
+          <v-card-text v-if="!recentList.length">
             <v-layout justify-center class="py-8">
-              <v-avatar size="100" class="rounded-lg">
-                <img src="/images/default.png" alt="" />
-              </v-avatar>
+              <v-card rounded="circle" outlined>
+                <v-avatar size="100">
+                  <v-icon class="grey--text text--lighten-1" size="36">
+                    mdi-file-document-outline
+                  </v-icon>
+                </v-avatar>
+              </v-card>
             </v-layout>
           </v-card-text>
+          <v-list dense>
+            <template v-for="([date, item, amount], key) in recentList">
+              <v-list-item :key="`item-${key}`" class="px-2 align-start">
+                <v-list-item-action class="body-2 mr-2 my-1 mb-auto">
+                  {{ date }}
+                </v-list-item-action>
+                <v-list-item-content
+                  class="py-1 gap-xs text-center my-1 mb-auto"
+                >
+                  <small>{{ displayText(item)[0] }}</small>
+                  <small v-if="displayText(item)[1]">
+                    {{ displayText(item)[1] }}
+                  </small>
+                </v-list-item-content>
+                <v-list-item-action class="body-2 ml-2 my-1 mb-auto">
+                  {{ amount }}
+                </v-list-item-action>
+              </v-list-item>
+              <v-divider
+                :key="`item-divider-${key}`"
+                v-if="recentList.length - 1 > key"
+              ></v-divider>
+            </template>
+          </v-list>
         </v-card>
       </v-sheet>
       <v-sheet class="pa-2 px-1 flex-fill" color="transparent">
@@ -90,6 +118,8 @@ export default {
   name: "GameLayout",
   data() {
     return {
+      loadingRecent: false,
+      recentList: [],
       bittingClosed: false,
       drawerRight: false,
       tempTable: "",
@@ -249,6 +279,24 @@ export default {
         this.getCloseTime();
       }, 1000 * 30);
     },
+    getDynamicData() {
+      this.loadingRecent = true;
+      const _uri = "/api-base/Dynamic";
+      const UID = this.$cookiz.get("m6_uid");
+      this.$axios
+        .$get(_uri, { params: { UID } })
+        .then((res) => {
+          console.log(res);
+          if (res.code !== 0) return;
+          this.recentList = Object.assign([], res.recent);
+        })
+        .finally((error) => {
+          this.loadingRecent = false;
+        });
+    },
+    displayText(text = "") {
+      return text.split("(");
+    },
   },
   mounted() {
     const uid = this.$cookiz.get("m6_uid");
@@ -256,6 +304,7 @@ export default {
     this.getCloseTime();
     this.gitLastResult();
     this.startIntervalRequest();
+    this.getDynamicData();
   },
   beforeDestroy() {
     clearInterval(this.timerInterval);

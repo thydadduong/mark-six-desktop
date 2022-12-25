@@ -24,6 +24,10 @@
           />
           <v-layout class="fill-height" align-end column>
             <div>
+              <v-btn to="/profile" class="px-1" small text>
+                <v-icon left>mdi-account</v-icon>
+                个人信息
+              </v-btn>
               <v-menu>
                 <template v-slot:activator="{ on, attrs }">
                   <v-btn
@@ -173,12 +177,12 @@ export default {
           to: "/lottery",
           exact: true,
         },
-        {
-          title: "个人信息",
-          icon: "mdi-account-outline",
-          to: "/profile",
-          exact: false,
-        },
+        // {
+        //   title: "个人信息",
+        //   icon: "mdi-account-outline",
+        //   to: "/profile",
+        //   exact: false,
+        // },
       ];
     },
   },
