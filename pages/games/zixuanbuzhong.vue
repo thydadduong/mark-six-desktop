@@ -132,6 +132,7 @@
             <ActionBarBallAmount
               @set-amount="setItemAmount"
               @compose="openDialogBitting"
+              @clear="clearSelection"
             />
           </v-form>
         </v-card>
@@ -224,9 +225,6 @@ export default {
           color: this.$common.getBallColor(ball),
         }))
       );
-    },
-    showInput() {
-      return this.selectedList.length >= this.selectedProp.value;
     },
     propertyOptions() {
       return [
@@ -325,7 +323,6 @@ export default {
     },
     openDialogBitting() {
       const minSelected = this.selectedProp.value;
-
       if (this.selectedList.length < minSelected)
         return this.$toast.error(`请至少选择 ${minSelected} 项`, {
           position: POSITION.TOP_CENTER,

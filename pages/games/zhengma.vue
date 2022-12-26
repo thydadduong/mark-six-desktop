@@ -1,7 +1,7 @@
 <template>
   <div>
     <v-layout class="gap-sm">
-      <v-sheet>
+      <v-sheet color="transparent">
         <v-card-text
           style="background: linear-gradient(0deg, #dae8fc, #fff)"
           class="primary--text py-1 px-2"
@@ -115,6 +115,7 @@
             <ActionBarBallAmount
               @set-amount="setItemAmount"
               @compose="openDialogBitting"
+              @clear="clearSelection"
             />
           </v-form>
         </v-card>
@@ -168,6 +169,7 @@
 
 <script>
 import { GridZhengmaA, GridZhengmaB, ZhengmaFlip } from "~/models/balls-map";
+import { POSITION } from 'vue-toastification';
 
 export default {
   name: "PageLuckyDraw",
@@ -199,9 +201,6 @@ export default {
     },
     flipCoins() {
       return ZhengmaFlip;
-    },
-    showInput() {
-      return !!this.selectedList.length;
     },
   },
   methods: {
@@ -284,6 +283,12 @@ export default {
       this.selectedList = [];
     },
     openDialogBitting() {
+      const min = 1;
+      if (this.selectedList.length < min)
+        return this.$toast.error(`请至少选择 ${min} 项`, {
+          position: POSITION.TOP_CENTER,
+        });
+
       const formData = new FormData(this.$refs.formItem.$el);
       const _balls = this.selectedList.map((item) => ({
         ...item,

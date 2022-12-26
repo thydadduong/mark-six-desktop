@@ -122,6 +122,7 @@
             <ActionBarBallAmount
               @set-amount="setItemAmount"
               @compose="openDialogBitting"
+              @clear="clearSelection"
             />
           </v-form>
         </v-card>
@@ -176,17 +177,9 @@
 </template>
 
 <script>
-import {
-  getPlayId,
-  GridTemaA,
-  GridTemaB,
-  ColorBalls,
-} from "~/models/balls-map";
-import {
-  ColorBallsFlat,
-  TemaFlipCoin,
-  ShortcutsTema,
-} from "~/models/balls-map";
+import { POSITION } from "vue-toastification";
+import { GridTemaA, GridTemaB, ColorBalls } from "~/models/balls-map";
+import { ColorBallsFlat, TemaFlipCoin, getPlayId } from "~/models/balls-map";
 const getNumberLabel = (number) => (number < 10 ? `0${number}` : `${number}`);
 export default {
   name: "PageLuckyDraw",
@@ -232,9 +225,6 @@ export default {
         ...item,
         play_id: [prefix, item.suffix].join(""),
       }));
-    },
-    showInput() {
-      return !!this.selectedList.length;
     },
   },
   methods: {
@@ -303,6 +293,11 @@ export default {
       this.selectedList = [];
     },
     openDialogBitting() {
+      const min = 1;
+      if (this.selectedList.length < min)
+        return this.$toast.error(`请至少选择 ${min} 项`, {
+          position: POSITION.TOP_CENTER,
+        });
       const formData = new FormData(this.$refs.formItem.$el);
       const _balls = this.selectedList.map((item) => ({
         ...item,

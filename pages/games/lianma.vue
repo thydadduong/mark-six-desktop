@@ -1,7 +1,7 @@
 <template>
   <div>
     <v-layout class="gap-sm">
-      <v-sheet>
+      <v-sheet color="transparent">
         <v-card-text
           style="background: linear-gradient(0deg, #dae8fc, #fff)"
           class="primary--text py-1 px-2"
@@ -27,7 +27,7 @@
           </v-btn-toggle>
           <v-btn-toggle
             v-model="selectedType"
-            @change="onSubOptionChange"
+            @change="clearSelection"
             color="primary"
             active-class="primary white--text"
             mandatory
@@ -131,6 +131,7 @@
             <ActionBarBallAmount
               @set-amount="setItemAmount"
               @compose="openDialogBitting"
+              @clear="clearSelection"
             />
           </v-form>
         </v-card>
@@ -156,14 +157,14 @@
                   @click:item="onClickItem49"
                   :selected-items="selectedItems"
                 />
-                <ShortcutColor
+                <!-- <ShortcutColor
                   @click:item="onClickShortcut"
                   :selected="activeShortcut"
                 />
                 <ShortcutItem
                   @click:item="onClickShortcut"
                   :selected="activeShortcut"
-                />
+                /> -->
               </v-card-text>
             </v-card>
           </section>
@@ -190,6 +191,7 @@
 </template>
 
 <script>
+import { POSITION } from "vue-toastification";
 import {
   getBallColor,
   getNumberLabel,
@@ -227,9 +229,6 @@ export default {
           color: getBallColor(ball),
         }))
       );
-    },
-    showInput() {
-      return this.selectedList.length >= this.selectedProp.min;
     },
     ballPropOptions() {
       return [
@@ -271,6 +270,7 @@ export default {
         ({ play_id }) => item.play_id == play_id
       );
       if (index != -1) return this.selectedList.splice(index, 1);
+      if (this.selectedList.length >= 10) this.selectedList.shift();
       this.selectedList.push(item);
     },
     onClickItem49(item) {
@@ -318,8 +318,13 @@ export default {
       return index <= this.selectedProp.min - 2;
     },
     async openDialogBitting() {
-      const formData = new FormData(this.$refs.formItem.$el);
+      const min = this.selectedProp.min;
+      if (this.selectedList.length < min)
+        return this.$toast.error(`请至少选择 ${min} 项`, {
+          position: POSITION.TOP_CENTER,
+        });
 
+      const formData = new FormData(this.$refs.formItem.$el);
       const _balls = this.selectedList.map((item) => ({
         ...item,
         rate: this.getBallRate(item.label),
@@ -364,7 +369,8 @@ export default {
         this.getOddValues();
       }, 200);
     },
-    onSubOptionChange() {
+    clearSelection() {
+      this.activeShortcut = "";
       this.selectedList = [];
     },
     startIntervalRequest() {

@@ -23,6 +23,7 @@
             <ActionBarBallAmount
               @set-amount="setItemAmount"
               @compose="openDialogBitting"
+              @clear="clearSelection"
             />
           </v-form>
         </v-card>
@@ -45,6 +46,7 @@
 </template>
 
 <script>
+import { POSITION } from "vue-toastification";
 import { YiWeiLiangBalls } from "~/models/balls-map";
 
 export default {

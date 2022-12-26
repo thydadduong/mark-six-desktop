@@ -52,6 +52,7 @@
               <ActionBarBallAmount
                 @set-amount="setItemAmount"
                 @compose="openDialogBitting"
+                @clear="clearSelection"
               />
             </v-card-text>
           </v-form>
@@ -77,6 +78,7 @@
 </template>
 
 <script>
+import { POSITION } from "vue-toastification";
 import { AnimalGroupedList } from "~/models/balls-map";
 
 export default {
@@ -207,6 +209,9 @@ export default {
     },
     getBallRate(play_id) {
       return this.ref_rates[play_id];
+    },
+    clearSelection() {
+      this.selectedList = [];
     },
     onCountingOptionChanged() {
       this.selectedList = [];

@@ -286,7 +286,6 @@ export default {
       this.$axios
         .$get(_uri, { params: { UID } })
         .then((res) => {
-          console.log(res);
           if (res.code !== 0) return;
           this.recentList = Object.assign([], res.recent);
         })

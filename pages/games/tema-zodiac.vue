@@ -25,6 +25,7 @@
               <ActionBarBallAmount
                 @set-amount="setItemAmount"
                 @compose="openDialogBitting"
+                @clear="clearSelection"
               />
             </v-card-text>
           </v-form>
@@ -77,7 +78,6 @@ export default {
           rates[play_id] = this.getBallRate(play_id);
         });
       });
-      console.log(rates);
       return rates;
     },
     gridBalls() {
@@ -179,7 +179,7 @@ export default {
     getBallRate(play_id) {
       return this.ref_rates[play_id];
     },
-    onCountingOptionChanged() {
+    clearSelection() {
       this.selectedList = [];
     },
     startIntervalRequest() {

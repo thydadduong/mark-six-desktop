@@ -25,6 +25,7 @@
               <ActionBarBallAmount
                 @set-amount="setItemAmount"
                 @compose="openDialogBitting"
+                @clear="clearSelection"
               />
             </v-card-text>
           </v-form>
@@ -44,6 +45,8 @@
 </template>
 
 <script>
+import { POSITION } from 'vue-toastification';
+
 export default {
   name: "PageWuhang",
   data() {

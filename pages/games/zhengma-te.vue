@@ -119,6 +119,7 @@
             <ActionBarBallAmount
               @set-amount="setItemAmount"
               @compose="openDialogBitting"
+              @clear="clearSelection"
             />
           </v-form>
         </v-card>
@@ -168,6 +169,7 @@
 </template>
 
 <script>
+import { POSITION } from "vue-toastification";
 import {
   ColorBallsFlat,
   gridNumbers,
@@ -235,9 +237,6 @@ export default {
           play_id: [this.activeType.prefix, subItem.suffix].join(""),
         }))
       );
-    },
-    showInput() {
-      return !!this.selectedList.length;
     },
     typeOptions() {
       return [
@@ -343,6 +342,11 @@ export default {
       this.selectedList = [];
     },
     openDialogBitting() {
+      const min = 1;
+      if (this.selectedList.length < min)
+        return this.$toast.error(`请至少选择 ${min} 项`, {
+          position: POSITION.TOP_CENTER,
+        });
       const formData = new FormData(this.$refs.formItem.$el);
       const _balls = this.selectedList.map((item) => ({
         ...item,

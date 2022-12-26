@@ -26,6 +26,19 @@
       >
         输入
       </v-btn>
+      <v-btn
+        v-if="showClear"
+        @click="clear"
+        class="rounded"
+        color="error"
+        elevation=""
+        width="50"
+        height="50"
+        dark
+        fab
+      >
+        <v-icon>mdi-close</v-icon>
+      </v-btn>
     </v-layout>
   </v-card>
 </template>
@@ -38,6 +51,9 @@ export default {
     valueOptions() {
       return [100, 200, 500, 750, 1000];
     },
+    showClear() {
+      return !!this.$listeners.clear;
+    },
   },
   methods: {
     setValue(value) {
@@ -45,6 +61,9 @@ export default {
     },
     submit() {
       this.$emit("compose");
+    },
+    clear() {
+      this.$emit("clear");
     },
   },
 };

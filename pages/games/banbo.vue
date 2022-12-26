@@ -26,6 +26,7 @@ import { POSITION } from 'vue-toastification';
               <ActionBarBallAmount
                 @set-amount="setItemAmount"
                 @compose="openDialogBitting"
+                @clear="clearSelection"
               />
             </v-card-text>
           </v-form>
@@ -45,7 +46,7 @@ import { POSITION } from 'vue-toastification';
 </template>
 
 <script>
-import { POSITION } from 'vue-toastification';
+import { POSITION } from "vue-toastification";
 
 export default {
   name: "PageBanBo",
