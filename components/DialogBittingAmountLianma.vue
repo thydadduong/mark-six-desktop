@@ -2,22 +2,25 @@
   <v-dialog
     @input="visibleChange"
     :value="visible"
+    content-class="rounded-0"
     width="40rem"
     scrollable
     persistent
   >
-    <v-card :disabled="loading || isSaving">
-      <v-card-title class="justify-center text-center"> 确认订单 </v-card-title>
+    <v-card :disabled="loading || isSaving" class="dialog-bit" tile>
+      <v-card-title class="py-2 justify-center body-2 primary white--text">
+        确认订单
+      </v-card-title>
       <v-divider></v-divider>
-      <v-card-text class="pb-2 px-0 text--primary">
+      <v-card-text class="pa-4">
         <v-form ref="editedForm" v-model="formValid" :disabled="isSaving">
           <table class="table-bitting">
             <thead>
               <tr>
-                <th class="pl-4">项目</th>
-                <th>球号</th>
-                <th class="text-right pr-4" >赔率</th>
-                <th class="text-right pr-4" style="width: 70px">
+                <th class="table-bitting__title">项目</th>
+                <th class="table-bitting__ball">球号</th>
+                <th class="table-bitting__rate">赔率</th>
+                <th class="table-bitting__input">
                   <v-layout class="gap-xs" align-center>
                     <span class="text-no-wrap">金额</span>
                     <v-btn
@@ -35,20 +38,18 @@
             </thead>
             <tbody>
               <tr>
-                <td class="pl-4 pt-3">
+                <td class="table-bitting__title">
                   <v-layout class="gap-xs" wrap>
                     <span>{{ propertyTitle }}</span>
                     <span v-if="typeTitle"> [{{ typeTitle }}]</span>
                   </v-layout>
                 </td>
 
-                <td class="pt-3">
+                <td class="table-bitting__ball">
                   {{ displayBallItems }}
                 </td>
-                <td class="pa-4 py-3 text-right">
-                  {{ editedItem.minRate }}
-                </td>
-                <td class="pr-4 py-2 text-right">
+                <td class="table-bitting__rate">{{ editedItem.minRate }}0</td>
+                <td class="table-bitting__input">
                   <!-- <v-text-field
                     v-model.number="editedItem.amount"
                     :rules="$formRules.bittingAmount"
@@ -75,14 +76,16 @@
         </v-form>
       </v-card-text>
       <v-divider></v-divider>
-      <v-card-actions class="pa-4">
-        <v-btn @click="visibleChange(false)" elevation="0"> 取消 </v-btn>
-        <v-spacer></v-spacer>
+      <v-card-actions class="dialog-bit__footer justify-center">
+        <v-btn @click="visibleChange(false)" elevation="0" outlined small>
+          取消
+        </v-btn>
         <v-btn
           @click="submit"
           :loading="isSaving"
           color="primary"
           elevation="0"
+          small
         >
           保存
         </v-btn>

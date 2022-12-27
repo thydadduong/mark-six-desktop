@@ -2,21 +2,26 @@
   <v-dialog
     @input="visibleChange"
     :value="visible"
+    content-class="rounded-0"
     width="40rem"
     scrollable
     persistent
   >
-    <v-card :disabled="loading || isSaving">
-      <v-card-title class="justify-center text-center"> 确认订单 </v-card-title>
+    <v-card :disabled="loading || isSaving" class="dialog-bit" tile>
+      <v-card-title
+        class="py-2 justify-center text-center body-2 primary white--text"
+      >
+        确认订单
+      </v-card-title>
       <v-divider></v-divider>
-      <v-card-text class="pb-2 px-0 text--primary">
+      <v-card-text class="pa-4">
         <v-form ref="editedForm" v-model="formValid" :disabled="isSaving">
           <table class="table-bitting">
             <thead>
               <tr>
-                <th class="pl-4">球号</th>
-                <th class="pl-2">赔率</th>
-                <th style="width: 100px">
+                <th class="table-bitting__title">球号</th>
+                <th class="table-bitting__rate">赔率</th>
+                <th class="table-bitting__input">
                   <v-layout align-center>
                     <span class="mr-2">金额</span>
                     <v-btn
@@ -37,13 +42,13 @@
                 v-for="(ball, index) in editedItem.balls"
                 :key="`row-${index}`"
               >
-                <td class="pl-4">
+                <td class="table-bitting__title">
                   <div class="pt-1">{{ ball.label || ball.play_id }}</div>
                 </td>
-                <td class="pl-2">
+                <td class="table-bitting__rate">
                   <div class="pt-1">{{ ball.rate }}</div>
                 </td>
-                <td class="pr-4">
+                <td class="table-bitting__input">
                   <input
                     v-model.number="ball.amount"
                     :disabled="!customAmount"
@@ -56,19 +61,26 @@
                   />
                 </td>
               </tr>
+
+              <!-- <tr>
+                <td>注数:3</td>
+                <td colspan="2">合计金额:6</td>
+              </tr>
+              如赔率变化，以最新赔率确认投注！ -->
             </tbody>
           </table>
         </v-form>
       </v-card-text>
-      <v-divider></v-divider>
-      <v-card-actions class="pa-4">
-        <v-btn @click="visibleChange(false)" elevation="0"> 取消 </v-btn>
-        <v-spacer></v-spacer>
+      <v-card-actions class="dialog-bit__footer justify-center">
+        <v-btn @click="visibleChange(false)" elevation="0" small outlined>
+          取消
+        </v-btn>
         <v-btn
           @click="submit"
           :loading="isSaving"
           color="primary"
           elevation="0"
+          small
         >
           保存
         </v-btn>
@@ -170,25 +182,4 @@ export default {
 };
 </script>
 
-<style lang="sass">
-.table-bitting
-  width: 100%
-  border-collapse: collapse
-  thead tr
-    background-color: #f5f5f5
-
-  tr th,
-  tr td
-    padding: 0.5rem 0.125rem
-    text-align: left
-  tbody tr td
-    vertical-align: top
-  input
-    width: 75px
-    padding: 2px 4px
-    border: 1px solid #ccc
-    border-radius: 4px
-    text-align: right
-    &:read-only
-      background: #f2f2f2
-</style>
+<style lang="sass"></style>
