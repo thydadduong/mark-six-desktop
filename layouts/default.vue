@@ -3,7 +3,7 @@
     <v-overlay :value="loggingOut" z-index="999">
       <v-progress-circular indeterminate></v-progress-circular>
     </v-overlay>
-    <v-main class="overflow-x-auto" style="background-color: #f5f5f5">
+    <v-main class="main-app-body">
       <v-sheet color="transparent" min-width="950">
         <v-toolbar
           color="primary detail-toolbar"
@@ -72,7 +72,7 @@
                   </v-btn>
                 </template>
                 <v-list dense>
-                  <v-list-item to="/profile/reset-password" exact>
+                  <v-list-item @click="dialogResetPassword = true">
                     <v-list-item-content>修改密码</v-list-item-content>
                   </v-list-item>
                   <v-list-item @click="logout">
@@ -106,6 +106,7 @@
       </v-sheet>
       <DialogConfirm @confirm="onConfirm" ref="dialogConfirm" />
       <DialogMessageBox ref="dialogMessage" auto-close />
+      <DialogResetPassword :visible.sync="dialogResetPassword" />
     </v-main>
   </v-app>
 </template>
@@ -128,6 +129,7 @@ export default {
       drawerRight: false,
       loggingOut: false,
       loadingTable: false,
+      dialogResetPassword: false,
       lastResult: {
         balls: [],
       },
@@ -295,18 +297,6 @@ export default {
 </script>
 
 <style lang="sass">
-.bs-drawer .v-list .v-list-item--active::after
-  min-height: auto
-  content: ""
-  position: absolute
-  right: 0
-  background-color: #F2C94C
-  width: 4px
-  border-radius: 2px
-  top: 4px
-  bottom: 4px
-  margin: 0 auto
-
 .main-aside-menu .main-aside-menu--svg-icon
   >div,svg
     width: 24px !important
