@@ -2,10 +2,7 @@
   <div>
     <v-layout class="gap-sm">
       <v-sheet class="flex-fill">
-        <v-card-text
-          style="background: linear-gradient(0deg, #dae8fc, #fff)"
-          class="primary--text py-1 px-2"
-        >
+        <GameActionBar>
           <v-btn-toggle
             v-model="selectedProp"
             @change="onCountingOptionChanged"
@@ -32,7 +29,7 @@
               {{ item.title }}
             </v-btn>
           </v-btn-toggle>
-        </v-card-text>
+        </GameActionBar>
 
         <v-divider></v-divider>
         <v-card :disabled="loadingRates" class="pa-2" flat tile>

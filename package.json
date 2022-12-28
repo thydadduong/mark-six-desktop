@@ -14,6 +14,7 @@
     "core-js": "^3.15.1",
     "generatorics": "^1.1.0",
     "nuxt": "^2.15.7",
+    "portal-vue": "^2.1.7",
     "qs": "^6.11.0",
     "vue-i18n": "^8.27.1",
     "vue-toastification": "^1.7.14",

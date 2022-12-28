@@ -12,11 +12,11 @@
           tile
           dark
         >
-          <div class="mr-8">
+          <nuxt-link to="/" class="mr-8">
             <v-avatar size="54" rounded color="primary" class="white--text">
               <img src="/images/hk6.jpg" style="object-fit: cover" />
             </v-avatar>
-          </div>
+          </nuxt-link>
           <CardTodayResult
             :issueNumber="lastIssueNumber"
             :ballList="lastResult.balls"

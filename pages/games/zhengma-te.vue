@@ -2,10 +2,7 @@
   <div>
     <v-layout class="gap-sm">
       <v-sheet>
-        <v-card-text
-          style="background: linear-gradient(0deg, #dae8fc, #fff)"
-          class="primary--text py-1 px-2"
-        >
+        <GameActionBar>
           <v-btn-toggle
             v-model="activeType"
             color="primary"
@@ -23,7 +20,7 @@
               {{ item.title }}
             </v-btn>
           </v-btn-toggle>
-        </v-card-text>
+        </GameActionBar>
         <v-divider></v-divider>
         <v-card :disabled="loadingRates" class="pa-2" flat tile>
           <v-form ref="formItem">
@@ -208,7 +205,6 @@ export default {
           rates[play_id] = this.getBallRate(play_id);
         });
       });
-      console.log(rates);
       return rates;
     },
     gridBalls() {
@@ -283,7 +279,6 @@ export default {
       return !!this.selectedList.find((item) => item.label == label);
     },
     onClickShortcut(item = {}) {
-      console.log(item);
       const balls = item.balls || [];
       const prefix = this.activeType.ball_prefix;
       let ids = balls.map((item) => ({
@@ -292,7 +287,6 @@ export default {
         label: this.$common.getNumberLabel(item),
         color: this.$common.getBallColor(item),
       }));
-      console.log(ids);
       this.selectBalls(ids, item.value);
     },
     selectBalls(items = [], type) {

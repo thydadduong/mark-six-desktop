@@ -2,12 +2,7 @@
   <div>
     <v-layout class="gap-sm">
       <v-sheet color="transparent" width="850">
-        <v-card-text
-          style="background: linear-gradient(0deg, #dae8fc, #fff)"
-          class="primary--text py-1 px-2"
-        >
-          五行
-        </v-card-text>
+        <GameActionBar> 五行 </GameActionBar>
         <v-divider></v-divider>
 
         <v-card :disabled="loadingRates" class="mb-4" flat tile>
@@ -45,7 +40,7 @@
 </template>
 
 <script>
-import { POSITION } from 'vue-toastification';
+import { POSITION } from "vue-toastification";
 
 export default {
   name: "PageWuhang",

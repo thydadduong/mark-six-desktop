@@ -5,26 +5,24 @@
         <v-row dense>
           <v-col cols="12" sm="6">
             <v-card color="grey lighten-4" flat tile>
-              <v-card-text class="py-0 px-2">
-                <v-layout class="gap-sm">
-                  <v-chip-group
-                    v-model="selectedOption"
-                    @change="onCountingOptionChanged"
-                    color="primary"
-                    mandatory
-                    column
+              <GameActionBar>
+                <v-chip-group
+                  v-model="selectedOption"
+                  @change="onCountingOptionChanged"
+                  color="primary"
+                  mandatory
+                  column
+                >
+                  <v-chip
+                    v-for="(item, key) in gameOptions"
+                    :key="`item-${key}`"
+                    :value="item.value"
+                    small
                   >
-                    <v-chip
-                      v-for="(item, key) in gameOptions"
-                      :key="`item-${key}`"
-                      :value="item.value"
-                      small
-                    >
-                      {{ item.label }}
-                    </v-chip>
-                  </v-chip-group>
-                </v-layout>
-              </v-card-text>
+                    {{ item.label }}
+                  </v-chip>
+                </v-chip-group>
+              </GameActionBar>
             </v-card>
             <v-divider></v-divider>
             <v-card color="grey lighten-4" class="text-center" flat tile>

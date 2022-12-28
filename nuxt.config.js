@@ -62,6 +62,7 @@ export default {
   modules: [
     // https://go.nuxtjs.dev/axios
     "@nuxtjs/axios",
+    "portal-vue/nuxt",
     ["cookie-universal-nuxt", { alias: "cookiz" }],
   ],
 

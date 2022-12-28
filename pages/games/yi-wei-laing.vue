@@ -2,12 +2,7 @@
   <div>
     <v-layout class="gap-sm">
       <v-sheet color="transparent" width="850">
-        <v-card-text
-          style="background: linear-gradient(0deg, #dae8fc, #fff)"
-          class="primary--text py-1 px-2"
-        >
-          一尾量
-        </v-card-text>
+        <GameActionBar> 一尾量 </GameActionBar>
         <v-divider></v-divider>
 
         <v-card :disabled="loadingRates" class="pa-2" flat tile>

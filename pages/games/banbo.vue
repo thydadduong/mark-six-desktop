@@ -3,12 +3,7 @@ import { POSITION } from 'vue-toastification';
   <div>
     <v-layout class="gap-sm">
       <v-sheet color="transparent" width="850">
-        <v-card-text
-          style="background: linear-gradient(0deg, #dae8fc, #fff)"
-          class="primary--text py-1 px-2"
-        >
-          半波
-        </v-card-text>
+        <GameActionBar> 半波 </GameActionBar>
         <v-divider></v-divider>
 
         <v-card :disabled="loadingRates" class="mb-4" flat tile>

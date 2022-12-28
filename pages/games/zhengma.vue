@@ -2,10 +2,7 @@
   <div>
     <v-layout class="gap-sm">
       <v-sheet color="transparent">
-        <v-card-text
-          style="background: linear-gradient(0deg, #dae8fc, #fff)"
-          class="primary--text py-1 px-2"
-        >
+        <GameActionBar>
           <v-btn-toggle
             v-model="activeChannel"
             @change="switchChannel"
@@ -20,7 +17,7 @@
               正码 B
             </v-btn>
           </v-btn-toggle>
-        </v-card-text>
+        </GameActionBar>
         <v-divider></v-divider>
         <v-card :disabled="loadingRates" class="pa-2" flat tile>
           <v-form ref="formItem">
@@ -169,7 +166,7 @@
 
 <script>
 import { GridZhengmaA, GridZhengmaB, ZhengmaFlip } from "~/models/balls-map";
-import { POSITION } from 'vue-toastification';
+import { POSITION } from "vue-toastification";
 
 export default {
   name: "PageLuckyDraw",

@@ -14,13 +14,6 @@
         {{ gameTitle }}
       </v-toolbar-title>
       <v-spacer></v-spacer>
-
-      <v-layout class="gap-sm" align-center justify-end>
-        <p class="mb-0 white--text">{{ issueNumber }}期开奖</p>
-        <v-card color="white" class="error--text mb-0 px-2 body-1">
-          {{ displayTimeCounter }}
-        </v-card>
-      </v-layout>
     </v-toolbar>
     <v-layout class="elevation-1">
       <v-sheet width="15rem"></v-sheet>
@@ -106,6 +99,14 @@
     />
     <DialogConfirm @confirm="confirmSwitch" ref="dialogConfirm" />
     <DialogMessageBox ref="dialogMessage" auto-close />
+    <portal to="closeTimer">
+      <v-layout class="gap-xs" align-center justify-end>
+        <p class="mb-0">期开奖:</p>
+        <p class="mb-0 font-weight-medium" :class="timerColor" flat>
+          {{ displayTimeCounter }}
+        </p>
+      </v-layout>
+    </portal>
   </v-card>
 </template>
 
@@ -180,6 +181,11 @@ export default {
     issueNumber() {
       const { issue_id } = this.lastResult || {};
       return issue_id ? ` 2022${+issue_id + 1} ` : " — ";
+    },
+    timerColor() {
+      return this.closeTimer > 0
+        ? "success--text text-darken-1"
+        : "error--text";
     },
   },
   methods: {
