@@ -1,79 +1,76 @@
 <template>
   <v-container>
-    <v-data-table
-      v-if="!!totalPage && isReady"
-      :headers="tableHeaders"
-      :items="records"
-      :loading="isLoading"
-      :server-items-length="records.length"
-      class="hide-horizontal-scrollbar"
-      mobile-breakpoint="0"
-      hide-default-footer
-      no-data-text="无更多记录"
-    >
-      <template #[`item.index`]="{ item, index }">
-        <v-sheet
-          color="transparent"
-          min-width="30"
-          max-width="100"
-          v-if="index < records.length - 1"
-        >
-          {{ index + 1 }}
-        </v-sheet>
-      </template>
-      <template #[`item.0`]="{ item }">
-        <v-sheet color="transparent" min-width="40">
-          <span v-if="item[0] && $moment(item[0]).isValid()">
-            {{ $moment(item[0]).format("HH:mm:ss") }}
-          </span>
-          <span v-else>{{ item[0] }}</span>
-        </v-sheet>
-      </template>
-      <template #[`item.1`]="{ item }">
-        <v-sheet color="transparent" min-width="100" class="text-break">
-          <v-layout class="gap-xs text-center" column justify-center>
-            <span>{{ displayItemName(item[1]).first }}</span>
-            <span class="primary--text">{{
-              displayItemName(item[1]).second
-            }}</span>
-          </v-layout>
-        </v-sheet>
-      </template>
-      <template #[`item.2`]="{ item }">
-        <div class="text-break text-center">
-          {{ item[2] }}
-        </div>
-      </template>
-      <template #[`item.3`]="{ item }">
-        <v-sheet color="transparent" min-width="50">
-          {{ item[3] }}
-        </v-sheet>
-      </template>
-      <template #[`body.append`] v-if="showLastItem">
+    <table class="table-unsettle">
+      <thead>
         <tr>
+          <th
+            v-for="(header, key) in tableHeaders"
+            :key="`thead-${key}`"
+            class="body-1"
+          >
+            {{ header.text }}
+          </th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr v-for="(item, key) in records" :key="`row-${key}`">
+          <td>
+            <span v-if="key < records.length - 1">
+              {{ key + 1 }}
+            </span>
+          </td>
+          <td>
+            <span v-if="item[0] && $moment(item[0]).isValid()">
+              {{ $moment(item[0]).format("HH:mm:ss") }}
+            </span>
+            <span v-else>{{ item[0] }}</span>
+          </td>
+          <td>
+            <v-layout class="gap-xs text-center" column justify-center>
+              <span>{{ displayItemName(item[1]).first }}</span>
+              <span class="primary--text">{{
+                displayItemName(item[1]).second
+              }}</span>
+            </v-layout>
+          </td>
+          <td>{{ item[2] }}</td>
+          <td>{{ item[3] }}</td>
+        </tr>
+
+        <tr v-if="showLastItem">
           <td colspan="5" class="pa-0 text-no-wrap text--secondary text-center">
             <p class="mb-2"><small> 已经到达最后一条记录 </small></p>
-            <v-divider></v-divider>
           </td>
         </tr>
-      </template>
-    </v-data-table>
+        <tr v-if="!records.length">
+          <td colspan="5" class="pa-0 text-no-wrap text--secondary text-center">
+            <p class="mb-2"><small> 无更多记录 </small></p>
+          </td>
+        </tr>
+
+        <tr>
+          <td colspan="5">
+            <v-layout v-if="totalPage >= 1" justify-end>
+              <v-pagination
+                v-model="currentPage"
+                @input="onPaginationInput"
+                :length="totalPage"
+                :total-visible="5"
+              ></v-pagination>
+            </v-layout>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+
     <CardEmpty :visible="!totalPage && isReady" />
-    <v-layout v-if="totalPage >= 2" class="pt-4" justify-end>
-      <v-pagination
-        v-model="currentPage"
-        @input="onPaginationInput"
-        :length="totalPage"
-        :total-visible="5"
-      ></v-pagination>
-    </v-layout>
 
     <v-layout justify-center>
       <v-expand-transition>
         <div v-if="gameClosed">
-          <div class="pt-16">
-            <v-img src="/svg/no_data.svg" max-width="150" />
-          </div>
+          <v-card min-width="20rem" class="py-8" flat>
+            <v-img class="mx-auto" src="/svg/no_data.svg" max-width="150" />
+          </v-card>
         </div>
       </v-expand-transition>
     </v-layout>
@@ -176,7 +173,17 @@ export default {
       this.gameClosed = false;
       const uid = this.$cookiz.get("m6_uid");
       const r = Math.random().toFixed(16);
-      return this.$axios.$get("/api-base/GetCloseTime", { params: { uid, r } });
+      const response = this.$axios.$get("/api-base/GetCloseTime", {
+        params: { uid, r },
+      });
+      response
+        .then((r) => {
+          console.log(r);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+      return response;
     },
     onPaginationInput() {
       setTimeout(() => {
@@ -190,7 +197,7 @@ export default {
         console.log(res);
         console.log(!res?.code && !!res?.seconds);
         if (!res?.code && !!res?.seconds) this.fetchDataList();
-        if (!res) {
+        else {
           this.bittingClosed = true;
           this.gameClosed = true;
         }
@@ -202,4 +209,28 @@ export default {
 };
 </script>
 
-<style></style>
+<style lang="scss">
+.table-unsettle {
+  width: 100%;
+  border-collapse: collapse;
+  thead tr {
+    background-color: #1976d222;
+    th:nth-last-child(2),
+    th:first-child,
+    th:last-child {
+      width: 100px;
+    }
+  }
+
+  tr th,
+  tr td {
+    text-align: center;
+    border: 1px solid #ccc;
+    padding: 0.125rem 0.125rem;
+  }
+  tbody tr td {
+    font-size: 14px;
+    font-weight: normal;
+  }
+}
+</style>

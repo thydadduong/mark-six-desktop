@@ -1,7 +1,7 @@
 <template>
-  <v-sheet>
+  <v-sheet color="transparent">
     <Toolbar title="未结明细" />
-    <v-card flat>
+    <v-card class="mx-auto" color="transparent" width="850" flat>
       <UnsettleTable />
     </v-card>
   </v-sheet>
