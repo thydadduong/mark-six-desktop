@@ -166,9 +166,6 @@
       :propertyTitle="selectedProp.title"
       :amount="inputAmount"
     />
-    <v-overlay :value="loadingRates">
-      <v-progress-circular indeterminate />
-    </v-overlay>
   </div>
 </template>
 

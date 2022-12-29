@@ -88,10 +88,6 @@
         type="7"
       />
     </v-card>
-
-    <v-overlay :value="loadingRates">
-      <v-progress-circular indeterminate />
-    </v-overlay>
   </v-container>
 </template>
 

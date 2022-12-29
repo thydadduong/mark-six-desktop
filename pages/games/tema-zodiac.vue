@@ -34,10 +34,6 @@
       :edited-item="editedItem"
       type="7"
     />
-
-    <v-overlay :value="loadingRates">
-      <v-progress-circular indeterminate />
-    </v-overlay>
   </div>
 </template>
 

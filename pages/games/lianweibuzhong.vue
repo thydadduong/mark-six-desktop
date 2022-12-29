@@ -77,10 +77,6 @@
       :propertyTitle="selectedProp.title"
       :rate="minRate"
     />
-
-    <v-overlay :value="loadingRates">
-      <v-progress-circular indeterminate />
-    </v-overlay>
   </div>
 </template>
 

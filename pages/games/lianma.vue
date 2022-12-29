@@ -180,10 +180,6 @@
       :fixedFrontIndex="fixedFrontIndex"
       type="4"
     />
-
-    <v-overlay :value="loadingRates">
-      <v-progress-circular indeterminate />
-    </v-overlay>
   </div>
 </template>
 

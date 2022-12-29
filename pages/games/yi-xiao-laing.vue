@@ -33,10 +33,6 @@
       :gClass="8"
       :tot_num="selectedList.length"
     />
-
-    <v-overlay :value="loadingRates">
-      <v-progress-circular indeterminate />
-    </v-overlay>
   </div>
 </template>
 

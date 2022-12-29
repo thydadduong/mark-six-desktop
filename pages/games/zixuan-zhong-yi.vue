@@ -166,9 +166,6 @@
       :typeTitle="selectedType.title"
       :propertyTitle="selectedProp.title"
     />
-    <v-overlay :value="loadingRates">
-      <v-progress-circular indeterminate />
-    </v-overlay>
   </div>
 </template>
 

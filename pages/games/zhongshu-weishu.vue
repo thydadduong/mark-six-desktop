@@ -46,10 +46,6 @@
       :visible.sync="bittingInputs"
       :edited-item="editedItem"
     />
-
-    <v-overlay :value="loadingRates">
-      <v-progress-circular indeterminate />
-    </v-overlay>
   </div>
 </template>
 

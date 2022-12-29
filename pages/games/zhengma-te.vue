@@ -158,10 +158,6 @@
       :amount="inputAmount"
       :type="activeType.value"
     />
-
-    <v-overlay :value="loadingRates">
-      <v-progress-circular indeterminate />
-    </v-overlay>
   </div>
 </template>
 

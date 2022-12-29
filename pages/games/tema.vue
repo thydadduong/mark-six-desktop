@@ -166,10 +166,6 @@
       :edited-item="editedItem"
       type="1"
     />
-
-    <v-overlay :value="loadingRates">
-      <v-progress-circular indeterminate />
-    </v-overlay>
   </div>
 </template>
 
@@ -312,7 +308,6 @@ export default {
       this.$axios
         .$get("/api-base/GetOdds", { params: { uid, r, order_type, type: 1 } })
         .then((res) => {
-          this.loadingRates = false;
           if (!res.list) return;
           const _refs = {};
           res.list.forEach((item) => {
@@ -323,6 +318,9 @@ export default {
         })
         .catch((error) => {
           console.log(error);
+        })
+        .finally(() => {
+          this.loadingRates = false;
         });
     },
     switchChannel(channel) {
