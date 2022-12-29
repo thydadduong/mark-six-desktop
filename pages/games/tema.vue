@@ -1,7 +1,7 @@
 <template>
   <div>
     <v-layout class="gap-sm">
-      <v-sheet>
+      <v-sheet color="transparent" width="900">
         <GameActionBar>
           <v-btn-toggle
             v-model="activeChannel"
@@ -25,9 +25,8 @@
               <v-sheet
                 v-for="(luckNumbs, key) in gridBalls"
                 :key="`lucky-number-${key}`"
-                width="165"
               >
-                <table class="game-item-table disable-select">
+                <table class="game-item-table item-49 disable-select">
                   <tbody>
                     <tr
                       v-for="item in luckNumbs"
@@ -57,7 +56,6 @@
                             :id="item.play_id"
                             :name="item.play_id"
                             class="text-right px-1 hidden-spin"
-                            
                             type="number"
                           />
                         </td>
@@ -78,7 +76,6 @@
                         <td>
                           <input
                             @click.stop="onClickInputReadonly(item)"
-                            
                             class="text-right px-1"
                             tabindex="-1"
                             readonly

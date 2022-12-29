@@ -1,7 +1,7 @@
 <template>
   <div>
     <v-layout class="gap-sm">
-      <v-sheet color="transparent" width="850">
+      <v-sheet color="transparent" width="900">
         <GameActionBar> 一尾量 </GameActionBar>
         <v-divider></v-divider>
 
