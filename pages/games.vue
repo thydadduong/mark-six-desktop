@@ -7,12 +7,16 @@
       flat
       dark
     >
-      <v-sheet width="14rem"></v-sheet>
-      <v-toolbar-title
-        class="white primary--text px-4 my-4 py-1 body-1 fill-height"
+      <v-sheet width="17.12rem"></v-sheet>
+
+      <v-tabs
+        v-for="(item, key) in gameList"
+        :key="`game-${key}`"
+        active-class="white primary--text"
+        hide-slider
       >
-        {{ gameTitle }}
-      </v-toolbar-title>
+        <v-tab class="text-none body-2" to="/games">{{ item.title }}</v-tab>
+      </v-tabs>
       <v-spacer></v-spacer>
     </v-toolbar>
     <v-layout class="elevation-1">
@@ -134,6 +138,7 @@ export default {
   computed: {
     ...mapState("profile", ["gameTable"]),
     ...mapState("game", ["activeGameTitle"]),
+    ...mapState("game", { isLoading: "isLoading", gameList: "records" }),
     gameTimeoutTitle() {
       return `${this.activeGameTitle || ""} 暂停销售`;
     },
@@ -184,11 +189,12 @@ export default {
     },
     timerColor() {
       return this.closeTimer > 0
-        ? "success--text text-darken-1"
+        ? "success--text text--darken-1"
         : "error--text";
     },
   },
   methods: {
+    ...mapActions("game", ["getGameList"]),
     ...mapActions("profile", ["getGameTable"]),
     getCloseTime() {
       const uid = this.$cookiz.get("m6_uid");
@@ -305,6 +311,7 @@ export default {
   },
   mounted() {
     const uid = this.$cookiz.get("m6_uid");
+    this.getGameList();
     this.getIssueID(uid);
     this.getCloseTime();
     this.gitLastResult();
