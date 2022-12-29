@@ -203,6 +203,7 @@ export default {
     onSaveAmount() {
       this.selectedList = [];
       this.getOddValues();
+      this.$store.dispatch("lottery/getRecentBets");
     },
   },
   mounted() {

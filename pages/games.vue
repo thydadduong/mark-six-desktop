@@ -38,7 +38,7 @@
         width="15rem"
         color="transparent"
       >
-        <v-card :loading="loadingRecent" elevation="1" tile>
+        <v-card :loading="loadingBet" elevation="1" tile>
           <v-card-text
             style="background: linear-gradient(0deg, #dae8fc, #fff)"
             class="primary--text pa-1 text-center"
@@ -52,7 +52,7 @@
           >
             未结金额：0
           </v-card-text> -->
-          <v-card-text v-if="!recentList.length">
+          <v-card-text v-if="!recentBets.length">
             <v-layout justify-center class="py-8">
               <v-card rounded="circle" outlined>
                 <v-avatar size="100">
@@ -64,7 +64,7 @@
             </v-layout>
           </v-card-text>
           <v-list dense>
-            <template v-for="([date, item, amount], key) in recentList">
+            <template v-for="([date, item, amount], key) in recentBets">
               <v-list-item :key="`item-${key}`" class="px-2 align-start">
                 <v-list-item-action class="body-2 mr-2 my-1 mb-auto">
                   {{ date }}
@@ -83,7 +83,7 @@
               </v-list-item>
               <v-divider
                 :key="`item-divider-${key}`"
-                v-if="recentList.length - 1 > key"
+                v-if="recentBets.length - 1 > key"
               ></v-divider>
             </template>
           </v-list>
@@ -123,8 +123,6 @@ export default {
   name: "GameLayout",
   data() {
     return {
-      loadingRecent: false,
-      recentList: [],
       bittingClosed: false,
       drawerRight: false,
       tempTable: "",
@@ -137,6 +135,7 @@ export default {
   },
   computed: {
     ...mapState("profile", ["gameTable"]),
+    ...mapState("lottery", ["loadingBet", "recentBets"]),
     ...mapState("game", ["activeGameTitle"]),
     ...mapState("game", { isLoading: "isLoading", gameList: "records" }),
     gameTimeoutTitle() {
@@ -195,6 +194,7 @@ export default {
   },
   methods: {
     ...mapActions("game", ["getGameList"]),
+    ...mapActions("lottery", ["getRecentBets"]),
     ...mapActions("profile", ["getGameTable"]),
     getCloseTime() {
       const uid = this.$cookiz.get("m6_uid");
@@ -291,20 +291,6 @@ export default {
         this.getCloseTime();
       }, 1000 * 30);
     },
-    getDynamicData() {
-      this.loadingRecent = true;
-      const _uri = "/api-base/Dynamic";
-      const UID = this.$cookiz.get("m6_uid");
-      this.$axios
-        .$get(_uri, { params: { UID } })
-        .then((res) => {
-          if (res.code !== 0) return;
-          this.recentList = Object.assign([], res.recent);
-        })
-        .finally((error) => {
-          this.loadingRecent = false;
-        });
-    },
     displayText(text = "") {
       return text.split("(");
     },
@@ -316,7 +302,7 @@ export default {
     this.getCloseTime();
     this.gitLastResult();
     this.startIntervalRequest();
-    this.getDynamicData();
+    this.getRecentBets();
   },
   beforeDestroy() {
     clearInterval(this.timerInterval);
