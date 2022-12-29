@@ -48,7 +48,7 @@
         color="transparent"
         width="150"
       >
-        <input placeholder="0" hide-details outlined dense />
+        <input  hide-details outlined dense />
       </v-sheet>
     </v-layout>
   </v-card>

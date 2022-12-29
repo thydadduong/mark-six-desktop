@@ -54,7 +54,7 @@
                     v-model.number="editedItem.amount"
                     :rules="$formRules.bittingAmount"
                     :readonly="!customAmount"
-                    placeholder="0"
+                    
                     outlined
                     dense
                   /> -->
@@ -63,7 +63,7 @@
                     v-model.number="editedItem.amount"
                     :disabled="!customAmount"
                     class="hidden-spin"
-                    placeholder="0"
+                    
                     type="number"
                     required
                     outlined

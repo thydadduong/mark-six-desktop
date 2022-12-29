@@ -46,7 +46,7 @@
                     v-model.number="editedItem.amount"
                     :disabled="!customAmount"
                     class="hidden-spin"
-                    placeholder="0"
+                    
                     type="number"
                     required
                     outlined

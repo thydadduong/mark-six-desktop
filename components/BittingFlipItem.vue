@@ -28,7 +28,7 @@
                   :id="item.play_id"
                   :name="item.play_id"
                   class="text-right px-1 hidden-spin"
-                  placeholder="0"
+                  
                   type="number"
                 />
               </td>
@@ -42,7 +42,7 @@
                 <input
                   @click.stop="onClickInputReadonly(item)"
                   class="hidden-spin text-right px-1"
-                  placeholder="0"
+                  
                   type="number"
                   tabindex="-1"
                   readonly

@@ -53,7 +53,7 @@
                     v-model.number="ball.amount"
                     :disabled="!customAmount"
                     class="hidden-spin"
-                    placeholder="0"
+                    
                     type="number"
                     required
                     outlined

@@ -43,7 +43,7 @@
         :rules="$formRules.bittingAmount"
         :value="value"
         style="max-width: 75px"
-        placeholder="0"
+        
         dense
         outlined
         hide-details

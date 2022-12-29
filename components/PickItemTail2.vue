@@ -27,7 +27,7 @@
                   :id="subitem.play_id"
                   :name="subitem.play_id"
                   class="text-right px-1 hidden-spin"
-                  placeholder="0"
+                  
                   type="number"
                 />
               </td>
@@ -42,7 +42,7 @@
               <td>
                 <input
                   @click.stop="toggleSelectItem(subitem)"
-                  placeholder="0"
+                  
                   class="text-right px-1"
                   tabindex="-1"
                   readonly

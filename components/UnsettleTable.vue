@@ -176,14 +176,7 @@ export default {
       this.gameClosed = false;
       const uid = this.$cookiz.get("m6_uid");
       const r = Math.random().toFixed(16);
-      return this.$axios
-        .$get("/api-base/GetCloseTime", { params: { uid, r } })
-        .then((r) => {
-          console.log("re");
-        })
-        .catch((err) => {
-          console.log(err);
-        });
+      return this.$axios.$get("/api-base/GetCloseTime", { params: { uid, r } });
     },
     onPaginationInput() {
       setTimeout(() => {
@@ -194,6 +187,8 @@ export default {
   mounted() {
     this.getCloseTime()
       .then((res) => {
+        console.log(res);
+        console.log(!res?.code && !!res?.seconds);
         if (!res?.code && !!res?.seconds) this.fetchDataList();
         if (!res) {
           this.bittingClosed = true;

@@ -42,7 +42,7 @@
               :id="item.play_id"
               :name="item.play_id"
               class="text-right px-1 hidden-spin"
-              placeholder="0"
+              
               type="number"
             />
           </td>
@@ -68,7 +68,7 @@
           <td>
             <input
               @click.stop="toggleSelectItem(item)"
-              placeholder="0"
+              
               class="text-right px-1"
               tabindex="-1"
               readonly
