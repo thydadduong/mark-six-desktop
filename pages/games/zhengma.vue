@@ -19,7 +19,7 @@
           </v-btn-toggle>
         </GameActionBar>
         <v-divider></v-divider>
-        <v-card :disabled="loadingRates" class="pa-2" flat tile>
+        <v-card class="pa-2" flat tile>
           <v-form ref="formItem">
             <v-layout class="gap-xs">
               <v-sheet
@@ -131,7 +131,7 @@
           </v-card-text>
           <v-divider></v-divider>
           <section>
-            <v-card :disabled="loadingRates" class="mb-4" flat tile>
+            <v-card class="mb-4" flat tile>
               <v-card-text class="pa-1">
                 <Shortcut49
                   @click:item="onClickItem49"
@@ -157,7 +157,6 @@
       :edited-item="editedItem"
       type="2"
     />
-
   </div>
 </template>
 

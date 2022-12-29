@@ -32,7 +32,7 @@
             </v-card>
             <v-divider class="mb-4"></v-divider>
 
-            <v-card :disabled="loadingRates" class="mb-4" flat tile>
+            <v-card class="mb-4" flat tile>
               <v-item-group v-model="selectedList" multiple>
                 <v-layout wrap>
                   <v-sheet

@@ -1,5 +1,5 @@
 <template>
-  <v-card :disabled="bittingClosed" color="transparent" flat tile>
+  <v-card color="transparent" flat tile>
     <v-toolbar
       class="main-toolbar"
       color="primary darken-1"
@@ -7,7 +7,7 @@
       flat
       dark
     >
-      <v-sheet width="17.12rem"></v-sheet>
+      <v-sheet class="flex-shrink-0" width="14rem"></v-sheet>
 
       <v-tabs
         v-for="(item, key) in gameList"
@@ -105,7 +105,7 @@
     <DialogMessageBox ref="dialogMessage" auto-close />
     <portal to="closeTimer">
       <v-layout class="gap-xs" align-center justify-end>
-        <p class="mb-0">期开奖:</p>
+        <p class="mb-0">{{ issueNumber }}: 期开奖:</p>
         <p class="mb-0 font-weight-medium" :class="timerColor" flat>
           {{ displayTimeCounter }}
         </p>

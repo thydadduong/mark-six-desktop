@@ -5,7 +5,7 @@
         <GameActionBar> 一尾量 </GameActionBar>
         <v-divider></v-divider>
 
-        <v-card :disabled="loadingRates" class="pa-2" flat tile>
+        <v-card class="pa-2" flat tile>
           <v-form ref="formItem">
             <PickItemTail2
               @toggle-item="toggleSelectItem"
