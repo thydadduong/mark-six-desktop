@@ -114,7 +114,8 @@
             />
             <v-sheet height="8"></v-sheet>
             <ActionBarBallAmount
-              @set-amount="setItemAmount"
+              v-model="amount"
+              @change="setItemAmount"
               @compose="openDialogBitting"
               @clear="clearSelection"
             />
@@ -175,6 +176,7 @@ export default {
   name: "PageLuckyDraw",
   data() {
     return {
+      amount: undefined,
       activeShortcut: "",
       inputAmount: 5,
       bittingInputs: false,
@@ -226,6 +228,15 @@ export default {
       this.$refs.colorItem.setItemAmount(value);
       this.$refs.flipItem.setItemAmount(value);
     },
+    setItemAmountIndividual(play_id, value) {
+      setTimeout(() => {
+        if (!!this.$refs[play_id]?.[0]) {
+          this.$refs[play_id][0].value = value;
+        }
+        this.$refs.colorItem.setItemAmountIndividual(play_id, value);
+        this.$refs.flipItem.setItemAmountIndividual(play_id, value);
+      }, 50);
+    },
     onClickInputReadonly(item) {
       this.toggleSelectItem(item);
       setTimeout(() => {
@@ -239,6 +250,7 @@ export default {
       );
       if (index != -1) return this.selectedList.splice(index, 1);
       this.selectedList.push(item);
+      this.setItemAmountIndividual(item.play_id, this.amount);
     },
     onClickItem49(item) {
       let ballItem;
@@ -340,6 +352,7 @@ export default {
       this.getOddValues();
       this.$store.dispatch("lottery/getRecentBets");
     },
+    onBetAmountUpdate(v) {},
   },
   mounted() {
     clearInterval(this.intervalRequest);

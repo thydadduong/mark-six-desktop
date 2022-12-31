@@ -23,7 +23,6 @@
                   :id="item.play_id"
                   :name="item.play_id"
                   class="text-right px-1 hidden-spin"
-                  
                   type="number"
                 />
               </td>
@@ -37,7 +36,6 @@
                 <input
                   @click.stop="onClickInputReadonly(item)"
                   class="hidden-spin text-right px-1"
-                  
                   type="number"
                   tabindex="-1"
                   readonly
@@ -88,6 +86,11 @@ export default {
         const _item = this.$refs[item.play_id]?.[0];
         if (_item) _item.value = value;
       });
+    },
+    setItemAmountIndividual(play_id, value) {
+      if (!!this.$refs[play_id]?.[0]) {
+        this.$refs[play_id][0].value = value;
+      }
     },
   },
 };

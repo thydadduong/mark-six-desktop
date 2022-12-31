@@ -22,7 +22,6 @@ const actions = {
   },
 
   getRecentBets({ commit }) {
-    console.log('gettign');
     commit("LOADING_BET", false);
     const _uri = "/api-base/Dynamic";
     const UID = this.$cookiz.get("m6_uid");

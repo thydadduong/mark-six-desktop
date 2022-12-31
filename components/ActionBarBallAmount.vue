@@ -4,7 +4,7 @@
       <v-btn
         v-for="item in valueOptions"
         :key="`option-${item}`"
-        @click="setValue(item)"
+        @click="onInput(item)"
         elevation="1"
         color="teal"
         width="50"
@@ -14,13 +14,38 @@
       >
         {{ item }}
       </v-btn>
+      <div style="width: 150px">
+        <v-layout class="gap-sm" align-center>
+          <span class="text-no-wrap">金额</span>
+          <v-text-field
+            @input="onInput"
+            :value="value"
+            background-color="white"
+            class="amount-input"
+            type="number"
+            hide-details
+            outlined
+            dense
+          ></v-text-field>
+        </v-layout>
+      </div>
+      <v-btn
+        @click="onInput()"
+        class="rounded white"
+        width="40"
+        height="40"
+        outlined
+        fab
+      >
+        重置
+      </v-btn>
       <v-btn
         @click="submit"
         class="rounded"
         color="primary"
-        elevation=""
-        width="50"
-        height="50"
+        elevation="0"
+        width="40"
+        height="40"
         dark
         fab
       >
@@ -31,9 +56,9 @@
         @click="clear"
         class="rounded"
         color="error"
-        elevation=""
-        width="50"
-        height="50"
+        elevation="0"
+        width="40"
+        height="40"
         dark
         fab
       >
@@ -46,7 +71,9 @@
 <script>
 export default {
   name: "ActionBarBallAmount",
-  props: {},
+  props: {
+    value: Number,
+  },
   computed: {
     valueOptions() {
       return [100, 200, 500, 750, 1000];
@@ -59,6 +86,10 @@ export default {
     setValue(value) {
       this.$emit("set-amount", value);
     },
+    onInput(value) {
+      this.$emit("input", value);
+      this.$emit("change", value);
+    },
     submit() {
       this.$emit("compose");
     },
@@ -69,11 +100,27 @@ export default {
 };
 </script>
 
-<style>
+<style lang="scss">
 .game-action-bar.action-bar--fixed {
   position: fixed;
   bottom: 64px;
   left: 1rem;
   right: 1rem;
+}
+
+.game-action-bar {
+  .amount-input.v-text-field.v-text-field--enclosed:not(.v-text-field--rounded)
+    > .v-input__control
+    > .v-input__slot {
+    padding: 0 0.25rem;
+    input {
+      text-align: right;
+    }
+    input::-webkit-outer-spin-button,
+    input::-webkit-inner-spin-button {
+      -webkit-appearance: none;
+      margin: 0;
+    }
+  }
 }
 </style>
