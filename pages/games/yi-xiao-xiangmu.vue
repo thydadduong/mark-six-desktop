@@ -36,7 +36,8 @@
 
               <v-sheet height="8"></v-sheet>
               <ActionBarBallAmount
-                @set-amount="setItemAmount"
+                v-model="amount"
+@change="setItemAmount"
                 @compose="openDialogBitting"
                 @clear="clearSelection"
               />
@@ -65,6 +66,7 @@ export default {
   name: "PageLianxiao",
   data() {
     return {
+      amount: undefined,
       selectedProp: { label: "二肖连", value: 1, type: 14, property: 55 },
       activeShortcut: "",
       inputAmount: 5,

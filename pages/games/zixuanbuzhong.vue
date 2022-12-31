@@ -124,7 +124,8 @@
 
             <v-sheet height="8"></v-sheet>
             <ActionBarBallAmount
-              @set-amount="setItemAmount"
+              v-model="amount"
+@change="setItemAmount"
               @compose="openDialogBitting"
               @clear="clearSelection"
             />
@@ -180,6 +181,7 @@ export default {
   name: "PageZixuanbuzhong",
   data() {
     return {
+      amount: undefined,
       activeShortcut: "",
       selectedProp: {
         title: "五不中",

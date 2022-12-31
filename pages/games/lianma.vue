@@ -123,7 +123,8 @@
             </v-layout>
             <v-sheet height="8"></v-sheet>
             <ActionBarBallAmount
-              @set-amount="setItemAmount"
+              v-model="amount"
+@change="setItemAmount"
               @compose="openDialogBitting"
               @clear="clearSelection"
             />
@@ -193,6 +194,7 @@ export default {
   name: "PageLuckyDraw",
   data() {
     return {
+      amount: undefined,
       activeShortcut: "",
       selectedProp: { title: "三全中", value: 44, min: 3, prefix: "1001" },
       selectedType: { title: "复式", value: 1 },

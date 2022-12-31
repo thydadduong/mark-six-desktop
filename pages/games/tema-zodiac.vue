@@ -18,7 +18,8 @@
               />
               <v-sheet height="8"></v-sheet>
               <ActionBarBallAmount
-                @set-amount="setItemAmount"
+                v-model="amount"
+@change="setItemAmount"
                 @compose="openDialogBitting"
                 @clear="clearSelection"
               />
@@ -45,6 +46,7 @@ export default {
   name: "PageLuckyDraw",
   data() {
     return {
+      amount: undefined,
       countingRequired: 2,
       selectedCombined: 1,
       activeShortcut: "",

@@ -44,7 +44,8 @@
             />
             <v-sheet height="8"></v-sheet>
             <ActionBarBallAmount
-              @set-amount="setItemAmount"
+              v-model="amount"
+@change="setItemAmount"
               @compose="openDialogBitting"
               @clear="clearSelection"
             />
@@ -74,6 +75,7 @@ export default {
   name: "PageLianWei",
   data() {
     return {
+      amount: undefined,
       selectedProp: { title: "二连尾", count: 2, value: 64 },
       selectedType: { label: "复式", value: 1 },
       minRate: "-",

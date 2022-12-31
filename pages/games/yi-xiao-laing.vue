@@ -16,7 +16,8 @@
             />
             <v-sheet height="8"></v-sheet>
             <ActionBarBallAmount
-              @set-amount="setItemAmount"
+              v-model="amount"
+@change="setItemAmount"
               @compose="openDialogBitting"
               @clear="clearSelection"
             />
@@ -43,6 +44,7 @@ export default {
   name: "PageYiXiaoLiang",
   data() {
     return {
+      amount: undefined,
       minRate: "-",
       gameType: 16,
       inputAmount: 5,

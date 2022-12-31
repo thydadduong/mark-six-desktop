@@ -33,7 +33,8 @@
             />
             <v-sheet height="8"></v-sheet>
             <ActionBarBallAmount
-              @set-amount="setItemAmount"
+              v-model="amount"
+@change="setItemAmount"
               @compose="openDialogBitting"
               @clear="clearSelection"
             />
@@ -56,6 +57,7 @@ export default {
   name: "PageLianWei",
   data() {
     return {
+      amount: undefined,
       minRate: "-",
       selectedProperty: { label: "尾数中，", count: 2, value: 1 },
       gameType: 16,
