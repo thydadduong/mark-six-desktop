@@ -5,7 +5,10 @@
       :key="`lucky-number-${key}`"
       width="20%"
     >
-      <table class="game-item-table disable-select">
+      <table
+        class="game-item-table tail disable-select"
+        :class="{ 'no-input': singleAmount }"
+      >
         <tbody>
           <tr
             v-for="subitem in item"
@@ -14,35 +17,39 @@
             class="cursor-pointer"
           >
             <template v-if="isActive(subitem.value)">
-              <td class="primary white--text" style="width: 40px">
+              <td
+                class="game-item-table__title primary white--text"
+                style="width: 40px"
+              >
                 {{ subitem.name }}
               </td>
-              <td class="primary white--text" style="width: 50px">
+              <td
+                class="game-item-table__rate primary white--text"
+                style="width: 50px"
+              >
                 {{ getBallRate(subitem.play_id) }}
               </td>
-              <td class="primary">
+              <td v-if="!singleAmount" class="game-item-table__input primary">
                 <input
                   @click.stop="() => {}"
                   :ref="subitem.play_id"
                   :id="subitem.play_id"
                   :name="subitem.play_id"
                   class="text-right px-1 hidden-spin"
-                  
                   type="number"
                 />
               </td>
             </template>
             <template v-else>
-              <td class="primary--text" style="width: 45px">
+              <td class="game-item-table__title primary--text">
                 {{ subitem.name }}
               </td>
-              <td style="width: 50px">
+              <td class="game-item-table__rate">
                 {{ getBallRate(subitem.play_id) }}
               </td>
-              <td>
+              <td v-if="!singleAmount" class="game-item-table__input">
                 <input
                   @click.stop="toggleSelectItem(subitem)"
-                  
                   class="text-right px-1"
                   tabindex="-1"
                   readonly
@@ -60,6 +67,7 @@
 export default {
   name: "PickItemTail",
   props: {
+    singleAmount: Boolean,
     rates: { type: Object, default: () => ({}) },
     gridItems: { type: Array, default: () => [] },
     selectedItems: { type: Array, default: () => [] },
@@ -80,6 +88,7 @@ export default {
     },
     toggleSelectItem(item) {
       this.$emit("toggle-item", item);
+      if (this.singleAmount) return;
       setTimeout(() => {
         this.$refs[item.play_id][0]?.focus();
       }, 100);

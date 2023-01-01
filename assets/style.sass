@@ -66,12 +66,23 @@ table.game-item-table
         border-bottom: 1px solid white
     td:last-child
         width: 75px
-.game-item-table.item-49
+
+    &.no-input
+        .game-item-table__title,
+        .game-item-table__rate
+            width: 75px
+.game-item-table.item-49,
+.game-item-table.tail
     td:nth-child(2),
     td:first-child
         width: 60px
     td:last-child
         width: unset
+
+    &.no-input
+        .game-item-table__title,
+        .game-item-table__rate
+            width: 50%
 
 table.game-table-animal
     width: 100%

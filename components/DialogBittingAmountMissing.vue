@@ -42,13 +42,12 @@
               <tr>
                 <td class="table-bitting__title">{{ propertyTitle }}</td>
                 <td class="table-bitting__ball">{{ displayBallItems }}</td>
-                <td class="table-bitting__rate">{{ rate }}</td>
+                <td class="table-bitting__rate">{{ editedItem.minRate }}</td>
                 <td class="table-bitting__input">
                   <input
                     v-model.number="editedItem.amount"
                     :disabled="!customAmount"
                     class="hidden-spin"
-                    
                     type="number"
                     required
                     outlined
@@ -92,7 +91,6 @@ export default {
     typeTitle: String,
     propertyTitle: String,
     type: [String, Number],
-    rate: [Number, String],
     bitNumber: { type: [Number, String], default: "—" },
     editedItem: { type: Object, default: () => ({ balls: [], amount: 5 }) },
   },

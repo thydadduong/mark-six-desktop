@@ -48,22 +48,12 @@
                 <td class="table-bitting__ball">
                   {{ displayBallItems }}
                 </td>
-                <td class="table-bitting__rate">{{ editedItem.minRate }}0</td>
+                <td class="table-bitting__rate">{{ editedItem.minRate }}</td>
                 <td class="table-bitting__input">
-                  <!-- <v-text-field
-                    v-model.number="editedItem.amount"
-                    :rules="$formRules.bittingAmount"
-                    :readonly="!customAmount"
-                    
-                    outlined
-                    dense
-                  /> -->
-
                   <input
                     v-model.number="editedItem.amount"
                     :disabled="!customAmount"
                     class="hidden-spin"
-                    
                     type="number"
                     required
                     outlined
@@ -276,8 +266,6 @@ function compose_payload(
     ret["orderName"] = t["name"];
   }
 
-  console.log(ret);
-
   return encode_str(ret);
 }
 
@@ -298,7 +286,6 @@ export default {
   props: {
     visible: Boolean,
     loading: Boolean,
-    amount: [Number, String],
     type: [String, Number],
     property: [String, Number],
     typeTitle: String,
@@ -370,14 +357,13 @@ export default {
         this.typeTitle,
         balls,
         rates,
-        this.amount
+        this.editedItem.amount
       );
       const _URI =
         this.typeTitle == "胆拖"
           ? "/api-base/SaveFixedFront"
           : "/api-base/SaveMultiple";
 
-      console.log(_qs);
       const options = {
         headers: { "Content-Type": "application/x-www-form-urlencoded" },
         params: { UID: uid },

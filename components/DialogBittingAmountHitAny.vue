@@ -54,7 +54,6 @@
                     v-model.number="editedItem.amount"
                     :disabled="!customAmount"
                     class="hidden-spin"
-                    
                     type="number"
                     required
                     outlined
@@ -98,7 +97,6 @@ export default {
     typeTitle: String,
     propertyTitle: String,
     type: [String, Number],
-    amount: [String, Number],
     editedItem: { type: Object, default: () => ({ balls: [] }) },
   },
   data() {
@@ -155,7 +153,7 @@ export default {
         this.typeTitle,
         balls,
         rates,
-        +this.amount
+        +this.editedItem.amount
       );
       const options = {
         headers: { "Content-Type": "application/x-www-form-urlencoded" },

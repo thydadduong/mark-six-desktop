@@ -22,6 +22,8 @@
               {{ item.title }}
             </v-btn>
           </v-btn-toggle>
+        </GameActionBar>
+        <GameActionBarFlat>
           <v-btn-toggle
             v-model="selectedType"
             @change="onSubOptionChange"
@@ -40,92 +42,22 @@
               {{ item.title }}
             </v-btn>
           </v-btn-toggle>
-        </GameActionBar>
+        </GameActionBarFlat>
         <v-divider></v-divider>
         <v-card class="pa-2" flat tile>
           <v-form ref="formItem">
-            <v-layout class="gap-xs">
-              <v-sheet
-                v-for="(luckNumbs, key) in gridBalls"
-                :key="`lucky-number-${key}`"
-              >
-                <table class="game-item-table item-49 disable-select">
-                  <tbody>
-                    <tr
-                      v-for="item in luckNumbs"
-                      :key="`lucky-number-item-${key}-${item.play_id}`"
-                      @click="toggleSelectItem(item)"
-                      class="cursor-pointer"
-                    >
-                      <template v-if="isActive(item.label)">
-                        <td class="white--text primary">
-                          <v-avatar
-                            :color="$common.getBallColor(item.value)"
-                            class="darken-1"
-                            size="26"
-                          >
-                            <small class="font-weight-bold">
-                              {{ item.label || "-" }}
-                            </small>
-                          </v-avatar>
-                        </td>
-                        <td class="primary white--text">
-                          {{ getBallRate(item.label) }}
-                        </td>
-                        <td class="primary">
-                          <input
-                            @click.stop="() => {}"
-                            :ref="item.play_id"
-                            :id="item.play_id"
-                            :name="item.play_id"
-                            class="text-right px-1 hidden-spin"
-                            type="number"
-                          />
-                        </td>
-                      </template>
-                      <template v-else>
-                        <td>
-                          <v-avatar
-                            :color="$common.getBallColor(item.value)"
-                            class="white--text"
-                            size="26"
-                          >
-                            <small class="font-weight-bold">
-                              {{ item.label || "-" }}
-                            </small>
-                          </v-avatar>
-                        </td>
-                        <td>{{ getBallRate(item.label) }}</td>
-                        <td>
-                          <input
-                            @click.stop="onClickInputReadonly(item)"
-                            class="text-right px-1"
-                            tabindex="-1"
-                            readonly
-                          />
-                        </td>
-                      </template>
-                    </tr>
-                    <tr v-if="key == 4">
-                      <td>
-                        <v-sheet color="transparent" height="26"></v-sheet>
-                      </td>
-                      <td>
-                        <v-sheet color="transparent" height="26"></v-sheet>
-                      </td>
-                      <td>
-                        <v-sheet color="transparent" height="26"></v-sheet>
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </v-sheet>
-            </v-layout>
+            <BittingItem49
+              @toggle-item="toggleSelectItem"
+              :gridItems="gridBalls"
+              :selectedItems="selectedList"
+              :rates="itemsRate"
+              ref="item49Picker"
+              single-amount
+            />
             <v-sheet height="8"></v-sheet>
 
             <ActionBarBallAmount
-              v-model="amount"
-              @change="setItemAmount"
+              v-model="editedItem.amount"
               @compose="openDialogBitting"
               @clear="clearSelection"
             />
@@ -162,7 +94,6 @@
       :type="selectedProp.type"
       :typeTitle="selectedType.title"
       :propertyTitle="selectedProp.title"
-      :amount="inputAmount"
     />
   </div>
 </template>
@@ -170,6 +101,7 @@
 <script>
 import { gridNumbers } from "~/models/balls-map";
 import { POSITION } from "vue-toastification";
+import GameActionBarFlat from "~/components/GameActionBarFlat.vue";
 
 export default {
   name: "PageTepingzhong",
@@ -181,7 +113,7 @@ export default {
       selectedType: { title: "复式", value: 1 },
       inputAmount: 5,
       bittingInputs: false,
-      editedItem: { balls: [] },
+      editedItem: { balls: [], amount: 0 },
       closeTimer: 0,
       issueId: "",
       selectedList: [],
@@ -194,11 +126,21 @@ export default {
     selectedItems() {
       return this.selectedList.map((item) => item.value);
     },
+    itemsRate() {
+      const rates = {};
+      this.gridBalls.forEach((subitems) => {
+        subitems.forEach(({ name, play_id }) => {
+          rates[play_id] = this.getBallRate(name);
+        });
+      });
+      return rates;
+    },
     gridBalls() {
       return gridNumbers.map((cols) =>
         cols.map((ball) => ({
           play_id: this.$common.getPlayId("2002", ball),
           label: this.$common.getNumberLabel(ball),
+          name: this.$common.getNumberLabel(ball),
           value: ball,
           color: this.$common.getBallColor(ball),
         }))
@@ -219,10 +161,7 @@ export default {
   },
   methods: {
     setItemAmount(value) {
-      this.selectedList.forEach((item) => {
-        const _item = this.$refs[item.play_id]?.[0];
-        if (_item) _item.value = value;
-      });
+      this.$refs.item49Picker.setItemAmount(value);
     },
     onClickInputReadonly(item) {
       this.toggleSelectItem(item);
@@ -266,7 +205,6 @@ export default {
     selectBalls(items = [], type) {
       this.selectedList = Object.assign([], []);
       this.activeShortcut = type;
-
       if (items.every((item) => this.selectedList.includes(item))) {
         items.forEach((item) => {
           let index = this.selectedList.indexOf(item);
@@ -282,7 +220,6 @@ export default {
     },
     openDialogBitting() {
       const minSelected = this.selectedProp.value;
-
       if (this.selectedList.length < minSelected)
         return this.$toast.error(`请至少选择 ${minSelected} 项`, {
           position: POSITION.TOP_CENTER,
@@ -294,10 +231,6 @@ export default {
         amount: +formData.get(item.play_id) || 0,
       }));
       this.editedItem.balls = Object.assign([], _balls);
-      this.editedItem.amount =
-        Math.min(
-          ...this.selectedList.map((item) => formData.get(item.play_id) || 0)
-        ) || 0;
       this.editedItem.minRate = Math.min(
         ...this.selectedList.map((item) => this.getBallRate(item.label))
       );
@@ -364,5 +297,6 @@ export default {
   beforeDestroy() {
     clearInterval(this.intervalRequest);
   },
+  components: { GameActionBarFlat },
 };
 </script>

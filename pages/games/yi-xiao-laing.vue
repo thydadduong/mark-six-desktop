@@ -17,7 +17,7 @@
             <v-sheet height="8"></v-sheet>
             <ActionBarBallAmount
               v-model="amount"
-@change="setItemAmount"
+              @change="setItemAmount"
               @compose="openDialogBitting"
               @clear="clearSelection"
             />

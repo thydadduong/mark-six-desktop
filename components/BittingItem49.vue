@@ -1,12 +1,12 @@
 <template>
-  <v-row dense>
-    <v-col
+  <v-layout class="gap-xs">
+    <v-sheet
       v-for="(item, key) in gridItems"
       :key="`lucky-number-${key}`"
-      cols="6"
+      width="calc(100% / 3)"
     >
       <table
-        class="game-item-table disable-select"
+        class="game-item-table item-49 disable-select"
         :class="{ 'no-input': singleAmount }"
       >
         <tbody>
@@ -14,25 +14,19 @@
             v-for="subitem in item"
             :key="`lucky-number-item-${key}-${subitem.play_id}`"
             @click="toggleSelectItem(subitem)"
+            class="cursor-pointer"
           >
             <template v-if="isActive(subitem.value)">
-              <td class="game-item-table__title primary white--text">
+              <td
+                class="game-item-table__title primary white--text"
+                style="width: 40px"
+              >
                 {{ subitem.name }}
               </td>
-              <td class="game-item-table__ball primary text-left px-4">
-                <v-avatar
-                  v-for="(ball, index) in subitem.balls"
-                  :key="`ball-${key}-${subitem.play_id}-${index}`"
-                  class="mr-1 mb-1"
-                  color="white"
-                  size="26"
-                >
-                  <small class="font-weight-bold">
-                    {{ ball.label || "-" }}
-                  </small>
-                </v-avatar>
-              </td>
-              <td class="game-item-table__rate primary white--text">
+              <td
+                class="game-item-table__rate primary white--text"
+                style="width: 50px"
+              >
                 {{ getBallRate(subitem.play_id) }}
               </td>
               <td v-if="!singleAmount" class="game-item-table__input primary">
@@ -47,26 +41,16 @@
               </td>
             </template>
             <template v-else>
-              <td class="game-item-table__title">
+              <td
+                :class="ballColor(subitem.name)"
+                class="game-item-table__title"
+              >
                 {{ subitem.name }}
-              </td>
-              <td class="game-item-table__ball text-left px-4">
-                <v-avatar
-                  v-for="(ball, index) in subitem.balls"
-                  :key="`ball-${key}-${subitem.play_id}-${index}`"
-                  :color="$common.getBallColor(ball.value)"
-                  class="white--text mr-1 mb-1"
-                  size="26"
-                >
-                  <small class="font-weight-bold">
-                    {{ ball.label || "-" }}
-                  </small>
-                </v-avatar>
               </td>
               <td class="game-item-table__rate">
                 {{ getBallRate(subitem.play_id) }}
               </td>
-              <td class="game-item-table__input" v-if="!singleAmount">
+              <td v-if="!singleAmount" class="game-item-table__input">
                 <input
                   @click.stop="toggleSelectItem(subitem)"
                   class="text-right px-1"
@@ -78,13 +62,13 @@
           </tr>
         </tbody>
       </table>
-    </v-col>
-  </v-row>
+    </v-sheet>
+  </v-layout>
 </template>
 
 <script>
 export default {
-  name: "PickItemAnimal",
+  name: "BittingItem49",
   props: {
     singleAmount: Boolean,
     rates: { type: Object, default: () => ({}) },
@@ -95,6 +79,10 @@ export default {
   methods: {
     isActive(value) {
       return !!this.selectedItems.find((item) => item.value == value);
+    },
+    ballColor(name) {
+      const color = this.$common.getBallColor(name) || "primary";
+      return `${color}--text`;
     },
     setItemAmount(value) {
       this.selectedItems.forEach((item) => {

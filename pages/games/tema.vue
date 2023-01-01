@@ -223,7 +223,7 @@ export default {
     setItemAmount(value) {
       this.selectedList.forEach((item) => {
         const _item = this.$refs[item.play_id]?.[0];
-        if (_item) _item.value = value;
+        if (_item && !_item.value) _item.value = value;
       });
       this.$refs.colorItem.setItemAmount(value);
       this.$refs.flipItem.setItemAmount(value);

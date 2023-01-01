@@ -40,11 +40,11 @@
               :gridItems="gridBalls"
               :selectedItems="selectedList"
               ref="tailItemPicker"
+              single-amount
             />
             <v-sheet height="8"></v-sheet>
             <ActionBarBallAmount
-              v-model="amount"
-@change="setItemAmount"
+              v-model="editedItem.amount"
               @compose="openDialogBitting"
               @clear="clearSelection"
             />
@@ -193,8 +193,6 @@ export default {
         amount: formData.get(item.play_id) || 0,
       }));
       this.editedItem.balls = Object.assign([], _balls);
-      this.editedItem.amount =
-        Math.min(..._balls.map((item) => item.amount)) || 0;
       this.minRate = Math.min(..._balls.map((item) => item.rate));
       this.bittingInputs = true;
     },

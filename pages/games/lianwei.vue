@@ -19,6 +19,8 @@
               {{ item.title }}
             </v-btn>
           </v-btn-toggle>
+        </GameActionBar>
+        <GameActionBarFlat>
           <v-btn-toggle v-model="selectedType" color="primary" mandatory>
             <v-btn
               v-for="(item, key) in typeOptions"
@@ -30,7 +32,7 @@
               {{ item.label }}
             </v-btn>
           </v-btn-toggle>
-        </GameActionBar>
+        </GameActionBarFlat>
 
         <v-divider></v-divider>
         <v-card class="pa-2" flat tile>
@@ -41,11 +43,11 @@
               :gridItems="gridBalls"
               :selectedItems="selectedList"
               ref="tailItemPicker"
+              single-amount
             />
             <v-sheet height="8"></v-sheet>
             <ActionBarBallAmount
-              v-model="amount"
-@change="setItemAmount"
+              v-model="editedItem.amount"
               @compose="openDialogBitting"
               @clear="clearSelection"
             />
@@ -170,8 +172,6 @@ export default {
       }));
       this.editedItem.balls = Object.assign([], _balls);
       this.minRate = Math.min(..._balls.map((item) => item.rate));
-      this.editedItem.amount =
-        Math.min(..._balls.map((item) => item.amount)) || 0;
       this.bittingInputs = true;
     },
     getOddValues() {

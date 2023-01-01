@@ -19,6 +19,8 @@
               {{ item.label }}
             </v-btn>
           </v-btn-toggle>
+        </GameActionBar>
+        <GameActionBarFlat>
           <v-btn-toggle v-model="selectedType" color="primary" mandatory>
             <v-btn
               v-for="(item, key) in combinedOptions"
@@ -30,7 +32,7 @@
               {{ item.label }}
             </v-btn>
           </v-btn-toggle>
-        </GameActionBar>
+        </GameActionBarFlat>
         <v-divider></v-divider>
 
         <v-card class="mb-4" flat tile>
@@ -43,12 +45,12 @@
                 :gridItems="gridBalls"
                 :selectedItems="selectedList"
                 ref="animalItemPicker"
+                single-amount
               />
 
               <v-sheet height="8"></v-sheet>
               <ActionBarBallAmount
-                v-model="amount"
-@change="setItemAmount"
+                v-model="editedItem.amount"
                 @compose="openDialogBitting"
                 @clear="clearSelection"
               />
@@ -79,12 +81,11 @@ export default {
   name: "PageLianxiaobuzhong",
   data() {
     return {
-      amount: undefined,
       selectedProp: { label: "二肖连不中", value: 2, type: 14, property: 58 },
       selectedType: { label: "复式 ", value: 1 },
       activeShortcut: "",
       bittingInputs: false,
-      editedItem: { balls: [] },
+      editedItem: { balls: [], amount: 0 },
       issueId: "",
       selectedList: [],
       ref_rates: {},
@@ -175,8 +176,6 @@ export default {
         amount: formData.get(item.play_id) || 0,
       }));
       this.editedItem.balls = Object.assign([], _balls);
-      this.editedItem.amount =
-        Math.min(..._balls.map((item) => item.amount)) || 0;
       this.editedItem.minRate = Math.min(..._balls.map((item) => item.rate));
       this.bittingInputs = true;
     },

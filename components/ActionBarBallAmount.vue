@@ -84,11 +84,11 @@ export default {
   },
   methods: {
     setValue(value) {
-      this.$emit("set-amount", value);
+      this.$emit("set-amount", +value);
     },
     onInput(value) {
-      this.$emit("input", value);
-      this.$emit("change", value);
+      this.$emit("input", +value);
+      this.$emit("change", +value);
     },
     submit() {
       this.$emit("compose");
