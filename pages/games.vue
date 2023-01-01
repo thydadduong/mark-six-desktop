@@ -74,7 +74,7 @@
                 >
                   <small>{{ displayText(item)[0] }}</small>
                   <small v-if="displayText(item)[1]">
-                    {{ displayText(item)[1] }}
+                    ({{ displayText(item)[1] }}
                   </small>
                 </v-list-item-content>
                 <v-list-item-action class="body-2 ml-2 my-1 mb-auto">
