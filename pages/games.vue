@@ -74,7 +74,7 @@
                 >
                   <small>{{ displayText(item)[0] }}</small>
                   <small v-if="displayText(item)[1]">
-                    {{ displayText(item)[1] }}
+                    ({{ displayText(item)[1] }}
                   </small>
                 </v-list-item-content>
                 <v-list-item-action class="body-2 ml-2 my-1 mb-auto">
@@ -178,13 +178,10 @@ export default {
       const date = new Date(this.closeTimer * 1000).toISOString();
       return date.substring(11, 19);
     },
-    lastIssueNumber() {
-      const { issue_id } = this.lastResult || {};
-      return issue_id ? ` 2022${issue_id} ` : " — ";
-    },
     issueNumber() {
+      const y = new Date().getFullYear();
       const { issue_id } = this.lastResult || {};
-      return issue_id ? ` 2022${+issue_id + 1} ` : " — ";
+      return issue_id ? ` ${y}${+issue_id + 1} ` : " — ";
     },
     timerColor() {
       return this.closeTimer > 0
