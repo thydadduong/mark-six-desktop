@@ -7,13 +7,15 @@
             v-model="selectedProperty"
             @change="onCountingOptionChanged"
             color="primary"
+            active-class="primary white--text"
             mandatory
-            column
           >
             <v-btn
               v-for="(item, key) in propertyOptions"
               :key="`item-${key}`"
               :value="item"
+              class="px-1 ma-0"
+              height="24"
               small
             >
               {{ item.label }}
@@ -34,7 +36,7 @@
             <v-sheet height="8"></v-sheet>
             <ActionBarBallAmount
               v-model="amount"
-@change="setItemAmount"
+              @change="setItemAmount"
               @compose="openDialogBitting"
               @clear="clearSelection"
             />

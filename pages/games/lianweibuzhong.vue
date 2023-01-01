@@ -6,6 +6,7 @@
           <v-btn-toggle
             v-model="selectedProp"
             @change="onCountingOptionChanged"
+            active-class="primary white--text"
             color="primary"
             mandatory
             column
@@ -14,22 +15,33 @@
               v-for="(item, key) in propertyOptions"
               :key="`item-${key}`"
               :value="item"
-              small
-            >
-              {{ item.title }}
-            </v-btn>
-          </v-btn-toggle>
-          <v-btn-toggle v-model="selectedType" color="primary" mandatory>
-            <v-btn
-              v-for="(item, key) in typeOptions"
-              :key="`combined-option-${key}`"
-              :value="item"
+              class="px-1 ma-0"
+              height="24"
               small
             >
               {{ item.title }}
             </v-btn>
           </v-btn-toggle>
         </GameActionBar>
+        <GameActionBarFlat>
+          <v-btn-toggle
+            v-model="selectedType"
+            active-class="primary white--text"
+            color="primary"
+            mandatory
+          >
+            <v-btn
+              v-for="(item, key) in typeOptions"
+              :key="`combined-option-${key}`"
+              :value="item"
+              class="px-1 ma-0"
+              height="24"
+              small
+            >
+              {{ item.title }}
+            </v-btn>
+          </v-btn-toggle>
+        </GameActionBarFlat>
 
         <v-divider></v-divider>
         <v-card class="pa-2" flat tile>
