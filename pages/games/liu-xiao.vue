@@ -27,7 +27,6 @@
 
         <v-card class="mb-4" flat tile>
           <v-form ref="formItem">
-            <v-card class="text-center grey lighten-3" flat tile> 生肖 </v-card>
             <v-card-text class="pa-2">
               <PickItemAnimal
                 @toggle-item="toggleSelectItem"

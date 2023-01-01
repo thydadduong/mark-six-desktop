@@ -7,7 +7,6 @@
 
         <v-card class="mb-4" flat tile>
           <v-form ref="formItem">
-            <v-card class="text-center grey lighten-3" flat tile> 生肖 </v-card>
             <v-card-text class="pa-2">
               <PickItemBanbo
                 @toggle-item="toggleSelectItem"
@@ -19,7 +18,7 @@
               <v-sheet height="8"></v-sheet>
               <ActionBarBallAmount
                 v-model="amount"
-@change="setItemAmount"
+                @change="setItemAmount"
                 @compose="openDialogBitting"
                 @clear="clearSelection"
               />
