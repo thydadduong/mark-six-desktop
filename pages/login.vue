@@ -127,7 +127,6 @@ export default {
       this.authenticate({ payload: formData, options })
         .then((res) => {
           let message = "";
-          console.log(res);
           if (!res.code) {
             let _loginMsg = res.webtitle.split("客戶").join(" 客戶");
             message = [this.appTitle, _loginMsg].join(" ");

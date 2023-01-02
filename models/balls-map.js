@@ -59,6 +59,7 @@ export const GridZhengmaA = gridNumbers.map((col) =>
   col.map((ball) => ({
     play_id: getPlayId("0201", ball),
     label: getNumberLabel(ball),
+    name: getNumberLabel(ball),
     value: ball,
     color: getBallColor(ball),
   }))

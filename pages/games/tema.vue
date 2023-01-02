@@ -21,83 +21,13 @@
         <v-divider></v-divider>
         <v-card class="pa-2" flat tile>
           <v-form ref="formItem">
-            <v-layout class="gap-xs">
-              <v-sheet
-                v-for="(luckNumbs, key) in gridBalls"
-                :key="`lucky-number-${key}`"
-              >
-                <table class="game-item-table item-49 disable-select">
-                  <tbody>
-                    <tr
-                      v-for="item in luckNumbs"
-                      :key="`lucky-number-item-${key}-${item.play_id}`"
-                      @click="toggleSelectItem(item)"
-                      class="cursor-pointer"
-                    >
-                      <template v-if="isActive(item.label)">
-                        <td class="white--text primary">
-                          <v-avatar
-                            :color="$common.getBallColor(item.value)"
-                            class="darken-1"
-                            size="26"
-                          >
-                            <small class="font-weight-bold">
-                              {{ item.label || "-" }}
-                            </small>
-                          </v-avatar>
-                        </td>
-                        <td class="primary white--text">
-                          {{ getBallRate(item.play_id) }}
-                        </td>
-                        <td class="primary">
-                          <input
-                            @click.stop="() => {}"
-                            :ref="item.play_id"
-                            :id="item.play_id"
-                            :name="item.play_id"
-                            class="text-right px-1 hidden-spin"
-                            type="number"
-                          />
-                        </td>
-                      </template>
-                      <template v-else>
-                        <td>
-                          <v-avatar
-                            :color="$common.getBallColor(item.value)"
-                            class="white--text"
-                            size="26"
-                          >
-                            <small class="font-weight-bold">
-                              {{ item.label || "-" }}
-                            </small>
-                          </v-avatar>
-                        </td>
-                        <td>{{ getBallRate(item.play_id) }}</td>
-                        <td>
-                          <input
-                            @click.stop="onClickInputReadonly(item)"
-                            class="text-right px-1"
-                            tabindex="-1"
-                            readonly
-                          />
-                        </td>
-                      </template>
-                    </tr>
-                    <tr v-if="key == 4">
-                      <td>
-                        <v-sheet color="transparent" height="26"></v-sheet>
-                      </td>
-                      <td>
-                        <v-sheet color="transparent" height="26"></v-sheet>
-                      </td>
-                      <td>
-                        <v-sheet color="transparent" height="26"></v-sheet>
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </v-sheet>
-            </v-layout>
+            <BittingItem49
+              @toggle-item="toggleSelectItem"
+              :gridItems="gridBalls"
+              :selectedItems="selectedList"
+              :rates="itemsRate"
+              ref="item49Picker"
+            />
             <v-sheet height="8"></v-sheet>
             <BittingFlipItem
               @click:row="toggleSelectItem"
@@ -115,7 +45,7 @@
             <v-sheet height="8"></v-sheet>
             <ActionBarBallAmount
               v-model="amount"
-              @change="setItemAmount"
+              @blur="setItemAmount"
               @compose="openDialogBitting"
               @clear="clearSelection"
             />
@@ -192,6 +122,15 @@ export default {
     selectedItems() {
       return this.selectedList.map((item) => item.value);
     },
+    itemsRate() {
+      const rates = {};
+      this.gridBalls.forEach((subitems) => {
+        subitems.forEach(({ play_id }) => {
+          rates[play_id] = this.getBallRate(play_id);
+        });
+      });
+      return rates;
+    },
     flipBallRates() {
       const rates = {};
       TemaFlipCoin.forEach((balls) => {
@@ -221,27 +160,14 @@ export default {
   },
   methods: {
     setItemAmount(value) {
-      this.selectedList.forEach((item) => {
-        const _item = this.$refs[item.play_id]?.[0];
-        if (_item && !_item.value) _item.value = value;
-      });
+      this.$refs.item49Picker.setItemAmount(value);
       this.$refs.colorItem.setItemAmount(value);
       this.$refs.flipItem.setItemAmount(value);
     },
     setItemAmountIndividual(play_id, value) {
-      setTimeout(() => {
-        if (!!this.$refs[play_id]?.[0]) {
-          this.$refs[play_id][0].value = value;
-        }
-        this.$refs.colorItem.setItemAmountIndividual(play_id, value);
-        this.$refs.flipItem.setItemAmountIndividual(play_id, value);
-      }, 50);
-    },
-    onClickInputReadonly(item) {
-      this.toggleSelectItem(item);
-      setTimeout(() => {
-        this.$refs[item.play_id][0].focus();
-      }, 100);
+      this.$refs.item49Picker.setItemAmountIndividual(play_id, value);
+      this.$refs.colorItem.setItemAmountIndividual(play_id, value);
+      this.$refs.flipItem.setItemAmountIndividual(play_id, value);
     },
     toggleSelectItem(item) {
       this.activeShortcut = "";

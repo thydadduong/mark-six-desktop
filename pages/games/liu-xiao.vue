@@ -39,7 +39,7 @@
               <v-sheet height="8"></v-sheet>
               <ActionBarBallAmount
                 v-model="amount"
-                @change="setItemAmount"
+                @blur="setItemAmount"
                 @compose="openDialogBitting"
                 @clear="clearSelection"
               />
@@ -130,6 +130,9 @@ export default {
     setItemAmount(value) {
       this.$refs.animalItemPicker.setItemAmount(value);
     },
+    setItemAmountIndividual(play_id, value) {
+      this.$refs.animalItemPicker.setItemAmountIndividual(play_id, value);
+    },
     isActive(play_id) {
       return !!this.selectedList.find((item) => item.play_id == play_id);
     },
@@ -140,6 +143,7 @@ export default {
       if (index != -1) return this.selectedList.splice(index, 1);
       if (this.selectedList.length >= 6) this.selectedList.shift();
       this.selectedList.push(item);
+      this.setItemAmountIndividual(item.play_id, this.amount);
     },
     openDialogBitting() {
       if (this.selectedList.length < 6)

@@ -106,12 +106,16 @@ export default {
     setItemAmount(value) {
       this.$refs.wuhangItemPicker.setItemAmount(value);
     },
+    setItemAmountIndividual(play_id, value) {
+      this.$refs.wuhangItemPicker.setItemAmountIndividual(play_id, value);
+    },
     toggleSelectItem(item) {
       let index = this.selectedList.findIndex(
         ({ play_id }) => item.play_id == play_id
       );
       if (index != -1) return this.selectedList.splice(index, 1);
       this.selectedList.push(item);
+      this.setItemAmountIndividual(item.play_id, this.amount);
     },
     clearSelection() {
       this.selectedList = [];

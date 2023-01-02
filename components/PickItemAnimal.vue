@@ -32,7 +32,10 @@
                   </small>
                 </v-avatar>
               </td>
-              <td class="game-item-table__rate primary white--text">
+              <td
+                class="game-item-table__rate primary white--text"
+                style="width: 60px"
+              >
                 {{ getBallRate(subitem.play_id) }}
               </td>
               <td v-if="!singleAmount" class="game-item-table__input primary">
@@ -63,7 +66,7 @@
                   </small>
                 </v-avatar>
               </td>
-              <td class="game-item-table__rate">
+              <td class="game-item-table__rate" style="width: 60px">
                 {{ getBallRate(subitem.play_id) }}
               </td>
               <td class="game-item-table__input" v-if="!singleAmount">
@@ -99,8 +102,15 @@ export default {
     setItemAmount(value) {
       this.selectedItems.forEach((item) => {
         const _item = this.$refs[item.play_id]?.[0];
-        if (_item) _item.value = value;
+        if (_item && !_item.value) _item.value = value;
       });
+    },
+    setItemAmountIndividual(play_id, value) {
+      setTimeout(() => {
+        if (!!this.$refs[play_id]?.[0]) {
+          this.$refs[play_id][0].value = value;
+        }
+      }, 50);
     },
     getBallRate(id) {
       return this.rates[id] || "-";

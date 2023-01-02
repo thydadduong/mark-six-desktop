@@ -181,7 +181,8 @@ export default {
     issueNumber() {
       const y = new Date().getFullYear();
       const { issue_id } = this.lastResult || {};
-      return issue_id ? ` ${y}${+issue_id + 1} ` : " — ";
+      const id = (+issue_id + 1).toString().padStart(3, "0");
+      return issue_id ? ` ${y}${id} ` : " — ";
     },
     timerColor() {
       return this.closeTimer > 0

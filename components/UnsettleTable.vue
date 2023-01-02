@@ -176,13 +176,9 @@ export default {
       const response = this.$axios.$get("/api-base/GetCloseTime", {
         params: { uid, r },
       });
-      response
-        .then((r) => {
-          console.log(r);
-        })
-        .catch((err) => {
-          console.log(err);
-        });
+      response.catch((err) => {
+        console.log(err);
+      });
       return response;
     },
     onPaginationInput() {

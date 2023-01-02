@@ -42,7 +42,6 @@
               :id="item.play_id"
               :name="item.play_id"
               class="text-right px-1 hidden-spin"
-              
               type="number"
             />
           </td>
@@ -68,7 +67,6 @@
           <td>
             <input
               @click.stop="toggleSelectItem(item)"
-              
               class="text-right px-1"
               tabindex="-1"
               readonly
@@ -96,8 +94,15 @@ export default {
     setItemAmount(value) {
       this.selectedItems.forEach((item) => {
         const _item = this.$refs[item.play_id]?.[0];
-        if (_item) _item.value = value;
+        if (_item && !_item.value) _item.value = value;
       });
+    },
+    setItemAmountIndividual(play_id, value) {
+      setTimeout(() => {
+        if (!!this.$refs[play_id]?.[0]) {
+          this.$refs[play_id][0].value = value;
+        }
+      }, 50);
     },
     getBallRate(id) {
       return this.rates[id] || "-";

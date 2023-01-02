@@ -17,16 +17,12 @@
             class="cursor-pointer"
           >
             <template v-if="isActive(subitem.value)">
-              <td
-                class="game-item-table__title primary white--text"
-                style="width: 40px"
-              >
-                {{ subitem.name }}
+              <td class="game-item-table__title primary white--text">
+                <v-avatar :color="$common.getBallColor(subitem.name)" size="26">
+                  {{ subitem.name || "-" }}
+                </v-avatar>
               </td>
-              <td
-                class="game-item-table__rate primary white--text"
-                style="width: 50px"
-              >
+              <td class="game-item-table__rate primary white--text">
                 {{ getBallRate(subitem.play_id) }}
               </td>
               <td v-if="!singleAmount" class="game-item-table__input primary">
@@ -41,11 +37,10 @@
               </td>
             </template>
             <template v-else>
-              <td
-                :class="ballColor(subitem.name)"
-                class="game-item-table__title"
-              >
-                {{ subitem.name }}
+              <td class="game-item-table__title white--text">
+                <v-avatar :color="$common.getBallColor(subitem.name)" size="26">
+                  {{ subitem.name || "-" }}
+                </v-avatar>
               </td>
               <td class="game-item-table__rate">
                 {{ getBallRate(subitem.play_id) }}
@@ -87,8 +82,15 @@ export default {
     setItemAmount(value) {
       this.selectedItems.forEach((item) => {
         const _item = this.$refs[item.play_id]?.[0];
-        if (_item) _item.value = value;
+        if (_item && !_item.value) _item.value = value;
       });
+    },
+    setItemAmountIndividual(play_id, value) {
+      setTimeout(() => {
+        if (!!this.$refs[play_id]?.[0]) {
+          this.$refs[play_id][0].value = value;
+        }
+      }, 50);
     },
     getBallRate(id) {
       return this.rates[id] || "-";

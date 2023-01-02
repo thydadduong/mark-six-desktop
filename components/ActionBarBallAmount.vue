@@ -18,6 +18,7 @@
         <v-layout class="gap-sm" align-center>
           <span class="text-no-wrap">金额</span>
           <v-text-field
+            @blur="onBlur"
             @input="onInput"
             :value="value"
             background-color="white"
@@ -89,12 +90,16 @@ export default {
     onInput(value) {
       this.$emit("input", +value);
       this.$emit("change", +value);
+      this.$emit("blur", +value);
     },
     submit() {
       this.$emit("compose");
     },
     clear() {
       this.$emit("clear");
+    },
+    onBlur() {
+      this.$emit("blur", +this.value);
     },
   },
 };

@@ -54,7 +54,6 @@
                     v-model.number="editedItem.amount"
                     :disabled="!customAmount"
                     class="hidden-spin"
-                    
                     type="number"
                     required
                     outlined
@@ -159,7 +158,6 @@ export default {
         +this.editedItem.amount
       );
 
-      console.log(_qs);
       const options = {
         headers: { "Content-Type": "application/x-www-form-urlencoded" },
         params: { UID: uid },
