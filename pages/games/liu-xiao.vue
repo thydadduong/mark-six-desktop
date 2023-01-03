@@ -39,7 +39,7 @@
 
               <v-sheet height="8"></v-sheet>
               <ActionBarBallAmount
-                v-model="amount"
+                v-model="editedItem.amount"
                 @blur="setItemAmount"
                 @compose="openDialogBitting"
                 @clear="clearSelection"
@@ -160,8 +160,6 @@ export default {
         amount: formData.get(item.play_id) || 0,
       }));
       this.editedItem.balls = Object.assign([], _balls);
-      this.editedItem.amount =
-        Math.min(..._balls.map((item) => item.amount)) || 0;
       this.editedItem.minRate = Math.min(..._balls.map((item) => item.rate));
       this.bittingInputs = true;
     },

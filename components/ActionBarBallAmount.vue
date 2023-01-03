@@ -20,6 +20,7 @@
           <v-text-field
             @blur="onBlur"
             @input="onInput"
+            @focus="onFocus"
             :value="value"
             background-color="white"
             class="amount-input"
@@ -101,6 +102,13 @@ export default {
     onBlur() {
       this.$emit("blur", +this.value);
     },
+    onFocus(event) {
+      const { value = "" } = event.target;
+      if (!value) return;
+      event.target.type = "text";
+      event.target.setSelectionRange(value.length, value.length);
+      event.target.type = "number";
+    },
   },
 };
 </script>
@@ -117,7 +125,7 @@ export default {
   .amount-input.v-text-field.v-text-field--enclosed:not(.v-text-field--rounded)
     > .v-input__control
     > .v-input__slot {
-    padding: 0 0.25rem;
+    padding: 0.25rem .5rem;
     input {
       text-align: right;
     }

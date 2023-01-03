@@ -57,15 +57,23 @@ table.game-item-table
             border-radius: 4px
             border: 1px solid #ccc
             background: white
-    td:first-child
-        background: #dae8fc
-        width: 50px
     td:nth-child(2)
         background: #dae8fc55
     td.primary.cell-selected
         border-bottom: 1px solid white
     td:last-child
         width: 75px
+
+    .game-item-table__title,
+    .game-item-table__rate,
+    .game-item-table__input
+        width: 60px
+        font-size: 1rem
+    .game-item-table__balls
+        font-size: 1rem
+
+    .game-item-table__title
+        background: #dae8fc
 
     &.no-input
         .game-item-table__title,

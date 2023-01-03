@@ -27,15 +27,10 @@
                   color="white"
                   size="26"
                 >
-                  <small class="font-weight-bold">
-                    {{ ball.label || "-" }}
-                  </small>
+                  {{ ball.label || "-" }}
                 </v-avatar>
               </td>
-              <td
-                class="game-item-table__rate primary white--text"
-                style="width: 60px"
-              >
+              <td class="game-item-table__rate primary white--text">
                 {{ getBallRate(subitem.play_id) }}
               </td>
               <td v-if="!singleAmount" class="game-item-table__input primary">
@@ -61,12 +56,10 @@
                   class="white--text mr-1 mb-1"
                   size="26"
                 >
-                  <small class="font-weight-bold">
-                    {{ ball.label || "-" }}
-                  </small>
+                  {{ ball.label || "-" }}
                 </v-avatar>
               </td>
-              <td class="game-item-table__rate" style="width: 60px">
+              <td class="game-item-table__rate">
                 {{ getBallRate(subitem.play_id) }}
               </td>
               <td class="game-item-table__input" v-if="!singleAmount">

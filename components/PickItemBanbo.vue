@@ -17,10 +17,10 @@
         class="cursor-pointer"
       >
         <template v-if="isActive(item.play_id)">
-          <td class="primary white--text">
+          <td class="game-item-table__title primary white--text">
             {{ item.name }}
           </td>
-          <td class="primary white--text">
+          <td class="game-item-table__rate primary white--text">
             {{ getBallRate(item.play_id) }}
           </td>
           <td class="game-item-table__balls primary white--text">
@@ -32,10 +32,10 @@
               color="white"
               size="26"
             >
-              <small class="font-weight-bold">{{ ball }} </small>
+              {{ ball }}
             </v-avatar>
           </td>
-          <td class="primary">
+          <td class="game-item-table__input primary">
             <input
               @click.stop="() => {}"
               :ref="item.play_id"
@@ -47,12 +47,8 @@
           </td>
         </template>
         <template v-else>
-          <td class="primary--text">
-            {{ item.name }}
-          </td>
-          <td>
-            {{ getBallRate(item.play_id) }}
-          </td>
+          <td class="game-item-table__title primary--text">{{ item.name }}</td>
+          <td class="game-item-table__rate">{{ getBallRate(item.play_id) }}</td>
           <td class="game-item-table__balls">
             <v-avatar
               v-for="ball in item.balls"
@@ -61,10 +57,10 @@
               class="white--text mr-1 mb-1"
               size="26"
             >
-              <small class="font-weight-bold">{{ ball }} </small>
+              {{ ball }}
             </v-avatar>
           </td>
-          <td>
+          <td class="game-item-table__input">
             <input
               @click.stop="toggleSelectItem(item)"
               class="text-right px-1"
