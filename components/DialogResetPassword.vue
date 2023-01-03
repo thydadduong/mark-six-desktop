@@ -18,7 +18,8 @@
             v-model="payload.o_passwd"
             :rules="[(v) => !!v || '密码是必需的']"
             placeholder="请输入原始密码"
-            type="password"
+            class="pass-input"
+            type="text"
             outlined
             dense
           >
@@ -30,7 +31,8 @@
             v-model="payload.ag_passwd"
             :rules="[(v) => !!v || '密码是必需的']"
             placeholder="请输入6-16位数字+字母的新密码"
-            type="password"
+            class="pass-input"
+            type="text"
             outlined
             dense
           >
@@ -44,7 +46,8 @@
             :rules="[
               payload.ag_passwd === payload.ag_passwd_confirm || '密码必须匹配',
             ]"
-            type="password"
+            class="pass-input"
+            type="text"
             outlined
             dense
           >
