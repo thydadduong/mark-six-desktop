@@ -34,6 +34,7 @@
                 :gridItems="gridBalls"
                 :selectedItems="selectedList"
                 ref="animalItemPicker"
+                single-amount
               />
 
               <v-sheet height="8"></v-sheet>
