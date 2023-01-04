@@ -21,7 +21,10 @@
             @blur="onBlur"
             @input="onInput"
             @focus="onFocus"
+            @keypress="preventNonNumericalInput"
             :value="value"
+            pattern="[0-9]*"
+            step="any"
             background-color="white"
             class="amount-input"
             type="number"
@@ -109,31 +112,34 @@ export default {
       event.target.setSelectionRange(value.length, value.length);
       event.target.type = "number";
     },
+    preventNonNumericalInput(e) {
+      e = e || window.event;
+      var charCode = typeof e.which == "undefined" ? e.keyCode : e.which;
+      var charStr = String.fromCharCode(charCode);
+      
+      if (!charStr.match(/^[0-9]+$/)) e.preventDefault();
+    },
   },
 };
 </script>
 
 <style lang="scss">
-.game-action-bar.action-bar--fixed {
-  position: fixed;
-  bottom: 64px;
-  left: 1rem;
-  right: 1rem;
-}
-
-.game-action-bar {
+.game-action-bar
   .amount-input.v-text-field.v-text-field--enclosed:not(.v-text-field--rounded)
-    > .v-input__control
-    > .v-input__slot {
-    padding: 0.25rem .5rem;
-    input {
-      text-align: right;
-    }
-    input::-webkit-outer-spin-button,
-    input::-webkit-inner-spin-button {
-      -webkit-appearance: none;
-      margin: 0;
-    }
+  > .v-input__control
+  > .v-input__slot {
+  input {
+    text-align: right;
+    appearance: textfield;
+    -webkit-appearance: textfield;
+    -moz-appearance: textfield;
+  }
+  input::-webkit-outer-spin-button,
+  input::-webkit-inner-spin-button {
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    margin: 0;
   }
 }
 </style>

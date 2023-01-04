@@ -14,7 +14,7 @@
       >
         <v-avatar
           :color="$common.getBallColor(ball)"
-          class="darken-2 white--text"
+          class="darken-1 white--text"
           size="24"
         >
           <small class="font-weight-bold">

@@ -2,7 +2,7 @@ import { POSITION } from 'vue-toastification';
 <template>
   <div>
     <v-layout class="gap-sm">
-      <v-sheet color="transparent" width="900">
+      <v-sheet color="transparent" width="1000">
         <GameActionBar> 半波 </GameActionBar>
         <v-divider></v-divider>
 

@@ -1,7 +1,7 @@
 <template>
   <div>
     <v-layout class="gap-sm">
-      <v-sheet class="flex-fill">
+      <v-sheet color="transparent" width="1000">
         <GameActionBar>
           <v-btn-toggle
             v-model="selectedProp"
@@ -61,21 +61,6 @@
               @clear="clearSelection"
             />
           </v-form>
-        </v-card>
-      </v-sheet>
-
-      <v-sheet
-        class="flex-shrink-0 flex-grow-0"
-        width="15rem"
-        color="transparent"
-      >
-        <v-card flat tile>
-          <v-card-text
-            style="background: linear-gradient(0deg, #dae8fc, #fff)"
-            class="primary--text py-1 px-2"
-          >
-            <v-sheet height="24" color="transparent"></v-sheet>
-          </v-card-text>
         </v-card>
       </v-sheet>
     </v-layout>

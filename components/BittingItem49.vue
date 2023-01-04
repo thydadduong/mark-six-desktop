@@ -27,6 +27,7 @@
               </td>
               <td v-if="!singleAmount" class="game-item-table__input primary">
                 <input
+                  @keypress="preventNonNumericalInput"
                   @click.stop="() => {}"
                   :ref="subitem.play_id"
                   :id="subitem.play_id"
@@ -101,6 +102,14 @@ export default {
       setTimeout(() => {
         this.$refs[item.play_id][0]?.focus();
       }, 100);
+    },
+
+    preventNonNumericalInput(e) {
+      e = e || window.event;
+      var charCode = typeof e.which == "undefined" ? e.keyCode : e.which;
+      var charStr = String.fromCharCode(charCode);
+
+      if (!charStr.match(/^[0-9]+$/)) e.preventDefault();
     },
   },
 };

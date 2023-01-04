@@ -23,6 +23,7 @@
               </td>
               <td class="cell-selected primary">
                 <input
+                  @keypress="preventNonNumericalInput"
                   @click.stop="() => {}"
                   :ref="item.play_id"
                   :id="item.play_id"
@@ -98,6 +99,13 @@ export default {
           this.$refs[play_id][0].value = value;
         }
       }, 50);
+    },
+    preventNonNumericalInput(e) {
+      e = e || window.event;
+      var charCode = typeof e.which == "undefined" ? e.keyCode : e.which;
+      var charStr = String.fromCharCode(charCode);
+
+      if (!charStr.match(/^[0-9]+$/)) e.preventDefault();
     },
   },
 };
