@@ -5,6 +5,7 @@
         <GameActionBar>
           <v-btn-toggle
             v-model="activeType"
+            @change="onPrefixChanged"
             color="primary"
             active-class="primary white--text"
             mandatory
@@ -313,9 +314,9 @@ export default {
     },
     onPrefixChanged() {
       this.selectedList = [];
-      setTimeout(() => {
-        this.getOddValues();
-      }, 100);
+      this.getOddValues();
+      clearInterval(this.intervalRequest);
+      this.startIntervalRequest();
     },
     startIntervalRequest() {
       this.intervalRequest = setInterval(() => {
