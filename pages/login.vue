@@ -2,10 +2,11 @@
   <v-layout
     :style="{ backgroundImage: `url('${bgImg}')` }"
     style="min-height: 100vh; background-size: cover"
-    justify-center
+    class="pr-10"
+    justify-end
     align-center
   >
-    <v-sheet color="primary lighten-2" width="90%" max-width="640" rounded="xl">
+    <v-sheet style="background-color: rgba(106,170,255, 0.3) !important;" color="primary lighten-2" width="90%" max-width="640" rounded="xl">
       <v-row no-gutters>
         <v-col class="pa-6" cols="12" md="6">
           <v-layout class="fill-height" justify-center align-center>
@@ -96,11 +97,7 @@ export default {
         password: "",
         remember_me: false,
       },
-      bgImages: [
-        "/images/login1.png",
-        "/images/login2.jpeg",
-        "/images/login3.png",
-      ],
+      bgImages: ["/images/newYear1.png", "/images/newYear2.png"],
     };
   },
   computed: {
