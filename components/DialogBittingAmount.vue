@@ -19,9 +19,9 @@
           <table class="table-bitting">
             <thead>
               <tr>
-                <th class="table-bitting__title">球号</th>
-                <th class="table-bitting__rate">赔率</th>
-                <th class="table-bitting__input">
+                <th class="table-bitting__title text-center">球号</th>
+                <th class="table-bitting__rate text-center">赔率</th>
+                <th class="table-bitting__input text-center">
                   <v-layout align-center>
                     <span class="mr-2">金额</span>
                     <v-btn
@@ -42,13 +42,13 @@
                 v-for="(ball, index) in editedItem.balls"
                 :key="`row-${index}`"
               >
-                <td class="table-bitting__title">
+                <td class="table-bitting__title text-center">
                   <div class="pt-1">{{ ball.label || ball.play_id }}</div>
                 </td>
-                <td class="table-bitting__rate">
+                <td class="table-bitting__rate text-center">
                   <div class="pt-1">{{ ball.rate }}</div>
                 </td>
-                <td class="table-bitting__input">
+                <td class="table-bitting__input text-center">
                   <input
                     v-model.number="ball.amount"
                     :disabled="!customAmount"
