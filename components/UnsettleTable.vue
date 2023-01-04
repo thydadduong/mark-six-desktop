@@ -1,5 +1,5 @@
 <template>
-  <v-container>
+  <v-sheet color="transparent" width="1000">
     <table class="table-unsettle">
       <thead>
         <tr>
@@ -35,22 +35,25 @@
           </td>
           <td>{{ item[2] }}</td>
           <td>{{ item[3] }}</td>
+          <td>{{ item[4] }}</td>
+          <td>{{ item[5] }}</td>
+          <td>{{ item[6] }}</td>
         </tr>
 
         <tr v-if="showLastItem">
-          <td colspan="5" class="pa-0 text-no-wrap text--secondary text-center">
+          <td colspan="8" class="pa-0 text-no-wrap text--secondary text-center">
             <p class="mb-2"><small> 已经到达最后一条记录 </small></p>
           </td>
         </tr>
         <tr v-if="!records.length">
-          <td colspan="5" class="pa-0 text-no-wrap text--secondary text-center">
+          <td colspan="8" class="pa-0 text-no-wrap text--secondary text-center">
             <p class="mb-2"><small> 无更多记录 </small></p>
           </td>
         </tr>
 
-        <tr>
-          <td colspan="5">
-            <v-layout v-if="totalPage >= 1" justify-end>
+        <tr v-if="totalPage > 1">
+          <td colspan="8">
+            <v-layout justify-end>
               <v-pagination
                 v-model="currentPage"
                 @input="onPaginationInput"
@@ -62,8 +65,6 @@
         </tr>
       </tbody>
     </table>
-
-    <CardEmpty :visible="!totalPage && isReady" />
 
     <v-layout justify-center>
       <v-expand-transition>
@@ -81,7 +82,7 @@
       title="暂停销售"
       message="请选择其他彩种进行游戏"
     />
-  </v-container>
+  </v-sheet>
 </template>
 
 <script>
@@ -133,6 +134,30 @@ export default {
         {
           text: "金额",
           value: "3",
+          class: "grey lighten-2 px-1 pr-4",
+          cellClass: "px-1 pr-4",
+          align: "right",
+          sortable: false,
+        },
+        {
+          text: "盈亏",
+          value: "4",
+          class: "grey lighten-2 px-1 pr-4",
+          cellClass: "px-1 pr-4",
+          align: "right",
+          sortable: false,
+        },
+        {
+          text: "退水",
+          value: "5",
+          class: "grey lighten-2 px-1 pr-4",
+          cellClass: "px-1 pr-4",
+          align: "right",
+          sortable: false,
+        },
+        {
+          text: "总盈亏",
+          value: "6",
           class: "grey lighten-2 px-1 pr-4",
           cellClass: "px-1 pr-4",
           align: "right",
