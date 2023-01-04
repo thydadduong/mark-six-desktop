@@ -97,7 +97,7 @@ export default {
         password: "",
         remember_me: false,
       },
-      bgImages: ["/images/newYear1.png", "/images/newYear2.png"],
+      bgImages: ["/images/newYear1.png"],
     };
   },
   computed: {
