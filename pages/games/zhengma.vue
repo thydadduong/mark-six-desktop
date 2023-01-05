@@ -183,6 +183,9 @@ export default {
       }
       const newList = [...new Set([...this.selectedList, ...items])];
       this.selectedList = Object.assign([], newList);
+      setTimeout(() => {
+        this.setItemAmount(this.amount);
+      }, 10);
     },
     toggleSelectItem(item) {
       this.activeShortcut = "";
