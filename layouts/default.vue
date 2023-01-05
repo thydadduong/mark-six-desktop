@@ -5,12 +5,13 @@
     </v-overlay>
     <v-main class="main-app-body">
       <v-sheet color="transparent" min-width="950">
-        <v-toolbar
+        <v-app-bar
           color="primary detail-toolbar"
           height="70"
           elevation="0"
           tile
           dark
+          app
         >
           <nuxt-link to="/" class="mr-8">
             <v-avatar size="54" rounded color="primary" class="white--text">
@@ -22,9 +23,17 @@
             :ballList="lastResult.balls"
             class="py-2"
           />
-          <v-layout class="fill-height" align-end column>
+          <v-layout class="fill-height pt-1" align-end column>
             <div>
-              <v-btn to="/profile" class="px-1" small text>
+              <v-btn
+                @click="dialogNotification = true"
+                class="px-2 rounded mr-2"
+                small
+                icon
+              >
+                <v-icon small>mdi-bell</v-icon>
+              </v-btn>
+              <v-btn to="/profile" class="px-2" small text>
                 <v-icon left>mdi-account</v-icon>
                 个人信息
               </v-btn>
@@ -101,12 +110,13 @@
               </v-tabs>
             </div>
           </v-layout>
-        </v-toolbar>
+        </v-app-bar>
         <Nuxt />
       </v-sheet>
       <DialogConfirm @confirm="onConfirm" ref="dialogConfirm" />
       <DialogMessageBox ref="dialogMessage" auto-close />
       <DialogResetPassword :visible.sync="dialogResetPassword" />
+      <DialogNotification :visible.sync="dialogNotification" />
     </v-main>
   </v-app>
 </template>
@@ -129,6 +139,7 @@ export default {
       drawerRight: false,
       loggingOut: false,
       loadingTable: false,
+      dialogNotification: false,
       dialogResetPassword: false,
       lastResult: {
         balls: [],
