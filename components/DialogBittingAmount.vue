@@ -166,7 +166,7 @@ export default {
           if (res.code === 0) {
             this.$refs.dialogMessage.show(DialogType.SUCCESS);
             this.$emit("saved");
-            this.$store.dispatch("lottery/setRecentBets", res.records);
+            // this.$store.dispatch("lottery/setRecentBets", res.records);
             this.visibleChange(false);
             return;
           }
