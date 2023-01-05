@@ -46,7 +46,6 @@
                     v-model.number="editedItem.amount"
                     :disabled="!customAmount"
                     class="hidden-spin"
-                    
                     type="number"
                     required
                     outlined
@@ -87,7 +86,6 @@ export default {
     visible: Boolean,
     loading: Boolean,
     rate: [Number, String],
-    amount: [Number, String],
     type: [String, Number],
     property: [String, Number],
     propertyTitle: String,
@@ -153,7 +151,7 @@ export default {
       });
       const data = {};
       data.rate = rates.join(",");
-      data.amount = this.amount;
+      data.amount = this.editedItem.amount;
       data.chBall = balls.join(",");
       data.property = this.property;
       data.gameType = this.type;

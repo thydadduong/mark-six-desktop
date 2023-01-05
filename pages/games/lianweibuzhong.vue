@@ -69,7 +69,6 @@
       :visible.sync="bittingInputs"
       :edited-item="editedItem"
       :property="selectedProp.value"
-      :amount="inputAmount"
       :type="1"
       :fixedFrontIndex="fixedFrontIndex"
       :propertyTitle="selectedProp.title"
@@ -91,7 +90,6 @@ export default {
       selectedType: { label: "复式", value: 1 },
       minRate: "-",
       activeShortcut: "",
-      inputAmount: 5,
       bittingInputs: false,
       editedItem: { balls: [] },
       issueId: "",
