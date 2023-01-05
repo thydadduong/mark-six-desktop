@@ -299,7 +299,9 @@ export default {
     onSaveAmount() {
       this.selectedList = [];
       this.getOddValues();
-      this.$store.dispatch("lottery/getRecentBets");
+      setTimeout(() => {
+        this.$store.dispatch("lottery/getRecentBets");
+      }, 1000);
     },
   },
   mounted() {

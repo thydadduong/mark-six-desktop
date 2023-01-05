@@ -36,6 +36,22 @@ const actions = {
       });
     return res;
   },
+
+  setRecentBets({ state, commit }, value) {
+    let newBets = Object.assign([], state.recentBets);
+    const date = new Date();
+    let time = date.toLocaleString("en-GB");
+
+    value.map((item) => {
+      const bet = item.split(" ");
+      newBets.unshift([time.slice(12), bet[0], bet[2]]);
+    });
+
+    if (newBets.length >= 9) {
+      newBets = newBets.slice(0, 10);
+    }
+    commit("UPDATE_RECENT", newBets || []);
+  },
 };
 
 const mutations = {

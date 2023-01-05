@@ -20,11 +20,11 @@
             <thead>
               <tr>
                 <th class="table-bitting__title">项目</th>
-                <th class="table-bitting__ball">球号</th>
-                <th class="table-bitting__rate">赔率</th>
+                <th class="table-bitting__ball text-center">球号</th>
+                <th class="table-bitting__rate text-center">赔率</th>
                 <th class="table-bitting__input">
                   <v-layout class="gap-xs" align-center>
-                    <span class="text-no-wrap">金额</span>
+                    <span class="text-no-wrap text-center">金额</span>
                     <v-btn
                       @click="customAmount = true"
                       class="rounded"
@@ -41,13 +41,17 @@
             <tbody>
               <tr>
                 <td class="table-bitting__title">
-                  <v-layout class="gap-xs" wrap>
-                    <span>{{ propertyTitle }}</span>
+                  <v-layout class="gap-xs text-center" wrap>
+                    {{ propertyTitle }}
                     <span v-if="typeTitle"> [{{ typeTitle }}]</span>
                   </v-layout>
                 </td>
-                <td class="table-bitting__ball">{{ displayBallItems }}</td>
-                <td class="table-bitting__rate">{{ editedItem.minRate }}</td>
+                <td class="table-bitting__ball text-center">
+                  {{ displayBallItems }}
+                </td>
+                <td class="table-bitting__rate text-center">
+                  {{ editedItem.minRate }}
+                </td>
                 <td class="table-bitting__input">
                   <input
                     v-model.number="editedItem.amount"

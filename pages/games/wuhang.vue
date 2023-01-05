@@ -130,6 +130,7 @@ export default {
       const formData = new FormData(this.$refs.formItem.$el);
       const _balls = this.selectedList.map((item) => ({
         ...item,
+        label: item.name,
         rate: this.getBallRate(item.name),
         amount: formData.get(item.play_id) || 0,
       }));
@@ -177,7 +178,9 @@ export default {
     onSaveAmount() {
       this.selectedList = [];
       this.getOddValues();
-      this.$store.dispatch("lottery/getRecentBets");
+      setTimeout(() => {
+        this.$store.dispatch("lottery/getRecentBets");
+      }, 1000);
     },
   },
   mounted() {
