@@ -117,12 +117,11 @@ export default {
   name: "PageLuckyDraw",
   data() {
     return {
-      amount: undefined,
       activeShortcut: "",
       selectedProp: { title: "三全中", value: 44, min: 3, prefix: "1001" },
       selectedType: { title: "复式", value: 1 },
       bittingInputs: false,
-      editedItem: { balls: [], amount: 0 },
+      editedItem: { balls: [], amount: undefined },
       closeTimer: 0,
       selectedList: [],
       ref_rates: {},

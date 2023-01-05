@@ -94,7 +94,7 @@ export default {
       selectedType: { label: "复式 ", value: 1 },
       activeShortcut: "",
       bittingInputs: false,
-      editedItem: { balls: [], amount: 0 },
+      editedItem: { balls: [], amount: undefined },
       issueId: "",
       selectedList: [],
       ref_rates: {},

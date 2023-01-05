@@ -124,7 +124,7 @@ export default {
       selectedType: 1,
       activeShortcut: "",
       bittingInputs: false,
-      editedItem: { balls: [], amount: 0 },
+      editedItem: { balls: [], amount: undefined },
       closeTimer: 0,
       issueId: "",
       selectedList: [],

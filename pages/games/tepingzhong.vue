@@ -113,7 +113,7 @@ export default {
       selectedType: { title: "复式", value: 1 },
       inputAmount: 5,
       bittingInputs: false,
-      editedItem: { balls: [], amount: 0 },
+      editedItem: { balls: [], amount: undefined },
       closeTimer: 0,
       issueId: "",
       selectedList: [],

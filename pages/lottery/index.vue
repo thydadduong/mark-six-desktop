@@ -41,7 +41,7 @@
             <tbody>
               <tr v-for="(item, key) in records" :key="`row-${key}`">
                 <td class="table-result__date">
-                  {{ $moment(item.date).format("YYYY-MM-DD HH:mm:ss") }}
+                  {{ $moment(item.date).format("YYYY-MM-DD") }}
                 </td>
                 <td class="pa-2 px-1 table-result__id">
                   {{ item.issue_id }}
@@ -256,12 +256,12 @@ export default {
     min-width: 50px;
   }
   tbody tr td {
-    font-size: 16px;
+    font-size: 14px;
     font-weight: normal;
   }
 
   .table-result__date {
-    width: 160px;
+    width: 120px;
   }
   .table-result__id {
     width: 64px;
