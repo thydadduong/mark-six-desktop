@@ -60,7 +60,7 @@ export default {
       return [
         { title: "系统公告", to: "/profile/notifications" },
         { title: "未结明细", to: "/profile/unsettled" },
-        { title: "结算报表", to: "/profile/settled" },
+        // { title: "结算报表", to: "/profile/settled" },
         { title: "信用资料", to: "/profile/credits" },
         // { title: "全国开奖网", to: "/profile/reports" },
         { title: "游戏规则", to: "/rules" },

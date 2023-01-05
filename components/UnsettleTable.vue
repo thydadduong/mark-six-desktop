@@ -41,13 +41,13 @@
         </tr>
 
         <tr v-if="showLastItem">
-          <td colspan="8" class="pa-0 text-no-wrap text--secondary text-center">
-            <p class="mb-2"><small> 已经到达最后一条记录 </small></p>
+          <td colspan="8" class="text-no-wrap text--secondary text-center">
+            <small> 已经到达最后一条记录 </small>
           </td>
         </tr>
         <tr v-if="!records.length">
-          <td colspan="8" class="pa-0 text-no-wrap text--secondary text-center">
-            <p class="mb-2"><small> 无更多记录 </small></p>
+          <td colspan="8" class="text-no-wrap text--secondary text-center">
+            <small> 无更多记录 </small>
           </td>
         </tr>
 
@@ -239,6 +239,7 @@ export default {
     th:nth-last-child(2),
     th:first-child,
     th:last-child {
+      padding: 0.5rem;
       width: 100px;
     }
   }
@@ -247,10 +248,10 @@ export default {
   tr td {
     text-align: center;
     border: 1px solid #ccc;
-    padding: 0.125rem 0.125rem;
+    padding: 0.5rem 0.125rem;
   }
   tbody tr td {
-    font-size: 14px;
+    padding: 0.5rem 0.125rem;
     font-weight: normal;
   }
 }

@@ -11,78 +11,108 @@
       </v-sheet>
       <v-sheet class="pa-2 px-1 flex-fill" color="transparent">
         <v-sheet width="1000">
-          <v-simple-table class="table-result hide-horizontal-scrollbar">
-            <template v-slot:default>
-              <thead>
-                <tr class="text-center">
-                  <th
-                    class="px-1 pl-4 grey lighten-2 table-result__date"
-                    style="min-width: 80px"
-                  >
-                    日期
-                  </th>
-                  <th
-                    class="px-1 grey lighten-2 table-result__id"
-                    style="min-width: 45px"
-                  >
-                    ID
-                  </th>
-                  <th
-                    class="px-1 grey lighten-2 d-none d-md-table-cell"
-                    style="width: 350px"
-                  >
-                    号码
-                  </th>
-                  <th class="px-2 grey lighten-2 d-none d-md-table-cell">
-                    总和
-                  </th>
-                  <th class="px-2 grey lighten-2 d-none d-md-table-cell">
-                    特码
-                  </th>
-                  <th class="px-1 grey lighten-2 d-md-none table-result__balls">
-                    <v-layout justify-center>
-                      <v-chip-group
-                        v-model="showColumn"
-                        active-class="primary--text"
-                        mandatory
+          <table class="table-result">
+            <thead>
+              <tr class="text-center">
+                <th class="table-result__date">日期</th>
+                <th class="table-result__id">ID</th>
+                <th class="table-result__ball">号码</th>
+                <th class="table-result__ball1" colspan="3">总和</th>
+                <th class="table-result__ball2" colspan="4">特码</th>
+                <!-- <th class="d-md-none table-result__balls">
+                  <v-layout justify-center>
+                    <v-chip-group
+                      v-model="showColumn"
+                      active-class="primary--text"
+                      mandatory
+                    >
+                      <v-chip
+                        v-for="(item, key) in chipHeaders"
+                        :key="`option-${key}`"
+                        :value="item.value"
                       >
-                        <v-chip
-                          v-for="(item, key) in chipHeaders"
-                          :key="`option-${key}`"
-                          :value="item.value"
-                        >
-                          {{ item.text }}
-                        </v-chip>
-                      </v-chip-group>
-                    </v-layout>
-                  </th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr v-for="(item, key) in records" :key="`row-${key}`">
-                  <td class="pa-2 px-1 pl-4 table-result__date">
-                    <v-layout>
-                      <span>{{ $moment(item.date).format("Mo") }} </span>
-                      <span>{{ $moment(item.date).format("Do") }} </span>
-                    </v-layout>
-                  </td>
-                  <td class="pa-2 px-1 table-result__id">
-                    <span>
-                      {{ item.issue_id }}
-                    </span>
-                  </td>
-                  <td
-                    class="pa-2 table-result__balls d-none d-md-table-cell pr-4"
-                  >
-                    <v-layout class="gap-sm">
+                        {{ item.text }}
+                      </v-chip>
+                    </v-chip-group>
+                  </v-layout>
+                </th> -->
+              </tr>
+            </thead>
+            <tbody>
+              <tr v-for="(item, key) in records" :key="`row-${key}`">
+                <td class="table-result__date">
+                  {{ $moment(item.date).format("YYYY-MM-DD HH:mm:ss") }}
+                </td>
+                <td class="pa-2 px-1 table-result__id">
+                  {{ item.issue_id }}
+                </td>
+                <td class="table-result__ball">
+                  <v-layout class="gap-sm justify-center">
+                    <div
+                      v-for="(ball, idx) in 6"
+                      :key="`row-ball-${idx}`"
+                      class="text-center d-flex align-center gap-xs"
+                    >
+                      <v-sheet
+                        :color="$common.getBallColor(item['ball' + ball])"
+                        class="d-flex justify-center align-center mb-1"
+                        rounded="circle"
+                        width="25"
+                        height="25"
+                        dark
+                      >
+                        {{ item["ball" + ball] }}
+                      </v-sheet>
+                      <p class="mb-0">{{ item.animals[ball - 1] }}</p>
+                    </div>
+                    <div class="py-1 px-0">+</div>
+                    <div class="text-center d-flex align-center gap-xs">
+                      <v-sheet
+                        class="d-flex justify-center align-center mb-1"
+                        rounded="circle"
+                        width="25"
+                        height="25"
+                        color="red"
+                        dark
+                      >
+                        {{ item["ball7"] }}
+                      </v-sheet>
+                      <p class="mb-0">{{ item.animals[7] }}</p>
+                    </div>
+                  </v-layout>
+                </td>
+                <td>
+                  {{ item.sum }}
+                </td>
+                <td :class="ballTextColor(item.sum_even_odd)">
+                  {{ item.sum_even_odd }}
+                </td>
+                <td :class="ballTextColor(item.sum_big_small)">
+                  {{ item.sum_big_small }}
+                </td>
+                <td :class="ballTextColor(item.ball7)">
+                  {{ item.ball7 }}
+                </td>
+                <td :class="ballTextColor(item.ball7_even_odd)">
+                  {{ item.ball7_even_odd }}
+                </td>
+                <td :class="ballTextColor(item.ball7_big_small)">
+                  {{ item.ball7_big_small }}
+                </td>
+                <td :class="ballTextColor(item.ball7_digit_sum_even_odd)">
+                  {{ item.ball7_digit_sum_even_odd }}
+                </td>
+                <!-- <td class="pa-2 table-result__balls d-md-none pr-4">
+                  <div style="min-height: 3rem" class="d-flex align-center">
+                    <v-layout v-if="isShowNumber" class="gap-xs" justify-center>
                       <div
                         v-for="(ball, idx) in 6"
                         :key="`row-ball-${idx}`"
-                        class="text-center d-flex align-center gap-xs"
+                        class="d-flex flex-column align-center gap-xs"
                       >
                         <v-sheet
                           :color="$common.getBallColor(item['ball' + ball])"
-                          class="d-flex justify-center align-center mb-1"
+                          class="d-flex justify-center align-center"
                           rounded="circle"
                           width="25"
                           height="25"
@@ -93,9 +123,9 @@
                         <p class="mb-0">{{ item.animals[ball - 1] }}</p>
                       </div>
                       <div class="py-1 px-0">+</div>
-                      <div class="text-center d-flex align-center gap-xs">
+                      <div class="d-flex flex-column align-center gap-xs">
                         <v-sheet
-                          class="d-flex justify-center align-center mb-1"
+                          class="d-flex justify-center align-center"
                           rounded="circle"
                           width="25"
                           height="25"
@@ -107,33 +137,28 @@
                         <p class="mb-0">{{ item.animals[7] }}</p>
                       </div>
                     </v-layout>
-                  </td>
-                  <td
-                    class="pa-0 table-result__balls d-none d-md-table-cell pr-4"
-                  >
-                    <v-layout class="gap pa-2">
-                      <div class="flex-fill">{{ item.sum }}</div>
+                    <v-layout v-if="isShowSum" class="gap">
+                      <div class="px-2 flex-fill">{{ item.sum }}</div>
                       <div
-                        class="flex-fill"
+                        class="px-2 flex-fill"
                         :class="ballTextColor(item.sum_even_odd)"
                       >
                         {{ item.sum_even_odd }}
                       </div>
                       <div
-                        class="flex-fill"
+                        class="px-2 flex-fill"
                         :class="ballTextColor(item.sum_big_small)"
                       >
                         {{ item.sum_big_small }}
                       </div>
                     </v-layout>
-                  </td>
-                  <td
-                    class="pa-2 table-result__balls d-none d-md-table-cell pr-4"
-                  >
-                    <v-layout class="gap">
+                    <v-layout
+                      v-if="isShowSpecialNumber"
+                      class="gap justify-space-between text-center"
+                    >
                       <div
                         style="min-width: 3rem"
-                        class="flex-fill"
+                        class="flex-fill text-right"
                         :class="ballTextColor(item.ball7)"
                       >
                         {{ item.ball7 }}
@@ -157,97 +182,11 @@
                         {{ item.ball7_digit_sum_even_odd }}
                       </div>
                     </v-layout>
-                  </td>
-                  <td class="pa-2 table-result__balls d-md-none pr-4">
-                    <div style="min-height: 3rem" class="d-flex align-center">
-                      <v-layout
-                        v-if="isShowNumber"
-                        class="gap-xs"
-                        justify-center
-                      >
-                        <div
-                          v-for="(ball, idx) in 6"
-                          :key="`row-ball-${idx}`"
-                          class="d-flex flex-column align-center gap-xs"
-                        >
-                          <v-sheet
-                            :color="$common.getBallColor(item['ball' + ball])"
-                            class="d-flex justify-center align-center"
-                            rounded="circle"
-                            width="25"
-                            height="25"
-                            dark
-                          >
-                            {{ item["ball" + ball] }}
-                          </v-sheet>
-                          <p class="mb-0">{{ item.animals[ball - 1] }}</p>
-                        </div>
-                        <div class="py-1 px-0">+</div>
-                        <div class="d-flex flex-column align-center gap-xs">
-                          <v-sheet
-                            class="d-flex justify-center align-center"
-                            rounded="circle"
-                            width="25"
-                            height="25"
-                            color="red"
-                            dark
-                          >
-                            {{ item["ball7"] }}
-                          </v-sheet>
-                          <p class="mb-0">{{ item.animals[7] }}</p>
-                        </div>
-                      </v-layout>
-                      <v-layout v-if="isShowSum" class="gap">
-                        <div class="px-2 flex-fill">{{ item.sum }}</div>
-                        <div
-                          class="px-2 flex-fill"
-                          :class="ballTextColor(item.sum_even_odd)"
-                        >
-                          {{ item.sum_even_odd }}
-                        </div>
-                        <div
-                          class="px-2 flex-fill"
-                          :class="ballTextColor(item.sum_big_small)"
-                        >
-                          {{ item.sum_big_small }}
-                        </div>
-                      </v-layout>
-                      <v-layout
-                        v-if="isShowSpecialNumber"
-                        class="gap justify-space-between text-center"
-                      >
-                        <div
-                          style="min-width: 3rem"
-                          class="flex-fill text-right"
-                          :class="ballTextColor(item.ball7)"
-                        >
-                          {{ item.ball7 }}
-                        </div>
-                        <div
-                          class="flex-fill text-right"
-                          :class="ballTextColor(item.ball7_even_odd)"
-                        >
-                          {{ item.ball7_even_odd }}
-                        </div>
-                        <div
-                          class="flex-fill text-right"
-                          :class="ballTextColor(item.ball7_big_small)"
-                        >
-                          {{ item.ball7_big_small }}
-                        </div>
-                        <div
-                          class="flex-fill text-right"
-                          :class="ballTextColor(item.ball7_digit_sum_even_odd)"
-                        >
-                          {{ item.ball7_digit_sum_even_odd }}
-                        </div>
-                      </v-layout>
-                    </div>
-                  </td>
-                </tr>
-              </tbody>
-            </template>
-          </v-simple-table>
+                  </div>
+                </td> -->
+              </tr>
+            </tbody>
+          </table>
         </v-sheet>
       </v-sheet>
     </v-layout>
@@ -293,10 +232,39 @@ export default {
 };
 </script>
 
-<style lang="sass">
-.table-result
-  border-collapse: collapse
+<style lang="scss">
+.table-result {
+  width: 100%;
+  border-collapse: collapse;
+  thead tr {
+    background-color: #1976d222;
+    th {
+      padding: 0.5rem;
+      font-size: 1rem !important;
+      font-weight: 400;
+      letter-spacing: 0.03125em !important;
+      line-height: 1.5rem;
+      font-family: "Roboto", sans-serif !important;
+    }
+  }
 
-td > span, td > div
-  font-size: .8rem
+  tr th,
+  tr td {
+    text-align: center;
+    border: 1px solid #ccc;
+    padding: 0.125rem 0.125rem;
+    min-width: 50px;
+  }
+  tbody tr td {
+    font-size: 16px;
+    font-weight: normal;
+  }
+
+  .table-result__date {
+    width: 160px;
+  }
+  .table-result__id {
+    width: 64px;
+  }
+}
 </style>

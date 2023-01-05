@@ -167,18 +167,9 @@ export default {
     menuList() {
       return [
         { title: "主页", icon: "mdi-home-outline", to: "/", exact: true },
-        {
-          title: "未结明细",
-          icon: "mdi-file-document-outline",
-          to: "/payment",
-          exact: true,
-        },
-        {
-          title: "开奖结果",
-          icon: "mdi-star-shooting-outline",
-          to: "/lottery",
-          exact: true,
-        },
+        { title: "未结明细", to: "/payment", exact: true },
+        { title: "结算报表", to: "/settled", exact: true },
+        { title: "开奖结果", to: "/lottery", exact: true },
         // {
         //   title: "个人信息",
         //   icon: "mdi-account-outline",
