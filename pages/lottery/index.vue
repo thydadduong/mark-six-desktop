@@ -1,6 +1,6 @@
 <template>
   <v-sheet>
-    <Toolbar title="开奖结果" />
+    <portal to="toolbarName">开奖结果</portal>
 
     <v-layout>
       <v-sheet

@@ -1,6 +1,7 @@
 <template>
   <v-sheet color="transparent">
-    <Toolbar title="未结明细" />
+    <portal to="toolbarName">未结明细</portal>
+
     <v-layout>
       <v-sheet
         class="pa-2 px-1 flex-shrink-0 flex-grow-0"

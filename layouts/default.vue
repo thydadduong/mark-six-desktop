@@ -8,7 +8,7 @@
         <v-app-bar
           color="primary detail-toolbar"
           extension-height="58"
-          height="70"
+          height="86"
           elevation="1"
           tile
           dark
@@ -25,7 +25,7 @@
             class="py-2"
           />
           <v-layout class="fill-height pt-1" align-end column>
-            <div>
+            <v-layout class="align-center gap-xs">
               <v-btn
                 @click="dialogNotification = true"
                 class="px-2 rounded mr-2"
@@ -38,6 +38,11 @@
                 <v-icon left>mdi-account</v-icon>
                 个人信息
               </v-btn>
+              <p class="pa-2 ma-0 body-2">
+                <v-icon small>mdi-database-outline</v-icon>
+                剩余额度: {{ remainBalance }} 总共额度: {{ totalBalance }}
+              </p>
+
               <v-menu>
                 <template v-slot:activator="{ on, attrs }">
                   <v-btn
@@ -90,7 +95,7 @@
                   </v-list-item>
                 </v-list>
               </v-menu>
-            </div>
+            </v-layout>
             <div class="mt-auto">
               <v-tabs
                 background-color="transparent"
@@ -115,12 +120,14 @@
           <template v-slot:extension>
             <v-layout column>
               <v-sheet color="primary darken-2" width="100%" height="32" light>
-                <v-layout class="fill-height">
+                <v-layout class="fill-height align-center">
                   <v-sheet
-                    class="flex-shrink-0"
+                    class="flex-shrink-0 px-4 white--text"
                     width="14rem"
                     color="transparent"
-                  ></v-sheet>
+                  >
+                    <portal-target name="toolbarName"></portal-target>
+                  </v-sheet>
                   <v-tabs
                     v-for="(item, key) in gameList"
                     :key="`game-${key}`"
@@ -194,9 +201,15 @@ export default {
     };
   },
   computed: {
+    ...mapState("profile", ["basicItem"]),
     ...mapState("profile", ["gameTable"]),
     ...mapState("game", { isLoading: "isLoading", gameList: "records" }),
-
+    remainBalance() {
+      return this.basicItem.basic?.valid_balance || 0;
+    },
+    totalBalance() {
+      return this.basicItem.basic?.total_balance || 0;
+    },
     gameMenu() {
       return gameMenuList;
     },
@@ -242,6 +255,7 @@ export default {
     },
   },
   methods: {
+    ...mapActions("profile", ["fetchBasicItem"]),
     ...mapActions("game", ["getGameList"]),
     ...mapActions("app", ["getAppTitle"]),
     ...mapActions("auth", { logoutUser: "logout" }),
@@ -342,6 +356,7 @@ export default {
     },
   },
   mounted() {
+    this.fetchBasicItem();
     this.getGameList();
     this.getAppTitle();
     this.getGameTable();

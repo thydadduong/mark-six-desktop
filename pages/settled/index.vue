@@ -1,6 +1,6 @@
 <template>
   <v-sheet>
-    <Toolbar title="结算报表" />
+    <portal to="toolbarName">结算报表</portal>
     <v-card flat>
       <v-data-table
         @click:row="viewDetail"

@@ -1,8 +1,6 @@
 <template>
   <v-sheet color="transparent">
-    <v-toolbar color="primary darken-1" height="32" dark flat>
-      <v-toolbar-title class="px-4 my-4 py-1 body-1">大厅</v-toolbar-title>
-    </v-toolbar>
+    <portal to="toolbarName">大厅</portal>
     <v-card-text>
       <v-layout class="gap" wrap>
         <CardGameItem

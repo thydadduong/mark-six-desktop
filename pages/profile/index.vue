@@ -1,10 +1,8 @@
 <template>
   <div>
-    <v-toolbar class="main-toolbar" color="primary darken-1" dark height="32">
-      <v-toolbar-title class="my-4 py-1 body-1">
-        {{ basicItem.basic?.account || "没有账号" }}
-      </v-toolbar-title>
-    </v-toolbar>
+    <portal to="toolbarName">
+      {{ basicItem.basic?.account || "没有账号" }}
+    </portal>
     <div class="px-4">
       <v-card flat tile width="30rem">
         <v-card-text>
@@ -58,8 +56,8 @@ export default {
     ...mapState("profile", ["basicItem"]),
     profileMenu() {
       return [
-        { title: "系统公告", to: "/profile/notifications" },
-        { title: "未结明细", to: "/profile/unsettled" },
+        // { title: "系统公告", to: "/profile/notifications" },
+        // { title: "未结明细", to: "/profile/unsettled" },
         // { title: "结算报表", to: "/profile/settled" },
         { title: "信用资料", to: "/profile/credits" },
         // { title: "全国开奖网", to: "/profile/reports" },
