@@ -7,8 +7,9 @@
       <v-sheet color="transparent" min-width="950">
         <v-app-bar
           color="primary detail-toolbar"
+          extension-height="58"
           height="70"
-          elevation="0"
+          elevation="1"
           tile
           dark
           app
@@ -110,6 +111,50 @@
               </v-tabs>
             </div>
           </v-layout>
+
+          <template v-slot:extension>
+            <v-layout column>
+              <v-sheet color="primary darken-2" width="100%" height="32" light>
+                <v-layout class="fill-height">
+                  <v-sheet
+                    class="flex-shrink-0"
+                    width="14rem"
+                    color="transparent"
+                  ></v-sheet>
+                  <v-tabs
+                    v-for="(item, key) in gameList"
+                    :key="`game-${key}`"
+                    active-class="white primary--text"
+                    color="primary"
+                    background-color="transparent"
+                    height="32"
+                    hide-slider
+                    light
+                  >
+                    <v-tab class="text-none body-2" to="/games">{{
+                      item.title
+                    }}</v-tab>
+                  </v-tabs>
+                  <v-spacer></v-spacer>
+                </v-layout>
+              </v-sheet>
+              <v-sheet width="100%" height="26" light>
+                <v-layout class="fill-height">
+                  <v-sheet width="14rem"></v-sheet>
+                  <v-btn-toggle color="primary" group tile>
+                    <template v-for="(item, index) in gameMenu">
+                      <v-btn :to="item.to" class="px-1 ma-0" value="left" small>
+                        {{ item.title }}
+                      </v-btn>
+                      <div class="my-auto" style="height: 24px">
+                        <v-divider vertical></v-divider>
+                      </div>
+                    </template>
+                  </v-btn-toggle>
+                </v-layout>
+              </v-sheet>
+            </v-layout>
+          </template>
         </v-app-bar>
         <Nuxt />
       </v-sheet>
@@ -125,6 +170,7 @@
 import qs from "qs";
 import { mapActions, mapState } from "vuex";
 import { DialogType } from "~/models/types/dialog.type";
+import { gameMenuList } from "~/models/games";
 export default {
   name: "LayoutDefault",
   middleware: "auth",
@@ -149,6 +195,11 @@ export default {
   },
   computed: {
     ...mapState("profile", ["gameTable"]),
+    ...mapState("game", { isLoading: "isLoading", gameList: "records" }),
+
+    gameMenu() {
+      return gameMenuList;
+    },
     currentTable() {
       return this.gameTable.current_table;
     },
@@ -191,6 +242,7 @@ export default {
     },
   },
   methods: {
+    ...mapActions("game", ["getGameList"]),
     ...mapActions("app", ["getAppTitle"]),
     ...mapActions("auth", { logoutUser: "logout" }),
     ...mapActions("profile", ["getGameTable"]),
@@ -290,6 +342,7 @@ export default {
     },
   },
   mounted() {
+    this.getGameList();
     this.getAppTitle();
     this.getGameTable();
     this.getLastResult();
@@ -306,7 +359,10 @@ export default {
   path
     fill: white
 
-.v-toolbar.detail-toolbar .v-toolbar__content
-  padding-top: 0
-  padding-bottom: 0
+.v-toolbar.detail-toolbar
+  .v-toolbar__content
+    padding-top: 0
+    padding-bottom: 0
+  .v-toolbar__extension
+    padding: 0
 </style>

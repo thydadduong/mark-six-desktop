@@ -19,6 +19,8 @@
                 <th class="table-result__ball">号码</th>
                 <th class="table-result__ball1" colspan="3">总和</th>
                 <th class="table-result__ball2" colspan="4">特码</th>
+                <th class="table-result__tail">尾数量</th>
+                <th class="table-result__animal">生肖量</th>
                 <!-- <th class="d-md-none table-result__balls">
                   <v-layout justify-center>
                     <v-chip-group
@@ -101,6 +103,12 @@
                 </td>
                 <td :class="ballTextColor(item.ball7_digit_sum_even_odd)">
                   {{ item.ball7_digit_sum_even_odd }}
+                </td>
+                <td :class="ballTextColor(item.ball7_digit_sum_even_odd)">
+                  {{ item.individual_animal_count }}
+                </td>
+                <td :class="ballTextColor(item.ball7_digit_sum_even_odd)">
+                  {{ item.individual_tail_count }}
                 </td>
                 <!-- <td class="pa-2 table-result__balls d-md-none pr-4">
                   <div style="min-height: 3rem" class="d-flex align-center">
@@ -240,7 +248,7 @@ export default {
     background-color: #1976d222;
     th {
       padding: 0.5rem;
-      font-size: 1rem !important;
+      font-size: 14px !important;
       font-weight: 400;
       letter-spacing: 0.03125em !important;
       line-height: 1.5rem;
@@ -261,10 +269,10 @@ export default {
   }
 
   .table-result__date {
-    width: 120px;
+    width: 90px;
   }
   .table-result__id {
-    width: 64px;
+    width: 48px;
   }
 }
 </style>

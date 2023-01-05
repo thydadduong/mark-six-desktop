@@ -34,9 +34,7 @@ export default {
     },
   },
   mounted() {
-    this.getGameList().finally(() => {
-      this.$router.push("/games/tema");
-    });
+    this.getGameList();
   },
 };
 </script>

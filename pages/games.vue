@@ -1,37 +1,5 @@
 <template>
   <v-card color="transparent" flat tile>
-    <v-toolbar
-      class="main-toolbar"
-      color="primary darken-1"
-      height="32"
-      flat
-      dark
-    >
-      <v-sheet class="flex-shrink-0" width="14rem"></v-sheet>
-
-      <v-tabs
-        v-for="(item, key) in gameList"
-        :key="`game-${key}`"
-        active-class="white primary--text"
-        hide-slider
-      >
-        <v-tab class="text-none body-2" to="/games">{{ item.title }}</v-tab>
-      </v-tabs>
-      <v-spacer></v-spacer>
-    </v-toolbar>
-    <v-layout class="elevation-1">
-      <v-sheet width="15rem"></v-sheet>
-      <v-btn-toggle color="primary" group tile>
-        <template v-for="(item, index) in gameMenu">
-          <v-btn :to="item.to" class="px-1 ma-0" value="left" small>
-            {{ item.title }}
-          </v-btn>
-          <div class="my-auto" style="height: 24px">
-            <v-divider vertical></v-divider>
-          </div>
-        </template>
-      </v-btn-toggle>
-    </v-layout>
     <v-layout>
       <v-sheet
         class="pa-2 px-1 flex-shrink-0 flex-grow-0"
@@ -117,6 +85,7 @@
 <script>
 import qs from "qs";
 import { mapState, mapActions } from "vuex";
+import { gameMenuList } from "~/models/games";
 import { DialogType } from "~/models/types/dialog.type";
 
 export default {
@@ -147,32 +116,10 @@ export default {
     currentTable() {
       return this.gameTable.current_table;
     },
-    gameMenu() {
-      return [
-        { title: "特码", to: "/games/tema" },
-        { title: "正码", to: "/games/zhengma" },
-        { title: "正码特", to: "/games/zhengma-te" },
-        { title: "连码", to: "/games/lianma" },
-        { title: "自选不中", to: "/games/zixuanbuzhong" },
-        { title: "自选中一", to: "/games/zixuan-zhong-yi" },
-        { title: "特平中", to: "/games/tepingzhong" },
-        { title: "特码生肖", to: "/games/tema-zodiac" },
-        { title: "连肖", to: "/games/lianxiao" },
-        { title: "连肖不中", to: "/games/lianxiaobuzhong" },
-        { title: "一肖项目", to: "/games/yi-xiao-xiangmu" },
-        { title: "六肖", to: "/games/liu-xiao" },
-        { title: "连尾", to: "/games/lianwei" },
-        { title: "连尾不中 ", to: "/games/lianweibuzhong" },
-        { title: "尾数项目", to: "/games/zhongshu-weishu" },
-        { title: "一肖量", to: "/games/yi-xiao-laing" },
-        { title: "一尾量", to: "/games/yi-wei-laing" },
-        { title: "半波", to: "/games/banbo" },
-        { title: "五行", to: "/games/wuhang" },
-      ];
-    },
+
     gameTitle() {
       const _path = this.$route.path || "";
-      return this.gameMenu.find((item) => item.to == _path).title;
+      return gameMenuList.find((item) => item.to == _path).title;
     },
     displayTimeCounter() {
       const date = new Date(this.closeTimer * 1000).toISOString();
