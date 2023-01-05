@@ -276,6 +276,9 @@ export default {
     onSaveAmount() {
       this.selectedList = [];
       this.getOddValues();
+      setTimeout(() => {
+        this.$store.dispatch("lottery/getRecentBets");
+      }, 1000);
     },
     onBetAmountUpdate(v) {},
   },
@@ -283,7 +286,6 @@ export default {
     clearInterval(this.intervalRequest);
     this.getOddValues();
     this.startIntervalRequest();
-    this.$store.dispatch("lottery/getRecentBets");
   },
   beforeDestroy() {
     clearInterval(this.intervalRequest);
