@@ -194,6 +194,10 @@ export default {
       this.selectedList.push(item);
     },
     onClickItem49(item) {
+      if (!this.editedItem.amount)
+        return this.$toast.error(`请先预设你的金额`, {
+          position: POSITION.TOP_CENTER,
+        });
       let ballItem;
       for (const column of this.gridBalls) {
         ballItem = column.find((ball) => ball.value == item);

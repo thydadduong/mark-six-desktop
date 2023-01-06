@@ -206,6 +206,10 @@ export default {
       this.setItemAmountIndividual(item.play_id, this.amount);
     },
     onClickItem49(item) {
+      if (!this.amount)
+        return this.$toast.error(`请先预设你的金额`, {
+          position: POSITION.TOP_CENTER,
+        });
       let ballItem;
       for (const column of this.gridBalls) {
         ballItem = column.find((ball) => ball.value == item);
@@ -217,6 +221,10 @@ export default {
       return !!this.selectedList.find((item) => item.label == label);
     },
     onClickShortcut(item = {}) {
+      if (!this.amount)
+        return this.$toast.error(`请先预设你的金额`, {
+          position: POSITION.TOP_CENTER,
+        });
       const balls = item.balls || [];
       const prefix = this.activeType.ball_prefix;
       let ids = balls.map((item) => ({
