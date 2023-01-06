@@ -19,12 +19,12 @@
           <table class="table-bitting">
             <thead>
               <tr>
-                <th class="table-bitting__title">项目</th>
-                <th class="table-bitting__ball">球号</th>
-                <th class="table-bitting__rate">赔率</th>
-                <th class="table-bitting__input">
+                <th class="table-bitting__title text-center">项目</th>
+                <th class="table-bitting__ball text-center">球号</th>
+                <th class="table-bitting__rate text-center">赔率</th>
+                <th class="table-bitting__input text-center">
                   <v-layout class="gap-xs" align-center>
-                    <span class="text-no-wrap">金额</span>
+                    <span class="text-no-wrap ml-auto">金额</span>
                     <v-btn
                       @click="customAmount = true"
                       class="rounded"
@@ -42,18 +42,23 @@
               <tr>
                 <td class="table-bitting__title">
                   <v-layout class="gap-xs" wrap>
-                    <span>{{ propertyTitle }}</span>
-                    <span v-if="typeTitle"> [{{ typeTitle }}]</span>
+                    <div class="text-center mx-auto">
+                      <span>{{ propertyTitle }}</span>
+                      <span v-if="typeTitle"> [{{ typeTitle }}]</span>
+                    </div>
                   </v-layout>
                 </td>
-                <td class="table-bitting__ball">{{ displayBallItems }}</td>
-                <td class="table-bitting__rate">{{ editedItem.minRate }}</td>
-                <td class="table-bitting__input">
+                <td class="table-bitting__ball text-center">
+                  {{ displayBallItems }}
+                </td>
+                <td class="table-bitting__rate text-center">
+                  {{ editedItem.minRate }}
+                </td>
+                <td class="table-bitting__input text-center">
                   <input
                     v-model.number="editedItem.amount"
                     :disabled="!customAmount"
                     class="hidden-spin"
-                    
                     type="number"
                     required
                     outlined
