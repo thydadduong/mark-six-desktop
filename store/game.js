@@ -7,8 +7,9 @@ const state = () => ({
 const actions = {
   getGameList({ commit }) {
     commit("LOADING", true);
+    const r = Math.random().toFixed(17);
     const uid = this.$cookiz.get("m6_uid");
-    const payload = { params: { uid } };
+    const payload = { params: { uid, r } };
     this.$axios
       .$get("/api-base/GetGameList", payload)
       .then((res) => {

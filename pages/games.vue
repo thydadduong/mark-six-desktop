@@ -57,7 +57,7 @@
           </v-list>
         </v-card>
       </v-sheet>
-      <v-sheet class="pa-2 px-1 flex-fill" color="transparent">
+      <v-sheet class="pa-2 px-1 flex-fill game-close" color="transparent">
         <nuxt />
       </v-sheet>
     </v-layout>

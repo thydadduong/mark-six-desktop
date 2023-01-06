@@ -123,7 +123,7 @@
                 <v-layout class="fill-height align-center">
                   <v-sheet
                     class="flex-shrink-0 px-4 white--text"
-                    width="14rem"
+                    width="15.25rem"
                     color="transparent"
                   >
                     <portal-target name="toolbarName"></portal-target>
@@ -147,7 +147,7 @@
               </v-sheet>
               <v-sheet width="100%" height="26" light>
                 <v-layout class="fill-height">
-                  <v-sheet width="14rem"></v-sheet>
+                  <v-sheet width="15.25rem"></v-sheet>
                   <v-btn-toggle color="primary" group tile>
                     <template v-for="(item, index) in gameMenu">
                       <v-btn

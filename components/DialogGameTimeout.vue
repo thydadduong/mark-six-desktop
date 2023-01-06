@@ -1,6 +1,9 @@
 <template>
   <v-dialog :value="visible" width="400" :persistent="persistent">
     <v-card>
+      <v-card-title class="body-1 justify-center primary white--text py-2"
+        >温馨提示
+      </v-card-title>
       <v-layout class="justify-center pt-8">
         <v-icon color="primary" size="75"> mdi-information-outline</v-icon>
       </v-layout>
@@ -10,11 +13,11 @@
       <v-card-text class="justify-center text-center" v-if="message">
         {{ message }}</v-card-text
       >
-      <v-card-actions class="justify-center pb-4">
+      <v-card-actions class="justify-center py-2 dialog-close__footer">
         <v-btn v-if="!actionTo" @click="close" outlined>
           {{ actionTitle }}
         </v-btn>
-        <v-btn v-else text :href="actionTo" color="primary">
+        <v-btn v-else :href="actionTo" elevation="0" color="primary">
           {{ actionTitle }}
         </v-btn>
       </v-card-actions>
@@ -50,4 +53,7 @@ export default {
 };
 </script>
 
-<style lang="sass" scoped></style>
+<style lang="sass">
+.dialog-close__footer
+  background-color: #1976d222
+</style>

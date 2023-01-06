@@ -23,9 +23,10 @@ const actions = {
 
   getRecentBets({ commit }) {
     commit("LOADING_BET", false);
+    const r = Math.random().toFixed(17);
     const _uri = "/api-base/Dynamic";
     const UID = this.$cookiz.get("m6_uid");
-    const res = this.$axios.$get(_uri, { params: { UID } });
+    const res = this.$axios.$get(_uri, { params: { UID, r } });
     res
       .then((res) => {
         if (res.code !== 0) return;
