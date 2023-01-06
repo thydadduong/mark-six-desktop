@@ -1,6 +1,6 @@
 <template>
   <v-card flat class="game-action-bar" color="#dae8fc" rounded="lg">
-    <v-layout class="pa-1 gap" justify-end align-center>
+    <v-layout class="pa-1 px-2 gap" justify-end align-center>
       <v-btn
         v-for="item in valueOptions"
         :key="`option-${item}`"
@@ -116,7 +116,7 @@ export default {
       e = e || window.event;
       var charCode = typeof e.which == "undefined" ? e.keyCode : e.which;
       var charStr = String.fromCharCode(charCode);
-      
+
       if (!charStr.match(/^[0-9]+$/)) e.preventDefault();
     },
   },

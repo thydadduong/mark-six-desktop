@@ -292,6 +292,7 @@ export default {
       this.getOddValues();
       setTimeout(() => {
         this.$store.dispatch("lottery/getRecentBets");
+        this.$store.dispatch("profile/fetchBasicItem");
       }, 1000);
     },
   },
