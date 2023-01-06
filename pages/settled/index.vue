@@ -7,7 +7,7 @@
         :headers="tableHeaders"
         :items="records"
         :loading="isLoading"
-        class="hide-horizontal-scrollbar"
+        class="hide-horizontal-scrollbar px-5"
         mobile-breakpoint="0"
         hide-default-footer
         no-data-text="无更多记录"
@@ -171,7 +171,7 @@ export default {
         });
     },
     viewDetail(item) {
-      const _URI = `/profile/settled/${item[0]}`;
+      const _URI = `/settled/${item[0]}`;
       this.$router.push(_URI);
     },
   },

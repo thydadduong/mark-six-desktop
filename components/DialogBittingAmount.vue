@@ -23,7 +23,7 @@
                 <th class="table-bitting__rate text-center">赔率</th>
                 <th class="table-bitting__input text-center">
                   <v-layout align-center>
-                    <span class="mr-2">金额</span>
+                    <span class="ml-auto">金额</span>
                     <v-btn
                       @click="customAmount = !customAmount"
                       class="rounded"

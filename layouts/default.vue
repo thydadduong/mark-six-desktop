@@ -107,7 +107,7 @@
                 <v-tab
                   v-for="(item, key) in menuList"
                   :key="`side-menu-${key}`"
-                  :to="item.to"
+                  :to="item.to + '?v=' + version"
                   :exact="item.exact"
                   class="px-0"
                 >
@@ -150,10 +150,20 @@
                   <v-sheet width="14rem"></v-sheet>
                   <v-btn-toggle color="primary" group tile>
                     <template v-for="(item, index) in gameMenu">
-                      <v-btn :to="item.to" class="px-1 ma-0" value="left" small>
+                      <v-btn
+                        :key="index + 'btn'"
+                        :to="item.to + '?v=' + version"
+                        class="px-1 ma-0"
+                        value="left"
+                        small
+                      >
                         {{ item.title }}
                       </v-btn>
-                      <div class="my-auto" style="height: 24px">
+                      <div
+                        :key="index + 'divder'"
+                        class="my-auto"
+                        style="height: 24px"
+                      >
                         <v-divider vertical></v-divider>
                       </div>
                     </template>
@@ -198,6 +208,7 @@ export default {
         balls: [],
       },
       confirmAction: "",
+      version: "1.0.0",
     };
   },
   computed: {
