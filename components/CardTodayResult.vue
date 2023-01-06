@@ -4,7 +4,6 @@
       <span>澳门六合彩</span>
       <span>{{ issueNumber }}</span>
       <span>期</span>
-      <v-icon small>mdi-chevron-down</v-icon>
     </p>
     <v-layout class="gap-xs">
       <div
