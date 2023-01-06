@@ -27,7 +27,7 @@
       <v-card-title
         class="body-1 py-2 justify-center text-center primary white--text"
       >
-        确认订单
+        通 知
       </v-card-title>
       <v-divider></v-divider>
       <v-progress-linear

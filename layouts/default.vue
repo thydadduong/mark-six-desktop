@@ -82,7 +82,7 @@
                     <v-icon small class="mr-2"
                       >mdi-account-circle-outline</v-icon
                     >
-                    <span>Profile</span>
+                    <span>个人账号</span>
                     <v-icon small>mdi-menu-down</v-icon>
                   </v-btn>
                 </template>
@@ -91,7 +91,7 @@
                     <v-list-item-content>修改密码</v-list-item-content>
                   </v-list-item>
                   <v-list-item @click="logout">
-                    <v-list-item-content>个人信息</v-list-item-content>
+                    <v-list-item-content>退出系统</v-list-item-content>
                   </v-list-item>
                 </v-list>
               </v-menu>
