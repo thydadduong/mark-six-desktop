@@ -9,7 +9,7 @@
         color="transparent"
       >
       </v-sheet>
-      <v-sheet class="pa-2 px-1 flex-fill" color="transparent">
+      <v-sheet class="pa-2 px-1 " color="transparent" width="60rem">
         <UnsettleTable />
       </v-sheet>
     </v-layout>

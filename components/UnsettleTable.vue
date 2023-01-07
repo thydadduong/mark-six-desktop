@@ -1,5 +1,5 @@
 <template>
-  <v-sheet color="transparent" width="1000">
+  <v-sheet color="transparent">
     <table class="table-unsettle">
       <thead>
         <tr>

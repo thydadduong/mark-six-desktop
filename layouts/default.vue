@@ -34,10 +34,10 @@
               >
                 <v-icon small>mdi-bell</v-icon>
               </v-btn>
-              <v-btn to="/profile" class="px-2" small text>
+              <!-- <v-btn to="/profile" class="px-2" small text>
                 <v-icon left>mdi-account</v-icon>
                 个人信息
-              </v-btn>
+              </v-btn> -->
               <p class="pa-2 ma-0 body-2">
                 <v-icon small>mdi-database-outline</v-icon>
                 剩余额度: {{ remainBalance }} 总共额度: {{ totalBalance }}
@@ -253,15 +253,11 @@ export default {
     menuList() {
       return [
         { title: "主页", icon: "mdi-home-outline", to: "/", exact: true },
+        { title: "信用资料", to: "/profile/credits" },
         { title: "未结明细", to: "/payment", exact: true },
         { title: "结算报表", to: "/settled", exact: true },
+        { title: "游戏规则", to: "/rules" },
         { title: "开奖结果", to: "/lottery", exact: true },
-        // {
-        //   title: "个人信息",
-        //   icon: "mdi-account-outline",
-        //   to: "/profile",
-        //   exact: false,
-        // },
       ];
     },
   },
