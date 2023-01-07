@@ -16,6 +16,7 @@
                 ref="animalItemPicker"
               />
               <v-sheet height="8"></v-sheet>
+              <ViewItemRestrict :getItemRestrict="getItemRestrict" />
               <ActionBarBallAmount
                 v-model="amount"
                 @blur="setItemAmount"
@@ -57,6 +58,7 @@ export default {
       ref_rates: {},
       activeChannel: "A",
       loadingRates: false,
+      getItemRestrict: {},
     };
   },
   computed: {
@@ -166,6 +168,20 @@ export default {
         })
         .catch((error) => {
           console.log(error);
+          this.loadingRates = false;
+        });
+
+      this.$axios
+        .$get("/api-base/GetItemRestrict", { params: { uid, r, type: 7 } })
+        .then((res) => {
+          if (!res.restrict) return;
+          this.getItemRestrict = res.restrict;
+          this.loadingRates = false;
+        })
+        .catch((error) => {
+          console.log(error);
+        })
+        .finally(() => {
           this.loadingRates = false;
         });
     },

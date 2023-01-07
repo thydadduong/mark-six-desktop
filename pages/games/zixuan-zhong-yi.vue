@@ -55,7 +55,7 @@
               single-amount
             />
             <v-sheet height="8"></v-sheet>
-
+            <ViewItemRestrict :getItemRestrict="getItemRestrict" />
             <ActionBarBallAmount
               v-model="editedItem.amount"
               @compose="openDialogBitting"
@@ -125,6 +125,7 @@ export default {
       ref_rates: {},
       activeChannel: "A",
       loadingRates: false,
+      getItemRestrict: {},
     };
   },
   computed: {
@@ -190,7 +191,8 @@ export default {
       if (!this.editedItem.amount)
         return this.$toast.error(`请先预设你的金额`, {
           position: POSITION.TOP_CENTER,
-        });s
+        });
+      s;
       let ballItem;
       for (const column of this.gridBalls) {
         ballItem = column.find((ball) => ball.value == item);
@@ -279,6 +281,20 @@ export default {
         })
         .catch((error) => {
           console.log(error);
+          this.loadingRates = false;
+        });
+
+      this.$axios
+        .$get("/api-base/GetItemRestrict", { params: { uid, r, type } })
+        .then((res) => {
+          if (!res.restrict) return;
+          this.getItemRestrict = res.restrict;
+          this.loadingRates = false;
+        })
+        .catch((error) => {
+          console.log(error);
+        })
+        .finally(() => {
           this.loadingRates = false;
         });
     },
