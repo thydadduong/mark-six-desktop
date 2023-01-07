@@ -27,6 +27,7 @@
           <v-form ref="formItem">
             <BittingItem49
               @toggle-item="toggleSelectItem"
+              :disabled="gameClosed"
               :gridItems="gridBalls"
               :selectedItems="selectedList"
               :rates="itemsRate"
@@ -35,6 +36,7 @@
             <v-sheet height="8"></v-sheet>
             <BittingZhengmaTeFlip
               @click:row="toggleSelectItem"
+              :disabled="gameClosed"
               :flip-coins="flipCoins"
               :rates="flipBallRates"
               :selectedItems="selectedList"
@@ -47,6 +49,7 @@
               @blur="setItemAmount"
               @compose="openDialogBitting"
               @clear="clearSelection"
+              :disabled="gameClosed"
             />
           </v-form>
         </v-card>
@@ -68,14 +71,17 @@
             <Shortcut49
               @click:item="onClickItem49"
               :selected-items="selectedItems"
+              :disabled="gameClosed"
             />
             <ShortcutColor
               @click:item="onClickShortcut"
               :selected="activeShortcut"
+              :disabled="gameClosed"
             />
             <ShortcutItem
               @click:item="onClickShortcut"
               :selected="activeShortcut"
+              :disabled="gameClosed"
             />
           </v-card-text>
         </v-card>
@@ -93,6 +99,7 @@
 
 <script>
 import { POSITION } from "vue-toastification";
+import { mapState } from "vuex";
 import {
   ColorBallsFlat,
   gridNumbers,
@@ -123,6 +130,7 @@ export default {
     };
   },
   computed: {
+    ...mapState("game", { gameClosed: "closed" }),
     selectedItems() {
       return this.selectedList.map((item) => item.value);
     },

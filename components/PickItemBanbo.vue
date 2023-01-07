@@ -39,6 +39,7 @@
             <input
               @keypress="preventNonNumericalInput"
               @click.stop="() => {}"
+              :disabled="disabled"
               :ref="item.play_id"
               :id="item.play_id"
               :name="item.play_id"
@@ -64,6 +65,7 @@
           <td class="game-item-table__input">
             <input
               @click.stop="toggleSelectItem(item)"
+              :disabled="disabled"
               class="text-right px-1"
               tabindex="-1"
               readonly
@@ -79,6 +81,7 @@
 export default {
   name: "PickItemBanbo",
   props: {
+    disabled: Boolean,
     rates: { type: Object, default: () => ({}) },
     gridItems: { type: Array, default: () => [] },
     selectedItems: { type: Array, default: () => [] },
@@ -105,6 +108,7 @@ export default {
       return this.rates[id] || "-";
     },
     toggleSelectItem(item) {
+      if (this.disabled) return;
       this.$emit("toggle-item", item);
       setTimeout(() => {
         this.$refs[item.play_id][0]?.focus();

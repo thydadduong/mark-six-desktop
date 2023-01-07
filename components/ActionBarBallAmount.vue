@@ -5,6 +5,7 @@
         v-for="item in valueOptions"
         :key="`option-${item}`"
         @click="onInput(item)"
+        :disabled="disabled"
         elevation="1"
         color="teal"
         width="50"
@@ -23,6 +24,7 @@
             @focus="onFocus"
             @keypress="preventNonNumericalInput"
             :value="value"
+            :disabled="disabled"
             pattern="[0-9]*"
             step="any"
             background-color="white"
@@ -36,6 +38,7 @@
       </div>
       <v-btn
         @click="onInput()"
+        :disabled="disabled"
         class="rounded white"
         width="40"
         height="40"
@@ -45,6 +48,7 @@
         重置
       </v-btn>
       <v-btn
+        :disabled="disabled"
         @click="submit"
         class="rounded"
         color="primary"
@@ -78,6 +82,7 @@ export default {
   name: "ActionBarBallAmount",
   props: {
     value: Number,
+    disabled: Boolean,
   },
   computed: {
     valueOptions() {
@@ -140,6 +145,16 @@ export default {
     -webkit-appearance: none;
     -moz-appearance: none;
     margin: 0;
+  }
+}
+.game-action-bar {
+  .v-input.amount-input.v-input--is-disabled .v-input__slot.white {
+    background-color: #f1f1f1 !important;
+  }
+
+  .theme--dark.v-btn.v-btn--disabled.v-btn--has-bg {
+    background-color: #f1f1f1 !important;
+    color: gray !important;
   }
 }
 </style>

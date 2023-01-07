@@ -1,6 +1,6 @@
 <template>
   <div>
-    <v-layout class="gap-sm">
+    <v-layout class="gap-sm game-closed">
       <v-sheet color="transparent" width="1000">
         <GameActionBar>
           <v-btn-toggle
@@ -24,6 +24,7 @@
             <BittingItem49
               @toggle-item="toggleSelectItem"
               :gridItems="gridBalls"
+              :disabled="gameClosed"
               :selectedItems="selectedList"
               :rates="itemsRate"
               ref="item49Picker"
@@ -31,6 +32,7 @@
             <v-sheet height="8"></v-sheet>
             <BittingFlipItem
               @click:row="toggleSelectItem"
+              :disabled="gameClosed"
               :rates="flipBallRates"
               :selectedItems="selectedList"
               ref="flipItem"
@@ -40,6 +42,7 @@
               @click:row="toggleSelectItem"
               :rates="colorBallsRate"
               :selectedItems="selectedList"
+              :disabled="gameClosed"
               ref="colorItem"
             />
             <v-sheet height="8"></v-sheet>
@@ -49,6 +52,7 @@
               @blur="setItemAmount"
               @compose="openDialogBitting"
               @clear="clearSelection"
+              :disabled="gameClosed"
             />
           </v-form>
         </v-card>
@@ -72,14 +76,17 @@
               <v-card-text class="pa-1">
                 <Shortcut49
                   @click:item="onClickItem49"
+                  :disabled="gameClosed"
                   :selected-items="selectedItems"
                 />
                 <ShortcutColor
                   @click:item="onClickShortcut"
+                  :disabled="gameClosed"
                   :selected="activeShortcut"
                 />
                 <ShortcutItem
                   @click:item="onClickShortcut"
+                  :disabled="gameClosed"
                   :selected="activeShortcut"
                 />
               </v-card-text>
@@ -102,6 +109,7 @@
 import { POSITION } from "vue-toastification";
 import { GridTemaA, GridTemaB, ColorBalls } from "~/models/balls-map";
 import { ColorBallsFlat, TemaFlipCoin, getPlayId } from "~/models/balls-map";
+import { mapState } from "vuex";
 const getNumberLabel = (number) => (number < 10 ? `0${number}` : `${number}`);
 export default {
   name: "PageLuckyDraw",
@@ -121,6 +129,7 @@ export default {
     };
   },
   computed: {
+    ...mapState("game", { gameClosed: "closed" }),
     selectedItems() {
       return this.selectedList.map((item) => item.value);
     },

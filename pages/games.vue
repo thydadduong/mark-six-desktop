@@ -138,14 +138,11 @@ export default {
     },
   },
   methods: {
-    ...mapActions("game", ["getGameList"]),
+    ...mapActions("game", ["getGameList", "getCloseTime"]),
     ...mapActions("lottery", ["getRecentBets"]),
     ...mapActions("profile", ["getGameTable"]),
-    getCloseTime() {
-      const uid = this.$cookiz.get("m6_uid");
-      const r = Math.random().toFixed(16);
-      this.$axios
-        .$get("/api-base/GetCloseTime", { params: { uid, r } })
+    handleGetCloseTime() {
+      this.getCloseTime()
         .then((res) => {
           if (!!res?.code) return;
           this.bittingClosed = false;
@@ -233,7 +230,7 @@ export default {
     },
     startIntervalRequest() {
       this.intervalRequest = setInterval(() => {
-        this.getCloseTime();
+        this.handleGetCloseTime();
       }, 1000 * 30);
     },
     displayText(text = "") {
@@ -244,7 +241,7 @@ export default {
     const uid = this.$cookiz.get("m6_uid");
     this.getGameList();
     this.getIssueID(uid);
-    this.getCloseTime();
+    this.handleGetCloseTime();
     this.gitLastResult();
     this.startIntervalRequest();
     this.getRecentBets();

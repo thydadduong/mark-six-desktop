@@ -48,6 +48,7 @@
           <v-form ref="formItem">
             <BittingItem49
               @toggle-item="toggleSelectItem"
+              :disabled="gameClosed"
               :gridItems="gridBalls"
               :selectedItems="selectedList"
               :rates="itemsRate"
@@ -59,6 +60,7 @@
               v-model="editedItem.amount"
               @compose="openDialogBitting"
               @clear="clearSelection"
+              :disabled="gameClosed"
             />
           </v-form>
         </v-card>
@@ -83,6 +85,7 @@
                 <Shortcut49
                   @click:item="onClickItem49"
                   :selected-items="selectedItems"
+                  :disabled="gameClosed"
                 />
               </v-card-text>
             </v-card>
@@ -106,6 +109,7 @@
 
 <script>
 import { POSITION } from "vue-toastification";
+import { mapState } from "vuex";
 import {
   getBallColor,
   getNumberLabel,
@@ -130,6 +134,7 @@ export default {
     };
   },
   computed: {
+    ...mapState("game", { gameClosed: "closed" }),
     selectedItems() {
       return this.selectedList.map((item) => item.value);
     },

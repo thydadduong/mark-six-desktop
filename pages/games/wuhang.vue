@@ -10,6 +10,7 @@
             <v-card-text class="pa-2">
               <PickItemBanbo
                 @toggle-item="toggleSelectItem"
+                :disabled="gameClosed"
                 :gridItems="gridBalls"
                 :selectedItems="selectedList"
                 :rates="itemsRate"
@@ -21,6 +22,7 @@
                 @change="setItemAmount"
                 @compose="openDialogBitting"
                 @clear="clearSelection"
+                :disabled="gameClosed"
               />
             </v-card-text>
           </v-form>
@@ -41,6 +43,7 @@
 
 <script>
 import { POSITION } from "vue-toastification";
+import { mapState } from 'vuex';
 
 export default {
   name: "PageWuhang",
@@ -60,6 +63,7 @@ export default {
     };
   },
   computed: {
+    ...mapState("game", { gameClosed: "closed" }),
     itemsRate() {
       const rates = {};
       this.gridBalls.forEach(({ name, play_id }) => {

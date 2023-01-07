@@ -2,6 +2,8 @@ const state = () => ({
   records: [],
   isLoading: true,
   activeGameTitle: "",
+  closed: false,
+  closedTimer: 0,
 });
 
 const actions = {
@@ -19,6 +21,25 @@ const actions = {
         commit("LOADING", false);
       });
   },
+  getCloseTime({ commit }) {
+    const uid = this.$cookiz.get("m6_uid");
+    const r = Math.random().toFixed(16);
+    const response = this.$axios.$get("/api-base/GetCloseTime", {
+      params: { uid, r },
+    });
+    response
+      .then((res) => {
+        if (!!res?.code) return;
+        const payload = { closed: false, closedTimer: res.seconds || 0 };
+        commit("CLOSE_TIME", payload);
+      })
+
+      .catch((error) => {
+        console.log(error);
+      });
+
+    return response;
+  },
 };
 
 const mutations = {
@@ -28,6 +49,10 @@ const mutations = {
   },
   LOADING(state, value) {
     state.isLoading = value;
+  },
+  CLOSE_TIME(state, payload) {
+    state.closed = payload.closed;
+    state.closedTimer = payload.closedTimer;
   },
 };
 

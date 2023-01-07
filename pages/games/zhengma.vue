@@ -23,6 +23,7 @@
           <v-form ref="formItem">
             <BittingItem49
               @toggle-item="toggleSelectItem"
+              :disabled="gameClosed"
               :gridItems="gridBalls"
               :selectedItems="selectedList"
               :rates="itemsRate"
@@ -33,6 +34,7 @@
               @click:row="toggleSelectItem"
               :rates="flipBallRates"
               :selectedItems="selectedList"
+              :disabled="gameClosed"
               ref="zhengmaFlip"
             />
             <v-sheet height="8"></v-sheet>
@@ -42,6 +44,7 @@
               @blur="setItemAmount"
               @compose="openDialogBitting"
               @clear="clearSelection"
+              :disabled="gameClosed"
             />
           </v-form>
         </v-card>
@@ -65,14 +68,17 @@
                 <Shortcut49
                   @click:item="onClickItem49"
                   :selected-items="selectedItems"
+                  :disabled="gameClosed"
                 />
                 <ShortcutColor
                   @click:item="onClickShortcut"
                   :selected="activeShortcut"
+                  :disabled="gameClosed"
                 />
                 <ShortcutItem
                   @click:item="onClickShortcut"
                   :selected="activeShortcut"
+                  :disabled="gameClosed"
                 />
               </v-card-text>
             </v-card>
@@ -92,6 +98,7 @@
 <script>
 import { GridZhengmaA, GridZhengmaB, ZhengmaFlip } from "~/models/balls-map";
 import { POSITION } from "vue-toastification";
+import { mapState } from "vuex";
 
 export default {
   name: "PageLuckyDraw",
@@ -110,6 +117,7 @@ export default {
     };
   },
   computed: {
+    ...mapState("game", { gameClosed: "closed" }),
     selectedItems() {
       return this.selectedList.map((item) => item.value);
     },

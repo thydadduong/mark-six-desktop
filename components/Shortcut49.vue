@@ -32,6 +32,7 @@ import { Items49 } from "~/models/balls-map";
 export default {
   name: "Shortcut49",
   props: {
+    disabled: Boolean,
     selectedItems: { type: Array, default: () => [] },
   },
   computed: {
@@ -47,6 +48,7 @@ export default {
       return this.selectedItems.includes(item);
     },
     clickItem(item) {
+      if (this.disabled) return
       this.$emit("click:item", item);
     },
   },

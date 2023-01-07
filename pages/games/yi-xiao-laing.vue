@@ -9,6 +9,7 @@
           <v-form ref="formItem">
             <PickItemTail2
               @toggle-item="toggleSelectItem"
+              :disabled="gameClosed"
               :rates="itemsRate"
               :gridItems="gridBalls"
               :selectedItems="selectedList"
@@ -20,6 +21,7 @@
               @change="setItemAmount"
               @compose="openDialogBitting"
               @clear="clearSelection"
+              :disabled="gameClosed"
             />
           </v-form>
         </v-card>
@@ -39,6 +41,7 @@
 
 <script>
 import { YiXiaoLiangBalls } from "~/models/balls-map";
+import { mapState } from "vuex";
 
 export default {
   name: "PageYiXiaoLiang",
@@ -58,6 +61,7 @@ export default {
     };
   },
   computed: {
+    ...mapState("game", { gameClosed: "closed" }),
     itemsRate() {
       const rates = {};
       this.gridBalls.forEach((subitems) => {

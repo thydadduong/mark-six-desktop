@@ -36,6 +36,7 @@
                   :ref="subitem.play_id"
                   :id="subitem.play_id"
                   :name="subitem.play_id"
+                  :disabled="disabled"
                   class="text-right px-1 hidden-spin"
                   type="number"
                 />
@@ -51,6 +52,7 @@
               <td v-if="!singleAmount" class="game-item-table__input">
                 <input
                   @click.stop="toggleSelectItem(subitem)"
+                  :disabled="disabled"
                   class="text-right px-1"
                   tabindex="-1"
                   readonly
@@ -68,6 +70,7 @@
 export default {
   name: "PickItemTail",
   props: {
+    disabled: Boolean,
     singleAmount: Boolean,
     rates: { type: Object, default: () => ({}) },
     gridItems: { type: Array, default: () => [] },
@@ -95,6 +98,7 @@ export default {
       return this.rates[id] || "-";
     },
     toggleSelectItem(item) {
+      if (this.disabled) return;
       this.$emit("toggle-item", item);
       if (this.singleAmount) return;
       setTimeout(() => {

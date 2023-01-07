@@ -48,6 +48,7 @@
           <v-form ref="formItem">
             <BittingItem49
               @toggle-item="toggleSelectItem"
+              :disabled="gameClosed"
               :gridItems="gridBalls"
               :selectedItems="selectedList"
               :rates="itemsRate"
@@ -60,6 +61,7 @@
               v-model="editedItem.amount"
               @compose="openDialogBitting"
               @clear="clearSelection"
+              :disabled="gameClosed"
             />
           </v-form>
         </v-card>
@@ -82,6 +84,7 @@
             <Shortcut49
               @click:item="onClickItem49"
               :selected-items="selectedItems"
+              :disabled="gameClosed"
             />
           </v-card-text>
         </v-card>
@@ -102,6 +105,7 @@
 import { gridNumbers } from "~/models/balls-map";
 import { POSITION } from "vue-toastification";
 import GameActionBarFlat from "~/components/GameActionBarFlat.vue";
+import { mapState } from "vuex";
 
 export default {
   name: "PageTepingzhong",
@@ -123,6 +127,7 @@ export default {
     };
   },
   computed: {
+    ...mapState("game", { gameClosed: "closed" }),
     selectedItems() {
       return this.selectedList.map((item) => item.value);
     },

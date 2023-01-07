@@ -33,6 +33,7 @@ import { ShortcutColors } from "~/models/balls-map";
 export default {
   name: "ShortcutColor",
   props: {
+    disabled: Boolean,
     selected: String,
   },
   computed: {
@@ -48,6 +49,7 @@ export default {
       return item.value == this.selected;
     },
     clickItem(item) {
+      if (this.disabled) return;
       this.$emit("click:item", item);
     },
   },

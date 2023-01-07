@@ -20,6 +20,7 @@
                 <input
                   @keypress="preventNonNumericalInput"
                   @click.stop="() => {}"
+                  :disabled="disabled"
                   :ref="item.play_id"
                   :id="item.play_id"
                   :name="item.play_id"
@@ -36,6 +37,7 @@
               <td>
                 <input
                   @click.stop="onClickInputReadonly(item)"
+                  :disabled="disabled"
                   class="hidden-spin text-right px-1"
                   type="number"
                   tabindex="-1"
@@ -55,6 +57,7 @@ import { ZhengmaFlip } from "~/models/balls-map";
 export default {
   name: "BittingZhengmaFlip",
   props: {
+    disabled: Boolean,
     selectedItems: { type: Array, default: () => [] },
     rates: { type: Object, default: () => ({}) },
   },
@@ -65,6 +68,7 @@ export default {
   },
   methods: {
     onClickInputReadonly(item) {
+      if (this.disabled) return;
       this.clickRow(item);
       setTimeout(() => {
         this.$refs[item.play_id][0].focus();
@@ -80,6 +84,7 @@ export default {
       return !!this.selectedItems.find((item) => item.play_id == playId);
     },
     clickRow(item) {
+      if (this.disabled) return;
       this.$emit("click:row", item);
     },
     setItemAmount(value) {

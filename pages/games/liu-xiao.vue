@@ -30,6 +30,7 @@
             <v-card-text class="pa-2">
               <PickItemAnimal
                 @toggle-item="toggleSelectItem"
+                :disabled="gameClosed"
                 :rates="itemsRate"
                 :gridItems="gridBalls"
                 :selectedItems="selectedList"
@@ -43,6 +44,7 @@
                 @blur="setItemAmount"
                 @compose="openDialogBitting"
                 @clear="clearSelection"
+                :disabled="gameClosed"
               />
             </v-card-text>
           </v-form>
@@ -65,6 +67,7 @@
 <script>
 import { AnimalGroupedList } from "~/models/balls-map";
 import { POSITION } from "vue-toastification";
+import { mapState } from "vuex";
 
 export default {
   name: "PageLiuXiao",
@@ -89,6 +92,7 @@ export default {
     };
   },
   computed: {
+    ...mapState("game", { gameClosed: "closed" }),
     itemsRate() {
       const rates = {};
       this.gridBalls.forEach((subitems) => {

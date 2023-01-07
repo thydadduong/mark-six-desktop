@@ -24,6 +24,7 @@
                 <input
                   @keypress="preventNonNumericalInput"
                   @click.stop="() => {}"
+                  :disabled="disabled"
                   :ref="subitem.play_id"
                   :id="subitem.play_id"
                   :name="subitem.play_id"
@@ -42,6 +43,7 @@
               <td>
                 <input
                   @click.stop="toggleSelectItem(subitem)"
+                  :disabled="disabled"
                   class="text-right px-1"
                   tabindex="-1"
                   readonly
@@ -59,6 +61,7 @@
 export default {
   name: "PickItemTail",
   props: {
+    disabled: Boolean,
     rates: { type: Object, default: () => ({}) },
     gridItems: { type: Array, default: () => [] },
     selectedItems: { type: Array, default: () => [] },
@@ -85,6 +88,7 @@ export default {
       return this.rates[id] || "-";
     },
     toggleSelectItem(item) {
+      if (this.disabled) return;
       this.$emit("toggle-item", item);
       setTimeout(() => {
         this.$refs[item.play_id][0]?.focus();
