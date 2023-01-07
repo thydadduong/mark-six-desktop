@@ -1,58 +1,10 @@
 <template>
   <v-layout>
     <v-sheet
-      class="pa-2 px-1 flex-shrink-0 flex-grow-0"
+      class="flex-shrink-0 flex-grow-0"
       width="15rem"
       color="transparent"
     >
-      <v-card :loading="loadingBet" elevation="1" tile>
-        <v-card-text
-          style="background: linear-gradient(0deg, #dae8fc, #fff)"
-          class="primary--text pa-1 text-center"
-        >
-          最新注单
-        </v-card-text>
-        <v-divider></v-divider>
-        <!-- <v-card-text
-            style="background: linear-gradient(0deg, #dae8fc, #fff)"
-            class="primary--text pa-1"
-          >
-            未结金额：0
-          </v-card-text> -->
-        <v-card-text v-if="!recentBets.length">
-          <v-layout justify-center class="py-8">
-            <v-card rounded="circle" outlined>
-              <v-avatar size="100">
-                <v-icon class="grey--text text--lighten-1" size="36">
-                  mdi-file-document-outline
-                </v-icon>
-              </v-avatar>
-            </v-card>
-          </v-layout>
-        </v-card-text>
-        <v-list dense>
-          <template v-for="([date, item, amount], key) in recentBets">
-            <v-list-item :key="`item-${key}`" class="px-2 align-start">
-              <v-list-item-action class="body-2 mr-2 my-1 mb-auto">
-                {{ date }}
-              </v-list-item-action>
-              <v-list-item-content class="py-1 gap-xs text-center my-1 mb-auto">
-                <small>{{ displayText(item)[0] }}</small>
-                <small v-if="displayText(item)[1]">
-                  ({{ displayText(item)[1] }}
-                </small>
-              </v-list-item-content>
-              <v-list-item-action class="body-2 ml-2 my-1 mb-auto">
-                {{ amount }}
-              </v-list-item-action>
-            </v-list-item>
-            <v-divider
-              :key="`item-divider-${key}`"
-              v-if="recentBets.length - 1 > key"
-            ></v-divider>
-          </template>
-        </v-list>
-      </v-card>
     </v-sheet>
 
     <v-sheet class="pa-2 px-1 game-close" width="60rem" color="transparent">
@@ -140,7 +92,6 @@
 </template>
 
 <script>
-import { mapActions, mapState } from "vuex";
 export default {
   name: "PageUnsettled",
   data: () => ({
@@ -149,7 +100,6 @@ export default {
     isReady: false,
   }),
   computed: {
-    ...mapState("lottery", ["loadingBet", "recentBets"]),
     tableHeaders() {
       return [
         // {
@@ -210,7 +160,6 @@ export default {
     },
   },
   methods: {
-    ...mapActions("lottery", ["getRecentBets"]),
     fetchDataList() {
       const options = {
         params: {
@@ -240,7 +189,6 @@ export default {
   },
   created() {
     this.fetchDataList();
-    this.getRecentBets();
   },
 };
 </script>
