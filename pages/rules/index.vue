@@ -1,6 +1,6 @@
 <template>
-  <v-main>
-    <Toolbar title="澳门六合彩" />
+  <v-sheet>
+    <Toolbar title="澳门六合彩"/>
     <!-- <v-app-bar color="primary" dark app>
       <v-spacer></v-spacer>
       <v-app-bar-title></v-app-bar-title>
@@ -2092,13 +2092,12 @@
         <!---->
       </div>
     </v-container>
-  </v-main>
+  </v-sheet>
 </template>
 
 <script>
 export default {
   name: "PageRules",
-  layout: "blank",
 };
 </script>
 
