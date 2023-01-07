@@ -119,7 +119,15 @@
 
           <template v-slot:extension>
             <v-layout column>
-              <v-sheet color="primary darken-2" width="100%" height="32" light>
+              <v-sheet
+                color="primary"
+                width="100%"
+                height="32"
+                style="
+                  background-image: linear-gradient(#1a83eb, #1976d2, #1a83eb);
+                "
+                light
+              >
                 <v-layout class="fill-height align-center">
                   <v-sheet
                     class="flex-shrink-0 px-4 white--text"
