@@ -162,6 +162,7 @@ export default {
   },
   methods: {
     ...mapActions("profile", ["fetchBasicItem"]),
+    ...mapActions("lottery", ["getRecentBets"]),
     getKeyTypeText(key) {
       return KeyTypesCredits[key] || key;
     },
@@ -175,6 +176,7 @@ export default {
   },
   mounted() {
     this.fetchBasicItem();
+    this.getRecentBets();
   },
 };
 </script>

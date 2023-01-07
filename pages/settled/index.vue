@@ -140,7 +140,7 @@
 </template>
 
 <script>
-import { mapState } from "vuex";
+import { mapActions, mapState } from "vuex";
 export default {
   name: "PageUnsettled",
   data: () => ({
@@ -210,6 +210,7 @@ export default {
     },
   },
   methods: {
+    ...mapActions("lottery", ["getRecentBets"]),
     fetchDataList() {
       const options = {
         params: {
@@ -239,6 +240,7 @@ export default {
   },
   created() {
     this.fetchDataList();
+    this.getRecentBets();
   },
 };
 </script>
