@@ -36,6 +36,7 @@
               ref="zhengmaFlip"
             />
             <v-sheet height="8"></v-sheet>
+            <ViewItemRestrict :getItemRestrict="getItemRestrict" />
             <ActionBarBallAmount
               v-model="amount"
               @blur="setItemAmount"
@@ -105,6 +106,7 @@ export default {
       ref_rates: {},
       activeChannel: "A",
       loadingRates: false,
+      getItemRestrict: {},
     };
   },
   computed: {
@@ -258,6 +260,23 @@ export default {
         })
         .catch((error) => {
           console.log(error);
+          this.loadingRates = false;
+        });
+
+      const activeType = this.activeChannel == "A" ? 2 : 1002;
+      this.$axios
+        .$get("/api-base/GetItemRestrict", {
+          params: { uid, r, type: activeType },
+        })
+        .then((res) => {
+          if (!res.restrict) return;
+          this.getItemRestrict = res.restrict;
+          this.loadingRates = false;
+        })
+        .catch((error) => {
+          console.log(error);
+        })
+        .finally(() => {
           this.loadingRates = false;
         });
     },

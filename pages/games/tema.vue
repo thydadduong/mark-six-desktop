@@ -43,6 +43,7 @@
               ref="colorItem"
             />
             <v-sheet height="8"></v-sheet>
+            <ViewItemRestrict :getItemRestrict="getItemRestrict" />
             <ActionBarBallAmount
               v-model="amount"
               @blur="setItemAmount"
@@ -116,6 +117,7 @@ export default {
       ref_rates: {},
       activeChannel: "A",
       loadingRates: false,
+      getItemRestrict: {},
     };
   },
   computed: {
@@ -251,6 +253,7 @@ export default {
       const uid = this.$cookiz.get("m6_uid");
       const r = Math.random().toFixed(17);
       const order_type = this.activeChannel;
+
       this.$axios
         .$get("/api-base/GetOdds", { params: { uid, r, order_type, type: 1 } })
         .then((res) => {
@@ -260,6 +263,23 @@ export default {
             _refs[item.play_id] = item.odds;
           });
           this.ref_rates = Object.assign({}, _refs);
+          this.loadingRates = false;
+        })
+        .catch((error) => {
+          console.log(error);
+        })
+        .finally(() => {
+          this.loadingRates = false;
+        });
+
+      const activeType = this.activeChannel == "A" ? 1 : 1001;
+      this.$axios
+        .$get("/api-base/GetItemRestrict", {
+          params: { uid, r, type: activeType },
+        })
+        .then((res) => {
+          if (!res.restrict) return;
+          this.getItemRestrict = res.restrict;
           this.loadingRates = false;
         })
         .catch((error) => {

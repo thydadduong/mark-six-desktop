@@ -41,6 +41,7 @@
               ref="flipItem"
             />
             <v-sheet height="8"></v-sheet>
+            <ViewItemRestrict :getItemRestrict="getItemRestrict" />
             <ActionBarBallAmount
               v-model="amount"
               @blur="setItemAmount"
@@ -118,6 +119,7 @@ export default {
       selectedList: [],
       ref_rates: {},
       loadingRates: false,
+      getItemRestrict: {},
     };
   },
   computed: {
@@ -317,6 +319,20 @@ export default {
         })
         .catch((error) => {
           console.log(error);
+          this.loadingRates = false;
+        });
+
+      this.$axios
+        .$get("/api-base/GetItemRestrict", { params: { uid, r, type } })
+        .then((res) => {
+          if (!res.restrict) return;
+          this.getItemRestrict = res.restrict;
+          this.loadingRates = false;
+        })
+        .catch((error) => {
+          console.log(error);
+        })
+        .finally(() => {
           this.loadingRates = false;
         });
     },
