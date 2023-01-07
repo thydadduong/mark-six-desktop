@@ -63,7 +63,7 @@
           :headers="tableHeaders"
           :items="records"
           :loading="isLoading"
-          class="hide-horizontal-scrollbar"
+          class="hide-horizontal-scrollbar table-unsettle"
           mobile-breakpoint="0"
           hide-default-footer
           no-data-text="无更多记录"

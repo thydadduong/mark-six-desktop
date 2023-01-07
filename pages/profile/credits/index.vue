@@ -74,7 +74,7 @@
             :headers="tableHeaders"
             :items="tableRecords"
             :items-per-page="tableRecords.length"
-            class="hide-horizontal-scrollbar"
+            class="hide-horizontal-scrollbar table-unsettle"
             height="calc(100vh - 12.5rem)"
             mobile-breakpoint="0"
             fixed-header
