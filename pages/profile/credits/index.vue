@@ -7,7 +7,7 @@
         color="transparent"
       ></v-sheet>
       <v-sheet class="pa-2 px-1 game-close" width="60rem" color="transparent">
-        <Toolbar title="信用资料" />
+        <portal to="toolbarName">信用资料</portal>
         <v-sheet color="grey lighten-4">
           <v-card-title class="text--primary font-weight-bold">
             欢迎: {{ accountName }}
@@ -22,7 +22,7 @@
             :headers="tableHeaders"
             :items="tableRecords"
             :items-per-page="tableRecords.length"
-            class="hide-horizontal-scrollbar table-unsettle"
+            class="hide-horizontal-scrollbar table-unsettle row-height-50"
             height="calc(100vh - 12.5rem)"
             mobile-breakpoint="0"
             fixed-header
@@ -30,12 +30,12 @@
             no-data-text="无更多记录"
           >
             <template #[`item.typeKey`]="{ item }">
-              <v-sheet min-width="50" color="transparent">
+              <v-sheet color="transparent">
                 {{ getKeyTypeText(item.typeKey) }}
               </v-sheet>
             </template>
             <template #[`item.4`]="{ item }">
-              <v-sheet min-width="50" color="transparent">
+              <v-sheet color="transparent">
                 {{ displayNumber(item[4]) }}
               </v-sheet>
             </template>
@@ -126,4 +126,19 @@ export default {
 };
 </script>
 
-<style></style>
+<style>
+.v-data-table.row-height-50 td {
+  height: 38px !important;
+  text-align: center !important;
+  font-size: 14px !important;
+}
+.v-data-table.row-height-50 th {
+  height: 38px !important;
+  text-align: center !important;
+  color: #1976d2 !important;
+  font-size: 14px !important;
+}
+.v-data-table.row-height-50 {
+  box-sizing: initial !important;
+}
+</style>

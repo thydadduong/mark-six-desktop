@@ -15,7 +15,8 @@
           :headers="tableHeaders"
           :items="records"
           :loading="isLoading"
-          class="hide-horizontal-scrollbar table-unsettle"
+          class="hide-horizontal-scrollbar table-unsettle row-height-50"
+          fixed-header
           mobile-breakpoint="0"
           hide-default-footer
           no-data-text="无更多记录"

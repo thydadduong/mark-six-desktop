@@ -1,6 +1,6 @@
 <template>
   <v-sheet color="transparent">
-    <table class="table-unsettle">
+    <table class="table-unsettle row-height-50">
       <thead>
         <tr>
           <th
@@ -248,11 +248,15 @@ export default {
   tr td {
     text-align: center;
     border: 1px solid #ccc;
-    padding: 0.5rem 0.125rem;
+    height: 38px;
+    font-size: 14px;
+    // padding: 0.5rem 0.125rem;
   }
   tbody tr td {
-    padding: 0.5rem 0.125rem;
+    // padding: 0.5rem 0.125rem;
     font-weight: normal;
+    height: 38px;
+    font-size: 14px;
   }
 }
 </style>
