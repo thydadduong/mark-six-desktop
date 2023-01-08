@@ -76,11 +76,6 @@
                   {{ $t("login.title.login") }}
                 </v-btn>
                 <v-layout class="pt-4" justify-center>
-                  <!-- <v-checkbox
-                    class="remember-login"
-                    label=""
-                    dense
-                  ></v-checkbox> -->
                   <label for="remember-me">
                     <input
                       v-model="credential.remember_me"
@@ -167,12 +162,3 @@ export default {
   },
 };
 </script>
-<style lang="scss">
-// @media screen and (-ms-high-contrast: active), (-ms-high-contrast: none) {
-.card-login .remember-login .v-input--selection-controls__input {
-  i {
-    display: none;
-  }
-  // }
-}
-</style>
