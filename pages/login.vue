@@ -66,7 +66,7 @@
                   flat
                 ></v-text-field>
                 <v-btn
-                  @click="submitLogin"
+                  id="loginButton"
                   :loading="isLoading"
                   color="primary"
                   elevation="0"
@@ -122,10 +122,18 @@ export default {
       return this.bgImages[index] || this.bgImages[0];
     },
   },
+  mounted() {
+    this.loginButton = document.getElementById("loginButton");
+    this.loginButton.addEventListener("click", () => {
+      this.submitLogin();
+    });
+  },
+  beforeDestroy() {
+    this.loginButton?.removeEventListener("click");
+  },
   methods: {
     ...mapActions("auth", ["authenticate"]),
     submitLogin() {
-      console.log('click');
       if (!this.$refs.editedForm.validate()) return;
       const rnd = Math.round(Math.random() * 100000);
       const uid = this.credential.username;
