@@ -6,7 +6,13 @@
     justify-end
     align-center
   >
-    <v-sheet style="background-color: rgba(106,170,255, 0.3) !important;" color="primary lighten-2" width="90%" max-width="640" rounded="xl">
+    <v-sheet
+      style="background-color: rgba(106, 170, 255, 0.3) !important"
+      color="primary lighten-2"
+      width="90%"
+      max-width="640"
+      rounded="xl"
+    >
       <v-row no-gutters>
         <v-col class="pa-6" cols="12" md="6">
           <v-layout class="fill-height" justify-center align-center>
@@ -28,7 +34,7 @@
               >
                 <v-text-field
                   v-model="credential.username"
-                  :label="$t('login.title.credential')"
+                  :placeholder="$t('login.title.credential')"
                   :rules="$formRules.required"
                   prepend-inner-icon="mdi-account-outline"
                   background-color="primary"
@@ -41,7 +47,7 @@
                 ></v-text-field>
                 <v-text-field
                   v-model="credential.password"
-                  :label="$t('login.title.password')"
+                  :placeholder="$t('login.title.password')"
                   :rules="$formRules.required"
                   prepend-inner-icon="mdi-lock-outline"
                   background-color="primary"

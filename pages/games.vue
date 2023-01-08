@@ -243,7 +243,7 @@ export default {
     this.getIssueID(uid);
     this.handleGetCloseTime();
     this.gitLastResult();
-    this.startIntervalRequest();
+    // this.startIntervalRequest();
     this.getRecentBets();
   },
   beforeDestroy() {

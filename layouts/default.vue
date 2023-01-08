@@ -5,182 +5,14 @@
     </v-overlay>
     <v-main class="main-app-body">
       <v-sheet color="transparent" min-width="950">
-        <v-app-bar
-          color="primary detail-toolbar"
-          extension-height="58"
-          height="86"
-          elevation="1"
-          tile
-          dark
-          app
-        >
-          <nuxt-link to="/" class="mr-8">
-            <v-avatar size="54" rounded color="primary" class="white--text">
-              <img src="/images/hk6.jpg" style="object-fit: cover" />
-            </v-avatar>
-          </nuxt-link>
-          <CardTodayResult
-            :issueNumber="lastIssueNumber"
-            :ballList="lastResult.balls"
-            class="py-2"
-          />
-          <v-layout class="fill-height pt-1" align-end column>
-            <v-layout class="align-center gap-xs">
-              <v-btn
-                @click="dialogNotification = true"
-                class="px-2 rounded mr-2"
-                small
-                icon
-              >
-                <v-icon small>mdi-bell</v-icon>
-              </v-btn>
-              <!-- <v-btn to="/profile" class="px-2" small text>
-                <v-icon left>mdi-account</v-icon>
-                个人信息
-              </v-btn> -->
-              <p class="pa-2 ma-0 body-2">
-                <v-icon small>mdi-database-outline</v-icon>
-                剩余额度: {{ remainBalance }} 总共额度: {{ totalBalance }}
-              </p>
-
-              <v-menu>
-                <template v-slot:activator="{ on, attrs }">
-                  <v-btn
-                    v-bind="attrs"
-                    v-on="on"
-                    :loading="loadingTable"
-                    class="px-1"
-                    small
-                    text
-                  >
-                    盘口: {{ currentTable }}
-                    <v-icon>mdi-menu-down</v-icon>
-                  </v-btn>
-                </template>
-                <v-list>
-                  <v-list-item
-                    v-for="item in tableList"
-                    @click="openDialogConfirmSwitchTable(item)"
-                    :key="`table-${item}`"
-                    :disabled="item == currentTable"
-                  >
-                    <v-list-item-content>盘口 {{ item }}</v-list-item-content>
-                  </v-list-item>
-                </v-list>
-              </v-menu>
-
-              <v-menu>
-                <template v-slot:activator="{ on, attrs }">
-                  <v-btn
-                    v-bind="attrs"
-                    v-on="on"
-                    :loading="loadingTable"
-                    class="px-1 text-none"
-                    small
-                    text
-                  >
-                    <v-icon small class="mr-2"
-                      >mdi-account-circle-outline</v-icon
-                    >
-                    <span>个人账号</span>
-                    <v-icon small>mdi-menu-down</v-icon>
-                  </v-btn>
-                </template>
-                <v-list dense>
-                  <v-list-item @click="dialogResetPassword = true">
-                    <v-list-item-content>修改密码</v-list-item-content>
-                  </v-list-item>
-                  <v-list-item @click="logout">
-                    <v-list-item-content>退出系统</v-list-item-content>
-                  </v-list-item>
-                </v-list>
-              </v-menu>
-            </v-layout>
-            <div class="mt-auto">
-              <v-tabs
-                background-color="transparent"
-                :show-arrows="false"
-                height="36"
-                dark
-              >
-                <v-tabs-slider color="primary lighten-3"></v-tabs-slider>
-                <v-tab
-                  v-for="(item, key) in menuList"
-                  :key="`side-menu-${key}`"
-                  :to="item.to + '?v=' + version"
-                  :exact="item.exact"
-                  class="px-0"
-                >
-                  {{ item.title }}
-                </v-tab>
-              </v-tabs>
-            </div>
-          </v-layout>
-
-          <template v-slot:extension>
-            <v-layout column>
-              <v-sheet
-                color="primary"
-                width="100%"
-                height="32"
-                style="
-                  background-image: linear-gradient(#1a83eb, #1976d2, #1a83eb);
-                "
-                light
-              >
-                <v-layout class="fill-height align-center">
-                  <v-sheet
-                    class="flex-shrink-0 px-4 white--text"
-                    width="15.25rem"
-                    color="transparent"
-                  >
-                    <portal-target name="toolbarName"></portal-target>
-                  </v-sheet>
-                  <v-tabs
-                    v-for="(item, key) in gameList"
-                    :key="`game-${key}`"
-                    active-class="white primary--text"
-                    color="primary"
-                    background-color="transparent"
-                    height="32"
-                    hide-slider
-                    light
-                  >
-                    <v-tab class="text-none body-2" to="/games">{{
-                      item.title
-                    }}</v-tab>
-                  </v-tabs>
-                  <v-spacer></v-spacer>
-                </v-layout>
-              </v-sheet>
-              <v-sheet width="100%" height="26" light>
-                <v-layout class="fill-height">
-                  <v-sheet width="15.25rem"></v-sheet>
-                  <v-btn-toggle color="primary" group tile>
-                    <template v-for="(item, index) in gameMenu">
-                      <v-btn
-                        :key="index + 'btn'"
-                        :to="item.to + '?v=' + version"
-                        class="px-1 ma-0"
-                        value="left"
-                        small
-                      >
-                        {{ item.title }}
-                      </v-btn>
-                      <div
-                        :key="index + 'divder'"
-                        class="my-auto"
-                        style="height: 24px"
-                      >
-                        <v-divider vertical></v-divider>
-                      </div>
-                    </template>
-                  </v-btn-toggle>
-                </v-layout>
-              </v-sheet>
-            </v-layout>
-          </template>
-        </v-app-bar>
+        <MainAppBar
+          @show-notification="dialogNotification = true"
+          @reset-password="dialogResetPassword = true"
+          @switch-table="openDialogConfirmSwitchTable"
+          @logout="logout"
+          :issueNumber="lastIssueNumber"
+          :remainBalance="remainBalance"
+        />
         <Nuxt />
       </v-sheet>
       <DialogConfirm @confirm="onConfirm" ref="dialogConfirm" />
@@ -195,7 +27,6 @@
 import qs from "qs";
 import { mapActions, mapState } from "vuex";
 import { DialogType } from "~/models/types/dialog.type";
-import { gameMenuList } from "~/models/games";
 export default {
   name: "LayoutDefault",
   middleware: "auth",
@@ -216,27 +47,15 @@ export default {
         balls: [],
       },
       confirmAction: "",
-      version: "1.0.0",
     };
   },
   computed: {
     ...mapState("profile", ["basicItem"]),
-    ...mapState("profile", ["gameTable"]),
-    ...mapState("game", { isLoading: "isLoading", gameList: "records" }),
     remainBalance() {
       return this.basicItem.basic?.valid_balance || 0;
     },
     totalBalance() {
       return this.basicItem.basic?.total_balance || 0;
-    },
-    gameMenu() {
-      return gameMenuList;
-    },
-    currentTable() {
-      return this.gameTable.current_table;
-    },
-    tableList() {
-      return this.gameTable.tables || [];
     },
     lastIssueNumber() {
       const { issue_id } = this.lastResult || {};
@@ -258,18 +77,9 @@ export default {
     vBreakpoints() {
       return this.$vuetify.breakpoint;
     },
-    menuList() {
-      return [
-        { title: "主页", icon: "mdi-home-outline", to: "/", exact: true },
-        { title: "信用资料", to: "/profile/credits" },
-        { title: "未结明细", to: "/payment", exact: true },
-        { title: "结算报表", to: "/settled", exact: true },
-        { title: "游戏规则", to: "/rules" },
-        { title: "开奖结果", to: "/lottery", exact: true },
-      ];
-    },
   },
   methods: {
+    ...mapState("profile", ["gameTable"]),
     ...mapActions("profile", ["fetchBasicItem"]),
     ...mapActions("game", ["getGameList"]),
     ...mapActions("app", ["getAppTitle"]),
