@@ -125,6 +125,7 @@ export default {
   methods: {
     ...mapActions("auth", ["authenticate"]),
     submitLogin() {
+      console.log('click');
       if (!this.$refs.editedForm.validate()) return;
       const rnd = Math.round(Math.random() * 100000);
       const uid = this.credential.username;
