@@ -22,7 +22,13 @@
           </v-layout>
         </v-col>
         <v-col class="pa-6" cols="12" md="6">
-          <v-card color="primary darken-2" class="py-5" rounded="xl" flat dark>
+          <v-card
+            color="primary darken-2 card-login"
+            class="py-5"
+            rounded="xl"
+            flat
+            dark
+          >
             <v-card-title class="justify-center">
               {{ appTitle || "系統" }}
             </v-card-title>
@@ -69,12 +75,20 @@
                 >
                   {{ $t("login.title.login") }}
                 </v-btn>
-                <v-layout justify-center>
-                  <v-checkbox
-                    v-model="credential.remember_me"
-                    label="记住我"
+                <v-layout class="pt-4" justify-center>
+                  <!-- <v-checkbox
+                    class="remember-login"
+                    label=""
                     dense
-                  ></v-checkbox>
+                  ></v-checkbox> -->
+                  <label for="remember-me">
+                    <input
+                      v-model="credential.remember_me"
+                      id="remember-me"
+                      type="checkbox"
+                    />
+                    <span>记住我</span>
+                  </label>
                 </v-layout>
               </v-form>
             </v-card-text>
@@ -153,3 +167,12 @@ export default {
   },
 };
 </script>
+<style lang="scss">
+// @media screen and (-ms-high-contrast: active), (-ms-high-contrast: none) {
+.card-login .remember-login .v-input--selection-controls__input {
+  i {
+    display: none;
+  }
+  // }
+}
+</style>
