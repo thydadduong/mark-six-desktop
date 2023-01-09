@@ -1,6 +1,6 @@
 <template>
   <v-sheet>
-    <Toolbar title="澳门六合彩"/>
+    <Toolbar title="澳门六合彩" />
     <!-- <v-app-bar color="primary" dark app>
       <v-spacer></v-spacer>
       <v-app-bar-title></v-app-bar-title>
@@ -23,7 +23,7 @@
           </div>
           <div class="head-right flex-c"><!----></div>
         </div>
-        <div class="rules-item">
+        <div class="rules-item remove-margin-bottom">
           <p style="white-space: normal">
             <span
               style="font-family: 宋体; font-size: 13px; letter-spacing: 1px"
@@ -2101,4 +2101,8 @@ export default {
 };
 </script>
 
-<style></style>
+<style>
+.remove-margin-bottom p {
+  margin-bottom: 0px;
+}
+</style>
