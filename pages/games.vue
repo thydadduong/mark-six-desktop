@@ -67,7 +67,6 @@
       :title="gameTimeoutTitle"
       message="请选择其他彩种进行游戏"
       action-title="返回大厅"
-      action-to="/"
     />
     <DialogConfirm @confirm="confirmSwitch" ref="dialogConfirm" />
     <DialogMessageBox ref="dialogMessage" auto-close />
@@ -243,7 +242,7 @@ export default {
     this.getIssueID(uid);
     this.handleGetCloseTime();
     this.gitLastResult();
-    // this.startIntervalRequest();
+    this.startIntervalRequest();
     this.getRecentBets();
   },
   beforeDestroy() {
