@@ -194,4 +194,19 @@ export default {
 };
 </script>
 
-<style></style>
+<style>
+.v-data-table.row-height-50 td {
+  height: 38px !important;
+  text-align: center !important;
+  font-size: 14px !important;
+}
+.v-data-table.row-height-50 th {
+  height: 38px !important;
+  text-align: center !important;
+  color: #1976d2 !important;
+  font-size: 14px !important;
+}
+.v-data-table.row-height-50 {
+  box-sizing: initial !important;
+}
+</style>
