@@ -90,6 +90,20 @@
           </v-card>
         </v-col>
       </v-row>
+      <div
+        class="text-center pb-2 white--text"
+        align-center
+        style="font-size: 12px"
+      >
+        为了更好的使用体验，建议您安装谷歌，火狐浏览器。
+        <a
+          class="primary--text"
+          href="http://www.firefox.com.cn/"
+          target="_blank"
+          rel="noopener noreferrer"
+          >火狐浏览器安装
+        </a>
+      </div>
     </v-sheet>
     <DialogMessageBox ref="dialogMessage" auto-close />
   </v-layout>
