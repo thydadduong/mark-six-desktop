@@ -16,7 +16,7 @@
           :items="records"
           :loading="isLoading"
           :server-items-length="records.length"
-          class="hide-horizontal-scrollbar table-unsettle"
+          class="hide-horizontal-scrollbar table-unsettle row-height-50"
           mobile-breakpoint="0"
           hide-default-footer
           no-data-text="无更多记录"
@@ -47,7 +47,7 @@
           <template #[`body.append`]>
             <tr v-if="records.length">
               <td
-                colspan="5"
+                colspan="7"
                 class="pa-0 text-no-wrap text--secondary text-center"
               >
                 <p class="mb-2"><small> 已经到达最后一条记录 </small></p>
@@ -89,6 +89,20 @@ export default {
           sortable: false,
         },
         {
+          text: "赔率",
+          class: "grey lighten-2 px-2",
+          cellClass: "px-2",
+          value: "3",
+          sortable: false,
+        },
+        {
+          text: "退水",
+          class: "grey lighten-2 px-2",
+          cellClass: "px-2",
+          value: "6",
+          sortable: false,
+        },
+        {
           text: "金额",
           value: "4",
           class: "grey lighten-2 px-2",
@@ -99,8 +113,16 @@ export default {
         {
           text: "盈亏",
           value: "5",
-          class: "grey lighten-2 px-2 pr-4",
-          cellClass: "px-2 pr-4",
+          class: "grey lighten-2 px-2 ",
+          cellClass: "px-2 ",
+          align: "right",
+          sortable: false,
+        },
+        {
+          text: "总盈亏",
+          value: "7",
+          class: "grey lighten-2 px-2",
+          cellClass: "px-2 ",
           align: "right",
           sortable: false,
         },
@@ -135,4 +157,19 @@ export default {
 };
 </script>
 
-<style></style>
+<style>
+.v-data-table.row-height-50 td {
+  height: 38px !important;
+  text-align: center !important;
+  font-size: 14px !important;
+}
+.v-data-table.row-height-50 th {
+  height: 38px !important;
+  text-align: center !important;
+  color: #1976d2 !important;
+  font-size: 14px !important;
+}
+.v-data-table.row-height-50 {
+  box-sizing: initial !important;
+}
+</style>
