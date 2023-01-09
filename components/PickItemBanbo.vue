@@ -3,10 +3,10 @@
     <table class="game-item-table banbo-game disable-select">
       <thead>
         <tr>
-          <th class="primary--text game-item-table__title">半波</th>
-          <th class="primary--text game-item-table__rate">赔率</th>
-          <th class="primary--text game-item-table__balls">号码</th>
-          <th class="primary--text game-item-table__input"></th>
+          <th class="primary--text game-item-table__title text-center">半波</th>
+          <th class="primary--text game-item-table__rate text-center">赔率</th>
+          <th class="primary--text game-item-table__balls text-center">号码</th>
+          <th class="primary--text game-item-table__input text-center"></th>
         </tr>
       </thead>
 
