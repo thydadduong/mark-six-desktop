@@ -37,17 +37,6 @@
         </v-layout>
       </div>
       <v-btn
-        @click="onInput()"
-        :disabled="disabled"
-        class="rounded white"
-        width="40"
-        height="40"
-        outlined
-        fab
-      >
-        重置
-      </v-btn>
-      <v-btn
         :disabled="disabled"
         @click="submit"
         class="rounded"
@@ -60,6 +49,18 @@
       >
         输入
       </v-btn>
+      <v-btn
+        @click="onInput()"
+        :disabled="disabled"
+        class="rounded white"
+        width="40"
+        height="40"
+        outlined
+        fab
+      >
+        重置
+      </v-btn>
+
       <v-btn
         v-if="showClear"
         @click="clear"
