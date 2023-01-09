@@ -18,7 +18,7 @@
       :ballList="lastResult.balls || []"
       class="py-2"
     />
-    <v-layout class="fill-height pt-1" align-end column>
+    <v-layout class="fill-height pt-1 add-padding-right" align-end column>
       <v-layout class="align-center gap-xs">
         <v-btn @click="showNotification" class="px-2 rounded mr-2" small icon>
           <v-icon small>mdi-bell</v-icon>
@@ -284,4 +284,8 @@ export default {
 };
 </script>
 
-<style></style>
+<style>
+.layout.add-padding-right {
+  max-width: 62rem;
+}
+</style>
