@@ -7,73 +7,42 @@
     >
     </v-sheet>
 
-    <v-sheet class="pa-2 px-1 game-close" width="60rem" color="transparent">
+    <v-sheet class="pa-2 px-1 game-close" color="transparent">
       <portal to="toolbarName">结算报表</portal>
-      <v-card flat>
-        <v-data-table
-          @click:row="viewDetail"
-          :headers="tableHeaders"
-          :items="records"
-          :loading="isLoading"
-          class="hide-horizontal-scrollbar table-unsettle row-height-50"
-          fixed-header
-          mobile-breakpoint="0"
-          hide-default-footer
-          no-data-text="无更多记录"
-        >
-          <!-- <template #[`item.index`]="{ item, index }">
-          <v-sheet
-            color="transparent"
-            min-width="40"
-            max-width="100"
-            v-if="index < records.length - 1"
-          >
-            {{ index + 1 }}
-          </v-sheet>
-        </template> -->
-          <template #[`item.0`]="{ item }">
-            <v-sheet color="transparent">
-              <v-layout
-                class="gap-xs"
-                wrap
-                v-if="item[0] && $moment(item[0]).isValid()"
+      <v-card class="mx-auto" color="transparent" width="60rem" flat>
+        <table class="table-unsettle">
+          <thead>
+            <tr>
+              <th
+                v-for="(header, key) in tableHeaders"
+                :key="`thead-${key}`"
+                class="body-1"
               >
-                <span class="text-no-wrap">
+                {{ header.text }}
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr
+              v-for="(item, key) in records"
+              :key="`row-${key}`"
+              @click="viewDetail(item)"
+              class="hover-table"
+            >
+              <td v-if="item[0] && $moment(item[0]).isValid()">
+                <span>
                   {{ $moment(item[0]).format("MM-DD") }}
                 </span>
-                <span class="text-no-wrap">
+                <span>
                   {{ $moment(item[0]).format("dddd") }}
                 </span>
-              </v-layout>
-              <span v-else>{{ item[0] }}</span>
-            </v-sheet>
-          </template>
-          <template #[`item.1`]="{ item }">
-            <v-sheet color="transparent" class="text-no-wrap">
-              {{ item[1] }}</v-sheet
-            >
-          </template>
-          <template #[`item.2`]="{ item }">
-            <v-sheet color="transparent" class="text-no-wrap">
-              {{ item[2] }}</v-sheet
-            >
-          </template>
-          <template #[`item.3`]="{ item }">
-            <v-sheet color="transparent" class="text-no-wrap">
-              {{ item[3] }}</v-sheet
-            >
-          </template>
-          <template #[`item.4`]="{ item }">
-            <v-sheet color="transparent" class="text-no-wrap">
-              {{ item[4] }}</v-sheet
-            >
-          </template>
-          <template #[`item.5`]="{ item }">
-            <v-sheet color="transparent" class="text-no-wrap">
-              {{ item[5] }}</v-sheet
-            >
-          </template>
-          <template #[`body.append`]>
+              </td>
+              <td v-else>{{ item[1] }}</td>
+              <td>{{ item[1] }}</td>
+              <td>{{ item[2] }}</td>
+              <td>{{ item[3] }}</td>
+              <td>{{ item[4] }}</td>
+            </tr>
             <tr v-if="records.length">
               <td
                 colspan="5"
@@ -83,9 +52,8 @@
                 <v-divider></v-divider>
               </td>
             </tr>
-          </template>
-        </v-data-table>
-
+          </tbody>
+        </table>
         <CardEmpty :visible="!records.length && isReady" />
       </v-card>
     </v-sheet>
@@ -202,18 +170,5 @@ export default {
 </script>
 
 <style>
-.v-data-table.row-height-50 td {
-  height: 38px !important;
-  text-align: center !important;
-  font-size: 14px !important;
-}
-.v-data-table.row-height-50 th {
-  height: 38px !important;
-  text-align: center !important;
-  color: #1976d2 !important;
-  font-size: 14px !important;
-}
-.v-data-table.row-height-50 {
-  box-sizing: initial !important;
-}
+
 </style>
