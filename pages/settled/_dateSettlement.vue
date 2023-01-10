@@ -6,45 +6,40 @@
       color="transparent"
     >
     </v-sheet>
-    <v-sheet width="60rem">
-      <Toolbar title="结算报表" />
-      <v-card flat>
-        <v-card-subtitle> 日期: {{ displayDate }}</v-card-subtitle>
-
-        <v-data-table
-          :headers="tableHeaders"
-          :items="records"
-          :loading="isLoading"
-          :server-items-length="records.length"
-          class="hide-horizontal-scrollbar table-unsettle row-height-50"
-          mobile-breakpoint="0"
-          hide-default-footer
-          no-data-text="无更多记录"
-        >
-          <template #[`item.1`]="{ item }">
-            <div style="min-width: 65px">
-              <span v-if="item[1] && $moment(item[1]).isValid()">
-                {{ $moment(item[1]).format("HH:mm:ss") }}
-              </span>
-              <span v-else>{{ item[0] }}</span>
-            </div>
-          </template>
-          <template #[`item.2`]="{ item }">
-            <div style="min-width: 120px">
-              {{ item[2] }}
-            </div>
-          </template>
-          <template #[`item.4`]="{ item }">
-            <div style="min-width: 40px">
-              {{ item[4] }}
-            </div>
-          </template>
-          <template #[`item.5`]="{ item }">
-            <div style="min-width: 40px">
-              {{ item[5] }}
-            </div>
-          </template>
-          <template #[`body.append`]>
+    <v-sheet>
+      <portal to="toolbarName">结算报表 日期:{{ displayDate }}</portal>
+      <v-card class="mx-auto pt-2" color="transparent" width="60rem" flat>
+        <table class="table-unsettle">
+          <thead>
+            <tr>
+              <th
+                v-for="(header, key) in tableHeaders"
+                :key="`thead-${key}`"
+                class="body-1"
+              >
+                {{ header.text }}
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr
+              v-for="(item, key) in records"
+              :key="`row-${key}`"
+              class="hover-table"
+            >
+              <td>
+                <span v-if="item[1] && $moment(item[1]).isValid()">
+                  {{ $moment(item[1]).format("HH:mm:ss") }}
+                </span>
+                <span v-else>{{ item[0] }}</span>
+              </td>
+              <td>{{ item[2] }}</td>
+              <td>{{ item[3] }}</td>
+              <td>{{ item[6] }}</td>
+              <td>{{ item[4] }}</td>
+              <td>{{ item[5] }}</td>
+              <td>{{ item[7] }}</td>
+            </tr>
             <tr v-if="records.length">
               <td
                 colspan="7"
@@ -54,10 +49,10 @@
                 <v-divider></v-divider>
               </td>
             </tr>
-          </template>
-        </v-data-table>
-      </v-card>
-      <CardEmpty :visible="!records.length && isReady" /> </v-sheet
+          </tbody>
+        </table>
+        <CardEmpty :visible="!records.length && isReady" />
+      </v-card> </v-sheet
   ></v-layout>
 </template>
 
@@ -157,19 +152,4 @@ export default {
 };
 </script>
 
-<style>
-.v-data-table.row-height-50 td {
-  height: 38px !important;
-  text-align: center !important;
-  font-size: 14px !important;
-}
-.v-data-table.row-height-50 th {
-  height: 38px !important;
-  text-align: center !important;
-  color: #1976d2 !important;
-  font-size: 14px !important;
-}
-.v-data-table.row-height-50 {
-  box-sizing: initial !important;
-}
-</style>
+<style></style>

@@ -65,7 +65,7 @@
               text
             >
               <v-icon small class="mr-2">mdi-account-circle-outline</v-icon>
-              <span>个人账号</span>
+              <span>{{ accountName() ? accountName() : "个人账号" }}</span>
               <v-icon small>mdi-menu-down</v-icon>
             </v-btn>
           </template>
@@ -140,7 +140,7 @@
                 <v-tab
                   :key="`index-${index}`"
                   :to="item.to + '?v=' + version"
-                  style="min-width: 25px"
+                  style="min-width: 25px; font-size: 16px"
                   class="px-1"
                   value="left"
                 >
@@ -206,8 +206,7 @@
 </template>
 
 <script>
-import { mapState } from "vuex";
-import { gameMenuList } from "~/models/games";
+import { mapActions, mapState } from "vuex";
 
 export default {
   name: "MainAppBar",
@@ -249,7 +248,7 @@ export default {
   computed: {
     ...mapState("game", { isLoading: "isLoading", gameList: "records" }),
     ...mapState("profile", { loadingTable: "isLoading" }),
-    ...mapState("profile", ["gameTable"]),
+    ...mapState("profile", ["gameTable", "basicItem"]),
     currentTable() {
       return this.gameTable.current_table;
     },
@@ -268,6 +267,7 @@ export default {
     },
   },
   methods: {
+    ...mapActions("profile", ["fetchBasicItem"]),
     showNotification() {
       this.$emit("show-notification");
     },
@@ -280,12 +280,18 @@ export default {
     logout() {
       this.$emit("logout");
     },
+    accountName() {
+      return this.basicItem.basic?.account;
+    },
+  },
+  mounted() {
+    this.fetchBasicItem();
   },
 };
 </script>
 
 <style>
 .layout.add-padding-right {
-  max-width: 62rem;
+  max-width: 49rem;
 }
 </style>

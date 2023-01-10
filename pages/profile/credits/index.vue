@@ -6,7 +6,7 @@
         width="15rem"
         color="transparent"
       ></v-sheet>
-      <v-sheet class="pa-2 px-1 game-close" width="60rem" color="transparent">
+      <v-sheet class="pa-2 px-1 game-close" color="transparent">
         <portal to="toolbarName">信用资料</portal>
         <v-sheet color="grey lighten-4">
           <v-card-title class="text--primary font-weight-bold">
@@ -16,30 +16,43 @@
             <h4 class="font-weight-regular">{{ tableInfo }}</h4>
           </v-card-subtitle>
         </v-sheet>
-        <v-card flat>
-          <v-divider></v-divider>
-          <v-data-table
-            :headers="tableHeaders"
-            :items="tableRecords"
-            :items-per-page="tableRecords.length"
-            class="hide-horizontal-scrollbar table-unsettle row-height-50"
-            height="calc(100vh - 12.5rem)"
-            mobile-breakpoint="0"
-            fixed-header
-            hide-default-footer
-            no-data-text="无更多记录"
-          >
-            <template #[`item.typeKey`]="{ item }">
-              <v-sheet color="transparent">
-                {{ getKeyTypeText(item.typeKey) }}
-              </v-sheet>
-            </template>
-            <template #[`item.4`]="{ item }">
-              <v-sheet color="transparent">
-                {{ displayNumber(item[4]) }}
-              </v-sheet>
-            </template>
-          </v-data-table>
+
+        <v-card class="mx-auto pt-2" color="transparent" width="60rem" flat>
+          <table class="table-unsettle">
+            <thead>
+              <tr>
+                <th
+                  v-for="(header, key) in tableHeaders"
+                  :key="`thead-${key}`"
+                  class="body-1"
+                >
+                  {{ header.text }}
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr
+                v-for="(item, key) in tableRecords"
+                :key="`row-${key}`"
+                class="hover-table"
+              >
+                <td>{{ item[0] }}</td>
+                <td>{{ displayNumber(item[4]) }}</td>
+                <td>{{ item[1] }}</td>
+                <td>{{ item[2] }}</td>
+                <td>{{ item[3] }}</td>
+              </tr>
+              <tr v-if="tableRecords.length">
+                <td
+                  colspan="7"
+                  class="pa-0 text-no-wrap text--secondary text-center"
+                >
+                  <p class="mb-2"><small> 已经到达最后一条记录 </small></p>
+                  <v-divider></v-divider>
+                </td>
+              </tr>
+            </tbody>
+          </table>
         </v-card>
       </v-sheet>
     </v-layout>
@@ -126,19 +139,4 @@ export default {
 };
 </script>
 
-<style>
-.v-data-table.row-height-50 td {
-  height: 38px !important;
-  text-align: center !important;
-  font-size: 14px !important;
-}
-.v-data-table.row-height-50 th {
-  height: 38px !important;
-  text-align: center !important;
-  color: #1976d2 !important;
-  font-size: 14px !important;
-}
-.v-data-table.row-height-50 {
-  box-sizing: initial !important;
-}
-</style>
+<style></style>
