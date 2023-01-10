@@ -140,7 +140,7 @@
                 <v-tab
                   :key="`index-${index}`"
                   :to="item.to + '?v=' + version"
-                  style="min-width: 25px"
+                  style="min-width: 25px; font-size:16px"
                   class="px-1"
                   value="left"
                 >
@@ -286,6 +286,6 @@ export default {
 
 <style>
 .layout.add-padding-right {
-  max-width: 62rem;
+  max-width: 49rem;
 }
 </style>
