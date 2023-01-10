@@ -16,10 +16,20 @@
             @click="toggleSelectItem(subitem)"
           >
             <template v-if="isActive(subitem.value)">
-              <td class="game-item-table__title primary white--text">
+              <td
+                :class="
+                  isFixedFront(subitem.label) ? 'fixed-front-color' : 'primary'
+                "
+                class="game-item-table__title white--text"
+              >
                 {{ subitem.name }}
               </td>
-              <td class="game-item-table__ball primary text-left px-4">
+              <td
+                :class="
+                  isFixedFront(subitem.label) ? 'fixed-front-color' : 'primary'
+                "
+                class="game-item-table__balls text-left px-4"
+              >
                 <v-avatar
                   v-for="(ball, index) in subitem.balls"
                   :key="`ball-${key}-${subitem.play_id}-${index}`"
@@ -30,10 +40,21 @@
                   {{ ball.label || "-" }}
                 </v-avatar>
               </td>
-              <td class="game-item-table__rate primary white--text">
+              <td
+                :class="
+                  isFixedFront(subitem.label) ? 'fixed-front-color' : 'primary'
+                "
+                class="game-item-table__rate white--text"
+              >
                 {{ getBallRate(subitem.play_id) }}
               </td>
-              <td v-if="!singleAmount" class="game-item-table__input primary">
+              <td
+                v-if="!singleAmount"
+                :class="
+                  isFixedFront(subitem.label) ? 'fixed-front-color' : 'primary'
+                "
+                class="game-item-table__input primary"
+              >
                 <input
                   @keypress="preventNonNumericalInput"
                   @click.stop="() => {}"
@@ -50,7 +71,7 @@
               <td class="game-item-table__title">
                 {{ subitem.name }}
               </td>
-              <td class="game-item-table__ball text-left px-4">
+              <td class="game-item-table__balls text-left px-4">
                 <v-avatar
                   v-for="(ball, index) in subitem.balls"
                   :key="`ball-${key}-${subitem.play_id}-${index}`"
@@ -87,6 +108,8 @@ export default {
   props: {
     disabled: Boolean,
     singleAmount: Boolean,
+    type: Number,
+    fixedFront: { type: Number, default: 0 },
     rates: { type: Object, default: () => ({}) },
     gridItems: { type: Array, default: () => [] },
     selectedItems: { type: Array, default: () => [] },
@@ -95,6 +118,13 @@ export default {
   methods: {
     isActive(value) {
       return !!this.selectedItems.find((item) => item.value == value);
+    },
+    isFixedFront(label) {
+      if (this.type != 2) return false;
+      let index = this.selectedItems.findIndex((item) => item.label == label);
+      if (index == -1) return false;
+      console.log(index, this.fixedFront);
+      return index <= this.fixedFront;
     },
     setItemAmount(value) {
       this.selectedItems.forEach((item) => {

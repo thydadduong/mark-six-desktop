@@ -63,7 +63,7 @@
     </v-layout>
     <v-sheet height="60" color="transparent"></v-sheet>
     <DialogGameTimeout
-      :visible="bittingClosed"
+      :visible.sync="bittingClosed"
       :title="gameTimeoutTitle"
       message="请选择其他彩种进行游戏"
       action-title="返回大厅"

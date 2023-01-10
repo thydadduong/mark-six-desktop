@@ -54,6 +54,8 @@
                 :rates="itemsRate"
                 :gridItems="gridBalls"
                 :selectedItems="selectedList"
+                :type="selectedType.value"
+                :fixedFront="selectedProp.value - 2"
                 ref="animalItemPicker"
                 single-amount
               />
@@ -121,6 +123,7 @@ export default {
         item.map((subitem) => ({
           ...subitem,
           play_id: this.$common.getPlayId("1503", subitem.value),
+          label: this.$common.getPlayId("1503", subitem.value),
           balls: subitem.balls.map((ball) => ({
             label: this.$common.getNumberLabel(ball),
             value: ball,
@@ -157,12 +160,6 @@ export default {
     },
     isActive(play_id) {
       return !!this.selectedList.find((item) => item.play_id == play_id);
-    },
-    isFixedFront(label) {
-      if (this.selectedType.value != 2) return false;
-      let index = this.selectedList.findIndex((item) => item.name == label);
-      if (index == -1) return false;
-      return index <= this.selectedProp.value - 2;
     },
     toggleSelectItem(item) {
       let index = this.selectedList.findIndex(

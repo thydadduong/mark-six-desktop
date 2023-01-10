@@ -52,6 +52,8 @@
               :rates="itemsRate"
               :gridItems="gridBalls"
               :selectedItems="selectedList"
+              :type="selectedType.value"
+              :fixedFront="selectedProp.count - 2"
               ref="tailItemPicker"
               single-amount
             />
@@ -155,12 +157,6 @@ export default {
     },
     isActive(play_id) {
       return !!this.selectedList.find((item) => item.play_id == play_id);
-    },
-    isFixedFront(label) {
-      if (this.selectedType.value != 2) return false;
-      let index = this.selectedList.findIndex((item) => item.label == label);
-      if (index == -1) return false;
-      return index <= this.selectedProp.count - 2;
     },
     onSelectBalls(play_id) {
       const index = this.selectedList.findIndex((_id) => _id == play_id);

@@ -52,6 +52,8 @@
               :gridItems="gridBalls"
               :selectedItems="selectedList"
               :rates="itemsRate"
+              :type="selectedType.value"
+              :fixedFront="selectedProp.min - 2"
               ref="item49Picker"
               single-amount
             />
@@ -239,12 +241,6 @@ export default {
       }
       const newList = [...new Set([...this.selectedList, ...items])];
       this.selectedList = Object.assign([], newList);
-    },
-    isFixedFront(label) {
-      if (this.selectedType.value != 2) return false;
-      let index = this.selectedList.findIndex((item) => item.label == label);
-      if (index == -1) return false;
-      return index <= this.selectedProp.min - 2;
     },
     async openDialogBitting() {
       const min = this.selectedProp.min;

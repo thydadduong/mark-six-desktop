@@ -18,18 +18,30 @@
           >
             <template v-if="isActive(subitem.value)">
               <td
-                class="game-item-table__title primary white--text"
+                :class="
+                  isFixedFront(subitem.label) ? 'fixed-front-color' : 'primary'
+                "
+                class="game-item-table__title white--text"
                 style="width: 40px"
               >
                 {{ subitem.name }}
               </td>
               <td
-                class="game-item-table__rate primary white--text"
+                :class="
+                  isFixedFront(subitem.label) ? 'fixed-front-color' : 'primary'
+                "
+                class="game-item-table__rate white--text"
                 style="width: 50px"
               >
                 {{ getBallRate(subitem.play_id) }}
               </td>
-              <td v-if="!singleAmount" class="game-item-table__input primary">
+              <td
+                v-if="!singleAmount"
+                :class="
+                  isFixedFront(subitem.label) ? 'fixed-front-color' : 'primary'
+                "
+                class="game-item-table__input primary"
+              >
                 <input
                   @keypress="preventNonNumericalInput"
                   @click.stop="() => {}"
@@ -72,6 +84,8 @@ export default {
   props: {
     disabled: Boolean,
     singleAmount: Boolean,
+    type: Number,
+    fixedFront: { type: Number, default: 0 },
     rates: { type: Object, default: () => ({}) },
     gridItems: { type: Array, default: () => [] },
     selectedItems: { type: Array, default: () => [] },
@@ -80,6 +94,12 @@ export default {
   methods: {
     isActive(value) {
       return !!this.selectedItems.find((item) => item.value == value);
+    },
+    isFixedFront(label) {
+      if (this.type != 2) return false;
+      let index = this.selectedItems.findIndex((item) => item.label == label);
+      if (index == -1) return false;
+      return index <= this.fixedFront;
     },
     setItemAmount(value) {
       this.selectedItems.forEach((item) => {
