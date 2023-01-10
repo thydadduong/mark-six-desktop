@@ -171,6 +171,10 @@ export default {
       this.$axios
         .$get("/api-base/Settled", options)
         .then((res) => {
+          res.records[res.records.length - 1] = {
+            ...res.records[res.records.length - 1],
+            disabled: true,
+          };
           this.records = res.records.length
             ? res.records.map((item) => ({ ...item }))
             : [];
@@ -181,6 +185,9 @@ export default {
         });
     },
     viewDetail(item) {
+      if (item.disabled) {
+        return;
+      }
       const _URI = `/settled/${item[0]}`;
       this.$router.push(_URI);
     },
