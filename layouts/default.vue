@@ -11,6 +11,7 @@
           @switch-table="openDialogConfirmSwitchTable"
           @logout="logout"
           :issueNumber="lastIssueNumber"
+          :lastResult="lastResult"
           :remainBalance="remainBalance"
         />
         <Nuxt />
