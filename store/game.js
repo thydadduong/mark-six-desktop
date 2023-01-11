@@ -2,7 +2,7 @@ const state = () => ({
   records: [],
   isLoading: true,
   activeGameTitle: "",
-  closed: false,
+  closed: true,
   closedTimer: 0,
 });
 
@@ -29,11 +29,13 @@ const actions = {
     });
     response
       .then((res) => {
-        if (!!res?.code) return;
-        const payload = { closed: false, closedTimer: res.seconds || 0 };
+        const payload = { closed: true, closedTimer: 0 };
+        if (!!res?.code && !!res.seconds) {
+          payload.closed = false;
+          payload.closedTimer = res.seconds;
+        }
         commit("CLOSE_TIME", payload);
       })
-
       .catch((error) => {
         console.log(error);
       });
