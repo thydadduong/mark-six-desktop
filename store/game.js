@@ -30,7 +30,7 @@ const actions = {
     response
       .then((res) => {
         const payload = { closed: true, closedTimer: 0 };
-        if (!!res?.code && !!res.seconds) {
+        if (res?.code === 0 && !!res.seconds) {
           payload.closed = false;
           payload.closedTimer = res.seconds;
         }
