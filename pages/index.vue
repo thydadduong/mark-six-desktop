@@ -10,6 +10,12 @@
           :icon="getIcon(item.logo)"
           to="/games/tema"
         />
+        <CardGameItem
+          key="南粤36"
+          title="南粤36"
+          :icon="getIcon('/patch-files/logo/hk6.jpg')"
+          to="/nanyue-36/tema"
+        />
       </v-layout>
     </v-card-text>
   </v-sheet>
